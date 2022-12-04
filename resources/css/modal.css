@@ -1,0 +1,375 @@
+/* MODAL */
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    z-index: 100;
+    display: none;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* MODAL CART SHOPPING */
+.modal__cartshopping {
+    background-color: white;
+    z-index: 2;
+    width: 330px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    animation: modalCartAnimations ease 0.5s;
+    display: none;
+    overflow-y: auto;
+}
+
+.modal__cartshopping.active {
+    display: block;
+}
+
+@keyframes modalCartAnimations {
+    from {
+        transform: translateX(70%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.modal__cartshpping--inner {
+    padding: 10px 15px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.modal__cartshopping--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.modal__cartshopping--header > p {
+    font-weight: 600;
+}
+
+.cartshopping--icon {
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    width: 14px;
+}
+
+.cartshopping--icon:hover {
+    transform: rotate(360deg);
+}
+
+.cart-noproduct {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 0 0 ;
+}
+
+.cart-noproduct.hidden{
+    display: none;
+}
+
+.cart-noproduct img{
+    height: 200px;
+    width: 200px;
+}
+/* There are products in the cart */
+.cart__item {
+    display: flex;
+    margin-top: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.imgproduct--img {
+    max-width: 110px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.infoproduct {
+    min-width: 145px;
+}
+
+.infoproduct div {
+    margin-bottom: 5px;
+}
+
+.box_quantity .__button-item {
+    width: 25px;
+    height: 25px;
+}
+
+.box_quantity .input-quantity--modifi {
+    border: 1px solid #ccc;
+}
+
+.infoproduct--name {
+    display: block;
+}
+
+.infoproduct--separate {
+    margin: 0 5px;
+}
+
+.name_product {
+    display: flex;
+    font-weight: 500;
+}
+
+.box_quantity {
+    display: flex;
+    align-items: center;
+}
+
+.box_quantity label {
+    margin-right: 7px;
+}
+
+.box_quantity button {
+    background-color: #fff  ;
+    border: 1px solid #ccc;
+}
+
+.box_quantity .quantity {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    outline: none;
+}
+
+.box_price {
+    display: flex;
+}
+
+.box_price .price {
+    color: red;  
+}
+
+.box_price .labelprice {
+    margin-right: 5px;
+}
+
+.btn-romove {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    width: 145px;
+    border-radius: 25px;
+    border: 1px solid #3ba66b;
+    background: #fff;
+    color: #3ba66b;
+    height: 25px;
+}
+
+.btn-romove:hover {
+    background: #3ba66b;
+    color: #fff;
+}
+
+.cart__content {
+    height: calc(100% - 145px);
+    overflow-y: auto;
+}
+
+.cart__content::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(211, 211, 211);
+    border-radius: 5px;
+}
+
+.payment {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    padding: 0 20px;
+    display: none;
+}
+
+.payment.active {
+    display: block;
+}
+
+.separate {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+.payment-content {
+    display: flex;
+    font-size: 15px;
+}
+
+.summoney {
+    display: flex;
+    margin: 0 auto;
+    color: red;
+}
+
+.totalmoney {
+    display: flex;
+}
+
+.unitprice {
+    color: red;
+    text-decoration: underline;
+    margin-left: 2px;
+}
+
+.labelsum {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.payment-item {
+    margin-bottom: 12px;
+}
+
+.btn-payment {
+    width: 100%;
+    padding: 5px 0 6px 0;
+    border-radius: 25px;
+    color: #3ba66b;
+    border: 1px solid #3ba66b;
+    background: #fff;
+    margin-bottom: 15px;
+}
+
+.btn-payment:hover {
+    background:#3ba66b;
+    color: #fff;
+}
+/* The end add products */
+.btn-continue {
+    bottom: 0;
+    padding: 12px 30px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3ba66b;
+    font-size: 16px;
+    color: white;
+}
+
+.btn-continue:hover {
+    background-color: #2e8053;
+    cursor: pointer;
+    color: #fff;
+}
+/* MODAL SIDEBAR */
+.modal__sidebar {
+    position: absolute;
+    z-index: 10;
+    background-color: #fff;
+    width: 60%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 16px 0 0 32px;
+    animation: modalSidebarAni ease 0.4s ;
+    display: none;
+}
+
+.modal__sidebar.active {
+    display: block;
+}
+
+@keyframes modalSidebarAni {
+    from {
+        transform: translateX(-70%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+.sidebar__login {
+    border-bottom: 1px solid rgb(215, 215, 215);
+}
+
+.sidebar__login-inner {
+    margin-bottom: 12px;
+    list-style: none;
+    border-radius: 10px 0 0 10px;
+}
+
+.sidebar__login-inner i {
+    margin-right: 16px;
+    color: #757575;
+}
+
+.sidebar--btn-login {
+    color: #333;
+    display: block;
+    padding: 20px 0 20px 20px; 
+}
+
+.sidebar--btn-login .user-picture.user-loginAccount {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, #2cccff, #13e6c2);
+}
+
+.modal__sidebar--list {
+    margin: 12px 0;
+}
+
+.modal__sidebar--item {
+    list-style: none;
+    border-radius: 10px 0 0 10px;
+}
+
+.modal__sidebar--item a i {
+    width: 18px;
+    margin-right: 16px;
+    color: #757575;
+}
+
+.modal__sidebar--item a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    width: 100%;
+    padding: 20px 0 20px 20px;
+}
+
+.sidebar__login-inner:hover,
+.modal__sidebar--item:hover {
+    background: #f0f0f0;
+}
+/* THE END CSS MODAL */
