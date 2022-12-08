@@ -15,11 +15,11 @@ class CategoryProduct extends Model
     ];
     protected $primaryKey = 'id';
 
-    public function scopeSearch ($products, $query)
+    public function scopeSearch ($categoryProduct, $query)
     {
         if($query) {
-            $products = $products -> where('name','LIKE',"%{$query}%");
-            return $products;
+            $categoryProduct = $categoryProduct -> where('name','LIKE',"%{$query}%");
+            return $categoryProduct;
         }
     }
 }

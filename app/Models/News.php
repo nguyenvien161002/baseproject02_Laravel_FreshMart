@@ -14,4 +14,11 @@ class News extends Model
         'title', 'content', 'author'
     ];
     protected $primaryKey = 'id';
+    public function scopeSearch ($news, $query)
+    {
+        if($query) {
+            $news = $news -> where('title','LIKE',"%{$query}%");
+            return $news;
+        }
+    }
 }

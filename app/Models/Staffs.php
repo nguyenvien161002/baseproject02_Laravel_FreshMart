@@ -14,4 +14,11 @@ class Staffs extends Model
         'staff_name', 'password', 'id_authorization'
     ];
     protected $primaryKey = 'id';
+    public function scopeSearch ($staffs, $query)
+    {
+        if($query) {
+            $staffs = $staffs -> where('staff_name','LIKE',"%{$query}%");
+            return $staffs;
+        }
+    }
 }

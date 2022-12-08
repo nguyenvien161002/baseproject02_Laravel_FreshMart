@@ -38,7 +38,7 @@
                             <li class="item-name">
                                 <a href="{{URL::to('news/details/' . $value['id'])}}">
                                     <img src="{{asset('images/news/' . $value['image'])}}" alt="{{ $value['title'] }}">
-                                    <p>{!!$value['title']!!}</p>
+                                    <p>{{ $value['title'] }}</p>
                                 </a>
                             </li>
                             @endforeach

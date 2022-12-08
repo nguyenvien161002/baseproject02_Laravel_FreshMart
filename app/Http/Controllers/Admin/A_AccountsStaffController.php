@@ -2,37 +2,76 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Staffs;
+use App\Models\Authorization;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Models\Staffs;
-use App\Models\Authorization;
-use Illuminate\Support\Carbon;
 
 class A_AccountsStaffController extends Controller
 {
     public function index(Request $request)
     {
-        
-        if ($request -> sortby && !$request -> amount) {
+        // Autocomplete search
+        if($request -> queryAutocomplete) {
+            $resutl = "";
+            $query =  $request -> queryAutocomplete;
+            $staffs = Staffs::select('staff_name') -> search($query) -> get() -> toArray();
+            foreach ($staffs as $key => $value) { 
+                $resutl .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['staff_name']}'>
+                                <img src='{$request -> getSchemeAndHttpHost()}/images/svg/search2.svg' alt=''>
+                                <p class='title-result' title='{$value['staff_name']}'>{$value['staff_name']}</p>
+                            </div>";
+            }
+            return $resutl;
+        }
+        // Not autocomplete search
+        if ($request -> sortby && !$request -> amoun && !$request -> searcht) {
             $sortby = $request -> sortby;
             $type = $request -> type;
             $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
             -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
             -> orderBy("$sortby", "$type")  -> paginate(5);
-        } elseif (!$request -> sortby && $request -> amount) {
+        } elseif (!$request -> sortby && $request -> amount && !$request -> search) {
             $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
             -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
             -> orderBy('tbl_staffs.id', 'desc') -> paginate($request -> amount);
-        } elseif ($request -> sortby && $request -> amount) {
+        } elseif ($request -> sortby && $request -> amount && !$request -> search) {
             $sortby = $request -> sortby;
             $type = $request -> type;
             $amount = $request -> amount;
             $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
             -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
             -> orderBy("$sortby", "$type")  -> paginate($amount);
+        } elseif (!$request -> sortby && !$request -> amount && $request -> search) {
+            $search = $request -> search;
+            $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
+            -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
+            -> orderBy('tbl_staffs.id', 'desc') -> search($search) -> paginate(5);
+        } elseif (!$request -> sortby && $request -> amount && $request -> search) {
+            $amount = $request -> amount;
+            $search = $request -> search;
+            $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
+            -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
+            -> orderBy('tbl_staffs.id', 'desc') -> search($search) -> paginate($amount);
+        } elseif ($request -> sortby && !$request -> amount && $request -> search) {
+            $sortby = $request -> sortby;
+            $type = $request -> type;
+            $search = $request -> search;
+            $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
+            -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
+            -> orderBy("$sortby", "$type") -> search($search) -> paginate(5);
+        } elseif ($request -> sortby && $request -> amount && $request -> search) {
+            $sortby = $request -> sortby;
+            $type = $request -> type;
+            $amount = $request -> amount;
+            $search = $request -> search;
+            $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
+            -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 
+            -> orderBy("$sortby", "$type") -> search($search) -> paginate($amount);
         } else {
             $staffs = Staffs::join('tbl_authorization', 'tbl_staffs.id_authorization', '=', 'tbl_authorization.id')
             -> select('tbl_staffs.id', 'staff_name', 'password', 'tbl_authorization.name', 'id_authorization') 

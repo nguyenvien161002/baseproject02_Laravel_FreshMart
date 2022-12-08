@@ -31,7 +31,10 @@
                             <span class="mdi mdi-menu"></span>
                         </div>
                         <div class="search">
-                            <input type="text" placeholder="Tìm kiếm ..." class="search-input">
+                            <form action="" class="header_form-search">
+                                <input type="text" placeholder="Tìm kiếm ..." class="search-input-header" name="search" autocomplete="off">
+                                <button type="submit"><img src="{{asset('images/svg/search2.svg')}}" alt=""></button>
+                            </form>
                         </div>
                     </div>
                     <div class="navbar-right">
@@ -237,9 +240,9 @@
         </div>
     </div>
     <div id="toast"></div>
-    <script src="{{asset('jquery-3.6.1/jquery-3.6.1.min.js')}}"></script>
     <script src="{{asset('chartjs/node_modules/chart.js/dist/chart.min.js')}}"></script>
     <script src="{{asset('ckeditor5-build-classic/ckeditor.js')}}"></script>
+    <script src="{{asset('jquery-3.6.1/jquery-3.6.1.min.js')}}"></script>
     <script src="{{asset('js/chart.js')}}"></script>
     <script src="{{asset('js/ckeditor.js')}}"></script>
     <script src="{{asset('js/admin.js')}}"></script>

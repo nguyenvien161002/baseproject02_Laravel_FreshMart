@@ -25,7 +25,12 @@
             </div>
             <p>sản phẩm</p>
         </div>
-        <input type="search" class="search-input" placeholder="Tìm kiếm sản phẩm">
+        <form action="{{URL::to('/admin/product/details/13')}}" class="form-search" method="POST"> 
+            @csrf
+            <input type="search" disabled class="search-input search-input-details" name="search" value="{{isset($search) ? $search : ''}}" placeholder="Tìm kiếm sản phẩm ..." autocomplete="off">
+            <div class="box-autocomplete position-absolute"></div>
+            <button disabled type="submit"><img src="{{asset('images/svg/search2.svg')}}" alt=""></button>
+        </form>
     </div>
     <div class="table-responsive">
         <div class="details__order bdb-none">

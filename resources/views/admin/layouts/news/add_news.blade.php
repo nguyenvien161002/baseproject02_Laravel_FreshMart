@@ -10,7 +10,7 @@
             @csrf
             <div class="mb-3 mt-3">
                 <label for="title">Tiêu đề tin tức:</label>
-                    <textarea id="ckeditor_desc" class="form-control" cols="30" rows="15" placeholder="Nhập tiêu đề tin tức" name="title_news"></textarea>
+                <input type="text" class="form-control" placeholder="Nhập tiêu đề tin tức" name="title_news" required>
             </div>
             <div class="mb-3">
                 <label for="content_news">Nội dung tin tức:</label>

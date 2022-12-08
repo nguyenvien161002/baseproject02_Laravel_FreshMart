@@ -308,6 +308,6 @@
     <script src="{{asset('js/cart.js')}}"></script>
     <script src="{{asset('js/search.js')}}"></script>
     <script src="{{asset('js/order.js')}}"></script>
-    <!-- <script src="{{asset('js/testorder.js')}}"></script> -->
+    <script>{{Session::has('orderSuccess') ? 'orderSuccess()' : ""}}</script>
 </body>
 </html>

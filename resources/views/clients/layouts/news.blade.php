@@ -13,7 +13,7 @@
                     <p class="post-date">Chủ Nhật, 16 tháng 10, 2022</p>
                 </div>
                 <div class="content-item--title">
-                    <a href="{{URL::to('news/details/' . $value['id'])}}">{!!$value['title']!!}</a>
+                    <a href="{{URL::to('news/details/' . $value['id'])}}">{{ $value['title'] }}</a>
                 </div>
                 <div class="content-item--status">
                     <p>{!!$value['content']!!}</p>

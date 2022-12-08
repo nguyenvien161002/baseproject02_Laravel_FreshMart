@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Products;
+use App\Models\CategoryProduct;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Models\Products;
-use App\Models\CategoryProduct;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 class A_ProductsController extends Controller
 {
@@ -18,16 +19,16 @@ class A_ProductsController extends Controller
     {
         // Autocomplete search
         if($request -> queryAutocomplete) {
-            $resutl = "";
+            $result = "";
             $query =  $request -> queryAutocomplete;
             $products = Products::select('name') -> search($query) -> get() -> toArray();
             foreach ($products as $key => $value) { 
-                $resutl .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['name']}'>
+                $result .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['name']}'>
                                 <img src='{$request -> getSchemeAndHttpHost()}/images/svg/search2.svg' alt=''>
                                 <p class='title-result' title='{$value['name']}'>{$value['name']}</p>
                             </div>";
             }
-            return $resutl;
+            return $result;
         }
         // Not autocomplete search
         if($request -> sortby && !$request -> amount && !$request -> search) {
@@ -297,6 +298,25 @@ class A_ProductsController extends Controller
         $product = Products::find($id) -> getOriginal();
         $totalProducts = Products::count();
         return View::make('admin.layouts.products.details_product', compact('product', 'totalProducts'));
+    }
+
+    public function searchProductInDetails(Request $request) {
+        if($request -> ajax()){
+            $result = "";
+            $query = $request -> all();
+            $products = Products::select('name') -> search($query['query']) -> get() -> toArray();
+            foreach ($products as $key => $value) { 
+                $result .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['name']}'>
+                                <img src='{$request -> getSchemeAndHttpHost()}/images/svg/search2.svg' alt=''>
+                                <p class='title-result' title='{$value['name']}'>{$value['name']}</p>
+                            </div>";
+            }
+            return Response::json($result);
+        } else {
+            $query = $request -> search;
+            $products = Products::search($query) -> paginate(10);
+            return  View::make('admin.layouts.products.list_product', compact('products'));
+        }
     }
 
     public function searchProduct(Request $request)

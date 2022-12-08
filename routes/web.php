@@ -74,8 +74,7 @@ Route::get("/logout", [AuthenticateController::class, "logout"]);
 
 // ADMIN
 Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
-    Route::get('/', [A_DashboardController::class, "index"]) -> name('admin');
-    Route::get('/dashboard', [A_DashboardController::class, "index"]);
+    Route::get('/dashboard', [A_DashboardController::class, "index"]) -> name('admin');
     Route::get('/products', [A_ProductsController::class, "index"]) -> name('admin.products');
     Route::prefix('/product') -> group(function() {
         Route::get('/add', [A_ProductsController::class, "viewAddProduct"]);
@@ -84,6 +83,7 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
         Route::post('/update', [A_ProductsController::class, "updateProduct"]);
         Route::get('/delete/{id}', [A_ProductsController::class, "deleteProduct"]);
         Route::get('/details/{id}', [A_ProductsController::class, "viewDetailsProduct"]);
+        Route::post('/details/{id}', [A_ProductsController::class, "searchProductInDetails"]);
     });
     Route::prefix('/category_product') -> group(function() {
         Route::get('', [A_CategoryProductController::class, "index"]) -> name('admin.category_product');

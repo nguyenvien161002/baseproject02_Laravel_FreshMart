@@ -80,7 +80,7 @@
                                         <p class="__button-item input-quantity--modifi text-center rounded-1">{{ $value3['quantity'] }}</p>
                                     </div>
                                 </div>
-                                <div class="column-intomoney column-intomoneyOrdered fw-bold fs-16">{{ $value3['into_money'] }}.000đ</div>
+                                <div class="column-intomoney column-intomoneyOrdered fw-bold fs-16">{{ number_format($value3['into_money'], 0, "", ".") }}đ</div>
                             </div>
                             @endif
                         @endforeach

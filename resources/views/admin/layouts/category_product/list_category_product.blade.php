@@ -54,7 +54,7 @@
             <input type="hidden" name="sortby" value="{{Request::get('sortby')}}">
             <input type="hidden" name="type" value="{{Request::get('type')}}">
             @endif
-            <input type="search" class="search-input" id="search-input" name="search" value="{{isset($search) ? $search : ''}}" placeholder="Tìm kiếm danh mục ..." autocomplete="off">
+            <input type="search" class="search-input search-input-general" name="search" value="{{isset($search) ? $search : ''}}" placeholder="Tìm kiếm danh mục ..." autocomplete="off">
             <div class="box-autocomplete position-absolute"></div>
             <button type="submit"><img src="{{asset('images/svg/search2.svg')}}" alt=""></button>
         </form>

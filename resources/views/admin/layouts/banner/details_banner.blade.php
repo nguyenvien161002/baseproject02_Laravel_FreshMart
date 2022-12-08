@@ -25,7 +25,19 @@
             </div>
             <p>banner</p>
         </div>
-        <input type="search" class="search-input" placeholder="Tìm kiếm sản phẩm">
+        <form action="{{URL::to('/admin/banner')}}" class="form-search" method="GET"> 
+            @if(Request::has('amount'))
+            <input type="hidden" name="query" value="show">
+            <input type="hidden" name="amount" value="{{Request::get('amount')}}">
+            @endif
+            @if(Request::has('sortby'))
+            <input type="hidden" name="sortby" value="{{Request::get('sortby')}}">
+            <input type="hidden" name="type" value="{{Request::get('type')}}">
+            @endif
+            <input type="search" class="search-input search-input-general" name="search" value="{{isset($search) ? $search : ''}}" placeholder="Tìm kiếm sản phẩm ..." autocomplete="off">
+            <div class="box-autocomplete position-absolute"></div>
+            <button type="submit"><img src="{{asset('images/svg/search2.svg')}}" alt=""></button>
+        </form>
     </div>
     <div class="table-responsive">
         <div class="details__order">

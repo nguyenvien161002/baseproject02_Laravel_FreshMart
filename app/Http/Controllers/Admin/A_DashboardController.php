@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\News;
 use App\Models\Users;
 use App\Models\Staffs;
-use App\Models\News;
-use App\Models\Products;
 use App\Models\Orders;
+use App\Models\Products;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Carbon;
 
 class A_DashboardController extends Controller
 {

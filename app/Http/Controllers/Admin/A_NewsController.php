@@ -2,30 +2,62 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\News;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Models\News;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\File;
 
 class A_NewsController extends Controller
 {
     public function index(Request $request)
     {
-        if($request -> sortby && !$request -> amount) {
+        // Autocomplete search
+        if($request -> queryAutocomplete) {
+            $resutl = "";
+            $query =  $request -> queryAutocomplete;
+            $allNews = News::select('title') -> search($query) -> get() -> toArray();
+            foreach ($allNews as $key => $value) { 
+                $resutl .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['title']}'>
+                                <img src='{$request -> getSchemeAndHttpHost()}/images/svg/search2.svg' alt=''>
+                                <p class='title-result' title='{$value['title']}'>{$value['title']}</p>
+                            </div>";
+            }
+            return $resutl;
+        }
+        // Not autocomplete search
+        if($request -> sortby && !$request -> amount && !$request -> search) {
             $sortby = $request -> sortby;
             $type = $request -> type;
             $allNews = News::orderBy("$sortby", "$type")  -> paginate(5);
-        } elseif (!$request -> sortby && $request -> amount) {
+        } elseif (!$request -> sortby && $request -> amount && !$request -> search) {
             $allNews = News::orderBy("id", "desc")  -> paginate($request -> amount);
-        } elseif ($request -> sortby && $request -> amount) {
+        } elseif ($request -> sortby && $request -> amount && !$request -> search) {
             $sortby = $request -> sortby;
             $type = $request -> type;
             $amount = $request -> amount;
             $allNews = News::orderBy("$sortby", "$type")  -> paginate($amount);
+        } elseif (!$request -> sortby && !$request -> amount && $request -> search) {
+            $search = $request -> search;
+            $allNews = News::orderBy("id", "desc") -> search($search) -> paginate(5);
+        } elseif (!$request -> sortby && $request -> amount && $request -> search) {
+            $amount = $request -> amount;
+            $search = $request -> search;
+            $allNews = News::orderBy("id", "desc") -> search($search) -> paginate($amount);
+        } elseif ($request -> sortby && !$request -> amount && $request -> search) {
+            $sortby = $request -> sortby;
+            $type = $request -> type;
+            $search = $request -> search;
+            $allNews = News::orderBy("$sortby", "$type") -> search($search) -> paginate(5);
+        } elseif ($request -> sortby && $request -> amount && $request -> search) {
+            $sortby = $request -> sortby;
+            $type = $request -> type;
+            $amount = $request -> amount;
+            $search = $request -> search;
+            $allNews = News::orderBy("$sortby", "$type") -> search($search) -> paginate($amount);
         } else {
             $allNews = News::orderBy("id", "desc") -> paginate(5);
         }

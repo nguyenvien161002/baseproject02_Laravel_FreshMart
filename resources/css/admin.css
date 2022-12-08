@@ -97,7 +97,7 @@ p {
     display: flex;
 }
 
-.navbar-middle  .menu-icon {
+.navbar-middle .menu-icon {
     display: flex;
     width: 7%;
     color: var(--color);
@@ -106,22 +106,44 @@ p {
     cursor: pointer;
 }
 
-.navbar-middle  .search {
+.navbar-middle .search {
     width: 100%;
-    
 }
 
-.navbar-middle  .search-input {
+.navbar-middle .header_form-search {
+    width: inherit;
+    height: 100%;
+    position: relative;
+}
+
+.navbar-middle .header_form-search > button { 
+    background-color: transparent;
+    position: absolute;
+    border: none;
+    height: 100%;
+    top: 0;
+    padding: 0 15px;
+    border: 1px solid #2c2e33;
+    border-left: none;
+    border-radius: 0 25px 25px 0;
+}
+
+.navbar-middle .search-input-header {
     background-color: transparent;
     outline: none;
     padding: 11px 20px 9px 20px;
     border: 1px solid #2c2e33;
     width: 85%;
-    border-radius: 6px;
+    height: 46px;
+    border-radius: 25px 0 0 25px;
     color: var(--color);
 }
 
-.navbar-middle  .search-input::placeholder { 
+.navbar-middle .search-input-header:focus {
+    outline: solid 1px #065fd4;
+}
+
+.navbar-middle .search-input-header::placeholder { 
     color: var(--color);
 }
 
@@ -843,6 +865,11 @@ p {
     border: 1px solid #2c2e33;
     border-radius: 4px 0 0 4px;
     color: var(--color);
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
 .form-search .search-input:focus{
@@ -864,7 +891,7 @@ p {
     border-radius: 0 4px 4px 0;
     border: 1px solid var(--border);
     border-left: none;
-    z-index: 100;
+    z-index: 97;
     background-color: var(--primary);
     text-align: center;
 }
@@ -900,12 +927,16 @@ p {
     line-height: 1.6;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
+    width: 100%;
+    padding-left: 30px;
+    z-index: 10;
 }
 
 .form-search .result-search {
     margin-bottom: 10px;
     color: var(--box-border);
     cursor: pointer;
+    position: relative;
 }
 
 .form-search .result-search:hover {
@@ -917,10 +948,11 @@ p {
 }
 
 .form-search .result-search img {
-    margin-right: 8px;
     margin-bottom: 1px;
     opacity: 0.5;
     width: 20px;
+    position: absolute;
+    left: 0;
 }
 
 .box-paging {

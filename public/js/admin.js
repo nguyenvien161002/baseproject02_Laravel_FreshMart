@@ -115,7 +115,7 @@ btnOrderBrowsing.click(function () {
 });
 
 // Tìm kiếm sản phẩm 
-var searchInput = $j(".search-input");
+var searchInput = $j(".form-search .search-input-general");
 var boxAutocomplete = $j('.box-autocomplete');
 var URLS = ['products', 'category_product', 'news', 'orders', 'accounts/staffs', 'accounts/users', 'banner'];
 var pageUrl = "";
@@ -138,6 +138,9 @@ searchInput.keyup(function () {
                 if(!!boxAutocomplete.fadeIn()) {
                     overlay.classList.add('active');
                 }
+                if(response == "") {
+                    boxAutocomplete.html("Không có kết quả tìm kiếm ...");
+                }
             }
         });
     } else {
@@ -145,9 +148,48 @@ searchInput.keyup(function () {
         boxAutocomplete.fadeOut();
     }
 });
+
 var formSearch = $j('.form-search');
-$j(document).on('click', ".result-search", () => {
-    searchInput.val($j('.result-search').attr('data-name')); 
+$j(document).on('click', ".result-search", (index, value) => {
+    var dataQuery = index.target.getAttribute('title');
+    searchInput.val(dataQuery);
     boxAutocomplete.fadeOut();
     formSearch.submit();
 })
+// SEARCH IN DETAILS PAGE
+// var searchInputDetails = $j(".form-search .search-input-details");
+// searchInputDetails.keyup(function () {
+//     var keyWordsSearch = $j(this).val();
+//     if(keyWordsSearch != "") {
+//         var query = {
+//             'query': keyWordsSearch
+//         }
+//         $j.ajaxSetup({
+//             headers: {
+//                 'X-CSRF-TOKEN': $j('meta[name="csrf-token"]').attr('content')
+//             }
+//         });
+    
+//         $j.ajax({
+//             type: "POST",
+//             url: `http://127.0.0.1:8000/admin/product/details/13`,
+//             data: JSON.stringify(query),
+//             dataType: 'JSON',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json;charset=UTF-8',
+//             },
+//             success: function (response) {
+//                 boxAutocomplete.fadeIn();
+//                 boxAutocomplete.html(response);
+//                 if(!!boxAutocomplete.fadeIn()) {
+//                     overlay.classList.add('active');
+//                 }
+//                 if(response == "") {
+//                     boxAutocomplete.html("Không có kết quả tìm kiếm ...");
+//                 }
+//             }
+//         });
+//     } 
+// });
+

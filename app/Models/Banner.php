@@ -14,4 +14,11 @@ class Banner extends Model
         'name', 'image'
     ];
     protected $primaryKey = 'id';
+    public function scopeSearch ($banner, $query)
+    {
+        if($query) {
+            $banner = $banner -> where('name','LIKE',"%{$query}%");
+            return $banner;
+        }
+    }
 }

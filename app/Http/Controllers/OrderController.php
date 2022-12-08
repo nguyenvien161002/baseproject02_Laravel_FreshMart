@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Models\CategoryProduct;
 use App\Models\Products;
 use App\Models\Orders;
+use App\Models\Users;
 use App\Models\DetailsOrder;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -97,12 +100,14 @@ class OrderController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
             }
+            $recipient = Users::find(Session::get('id'));
+            $isMailer = Mail::to($recipient -> email) -> queue(new OrderMail($recipient));
             if($resultOrders && $resultDOrder) {
-                Session::flash('success', true);
+                Session::flash('orderSuccess', true);
                 $url = '/user/ordered/' . Session::get('id');
                 return Response::json($url);
             } else {
-                Session::flash('failed', false);
+                Session::flash('orderFailed', false);
                 $url = '/user/ordered/' . Session::get('id');
                 return Response::json($url);
             } 

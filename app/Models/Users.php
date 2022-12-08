@@ -14,4 +14,11 @@ class Users extends Model
         'fullname', 'email', 'avatar', 'password', 'confirm_password', 'id_authorization'
     ];
     protected $primaryKey = 'id';
+    public function scopeSearch ($users, $query)
+    {
+        if($query) {
+            $users = $users -> where('fullname','LIKE',"%{$query}%");
+            return $users;
+        }
+    }
 }

@@ -13,4 +13,11 @@ class Orders extends Model
     protected $fillable = [
         'id_user', 'username', 'number_phone', 'address', 'payment_method', 'total_money', 'state', 'note'
     ];
+    public function scopeSearch ($orders, $query)
+    {
+        if($query) {
+            $orders = $orders -> where('fullname','LIKE',"%{$query}%");
+            return $orders;
+        }
+    }
 }

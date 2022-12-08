@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Orders;
+use App\Models\DetailsOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Models\Products;
-use App\Models\CategoryProduct;
-use App\Models\Orders;
-use App\Models\DetailsOrder;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Request;
 
@@ -19,20 +15,101 @@ use Illuminate\Support\Facades\Request;
 class A_OrdersController extends Controller
 {
     public function index() {
-        if(Request::has('query') && Request::get('query') == 'review') {
-            $state = Request::get('query') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
-            $orders = Orders::where('state', $state) -> paginate(5);
-        } elseif (Request::has('sortby') && !Request::has('amount')) {
+        // Autocomplete search
+        if(Request::has('queryAutocomplete')) {
+            $resutl = "";
+            $query = Request::get('queryAutocomplete');
+            $httpHost = Request::getSchemeAndHttpHost();
+            $orders = Orders::select('fullname') -> search($query) -> get() -> toArray();
+            foreach ($orders as $key => $value) { 
+                $resutl .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['fullname']}'>
+                                <img src='{$httpHost}/images/svg/search2.svg' alt=''>
+                                <p class='title-result' title='{$value['fullname']}'>{$value['fullname']}</p>
+                            </div>";
+            }
+            return $resutl;
+        }
+        // Not autocomplete search
+        if(Request::has('review') && !Request::has('sortby') && !Request::has('amount') && !Request::has('search')) {
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy('created_at', 'desc') -> where('state', $state) -> paginate(5);
+        } elseif (Request::has('sortby') && !Request::has('amount') && !Request::has('search') && !Request::has('review')) {
             $sortby = Request::get('sortby');
             $type = Request::get('type');
             $orders = Orders::orderBy("$sortby", "$type")  -> paginate(5);
-        } elseif (!Request::has('sortby') && Request::has('amount')) {
+        } elseif (!Request::has('sortby') && Request::has('amount') && !Request::has('search') && !Request::has('review')) {
             $orders = Orders::orderBy('created_at', 'desc')  -> paginate(Request::get('amount'));
-        } elseif (Request::has('sortby') && Request::has('amount')) {
+        } elseif (Request::has('sortby') && Request::has('amount') && !Request::has('search') && !Request::has('review')) {
             $sortby = Request::get('sortby');
             $type = Request::get('type');
             $amount = Request::get('amount');
             $orders = Orders::orderBy("$sortby", "$type") -> paginate($amount);
+        } elseif (!Request::has('sortby') && !Request::has('amount') && Request::has('search') && !Request::has('review')) {
+            $search = Request::get('search');
+            $orders = Orders::orderBy("created_at", "desc") -> search($search) -> paginate(5);
+        } elseif (!Request::has('sortby') && Request::has('amount') && Request::has('search') && !Request::has('review')) {
+            $amount = Request::get('amount');
+            $search = Request::get('search');
+            $orders = Orders::orderBy("created_at", "desc") -> search($search) -> paginate($amount);
+        } elseif (Request::has('sortby') && !Request::has('amount') && !Request::has('search') && !Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $search = Request::get('search');
+            $orders = Orders::orderBy("$sortby", "$type") -> search($search) -> paginate(5);
+        } elseif (Request::has('sortby') && Request::has('amount') && !Request::has('search') && !Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $amount = Request::get('amount');
+            $search = Request::get('search');
+            $orders = Orders::orderBy("$sortby", "$type") -> search($search) -> paginate($amount);
+        } elseif (Request::has('sortby') && !Request::has('amount') && Request::has('search') && !Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $search = Request::get('search');
+            $orders = Orders::orderBy("$sortby", "$type") -> search($search) -> paginate(5);
+        } elseif (Request::has('sortby') && Request::has('amount') && Request::has('search') && !Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $amount = Request::get('amount');
+            $search = Request::get('search');
+            $orders = Orders::orderBy("$sortby", "$type") -> search($search) -> paginate($amount);
+        } elseif (!Request::has('sortby') && Request::has('amount') && Request::has('search') && Request::has('review')) {
+            $amount = Request::get('amount');
+            $search = Request::get('search');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy('created_at', 'desc') -> where('state', $state) -> search($search) -> paginate($amount);
+        } elseif (!Request::has('sortby') && !Request::has('amount') && Request::has('search') && Request::has('review')) {
+            $search = Request::get('search');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy('created_at', 'desc') -> where('state', $state) -> search($search) -> paginate(5);
+        } elseif (!Request::has('sortby') && Request::has('amount') && !Request::has('search') && Request::has('review')) {
+            $amount = Request::get('amount');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy('created_at', 'desc') -> where('state', $state) -> paginate($amount);
+        } elseif (Request::has('sortby') && !Request::has('amount') && !Request::has('search') && Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy("$sortby", "$type") -> where('state', $state) -> paginate(5);
+        } elseif (Request::has('sortby') && Request::has('amount') && !Request::has('search') && Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $amount = Request::get('amount');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy("$sortby", "$type") -> where('state', $state) -> paginate($amount);
+        } elseif (Request::has('sortby') && !Request::has('amount') && Request::has('search') && Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $search = Request::get('search');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy("$sortby", "$type") -> where('state', $state) -> search($search) -> paginate(5);
+        } elseif (Request::has('sortby') && Request::has('amount') && Request::has('search') && Request::has('review')) {
+            $sortby = Request::get('sortby');
+            $type = Request::get('type');
+            $amount = Request::get('amount');
+            $search = Request::get('search');
+            $state = Request::get('review') == "approved" ? "Đã duyệt" : "Chờ xử lý"; 
+            $orders = Orders::orderBy("$sortby", "$type") -> where('state', $state) -> search($search) -> paginate($amount);
         } else {
             $orders = Orders::orderBy('created_at', 'desc') -> paginate(5);
         }

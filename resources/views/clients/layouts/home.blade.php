@@ -375,7 +375,7 @@
                                 </div>
                                 <div class="item-description">
                                     <div class="item-title">
-                                        <a href="{{URL::to('news/details/' . $value['id'])}}">{!!$value['title']!!}</a>
+                                        <a href="{{URL::to('news/details/' . $value['id'])}}">{{ $value['title'] }}</a>
                                     </div>
                                     <div class="item-author">
                                         @foreach($updated_at as $x => $y)
