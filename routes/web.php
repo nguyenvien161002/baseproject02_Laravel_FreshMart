@@ -83,7 +83,7 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
         Route::post('/update', [A_ProductsController::class, "updateProduct"]);
         Route::get('/delete/{id}', [A_ProductsController::class, "deleteProduct"]);
         Route::get('/details/{id}', [A_ProductsController::class, "viewDetailsProduct"]);
-        Route::post('/details/{id}', [A_ProductsController::class, "searchProductInDetails"]);
+        Route::get('/updated', [A_ProductsController::class, "updateStateProduct"]);
     });
     Route::prefix('/category_product') -> group(function() {
         Route::get('', [A_CategoryProductController::class, "index"]) -> name('admin.category_product');
@@ -93,6 +93,7 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
         Route::post('/update', [A_CategoryProductController::class, "updateCategoryProduct"]);
         Route::get('/delete/{id}', [A_CategoryProductController::class, "deleteCategoryProduct"]);
         Route::get('/details/{id}', [A_CategoryProductController::class, "viewDetailsCategoryProduct"]);
+        Route::get('/updated', [A_CategoryProductController::class, "updateStateCategoryProduct"]);
     });
     Route::prefix('/news') -> group(function() {
         Route::get('', [A_NewsController::class, "index"]) -> name('admin.news');
@@ -102,6 +103,7 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
         Route::post('/update', [A_NewsController::class, "updateNews"]);
         Route::get('/delete/{id}', [A_NewsController::class, "deleteNews"]);
         Route::get('/details/{id}', [A_NewsController::class, "viewDetailsNews"]);
+        Route::get('/updated', [A_NewsController::class, "updateStateNews"]);
     });
     Route::get('/accounts/users', [A_AccountsUserController::class, "index"]) -> name('admin.accounts.users');
     Route::prefix('/account/user') -> group(function() {
@@ -129,6 +131,7 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
         Route::post('/update', [A_BannerController::class, "updateBanner"]);
         Route::get('/delete/{id}', [A_BannerController::class, "deleteBanner"]);
         Route::get('/details/{id}', [A_BannerController::class, "viewDetailsBanner"]);
+        Route::get('/updated', [A_BannerController::class, "updateStateBanner"]);
     });
     Route::get('/orders', [A_OrdersController::class, "index"]) -> name('admin.orders');
     Route::prefix('/order') -> group(function() {

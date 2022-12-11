@@ -29,7 +29,16 @@
             </div>
             <div class="mb-3">
                 <label for="image_news">Hình ảnh:</label>
-                <input type="file" class="form-control" name="image_news" required>
+                <div class="preview-multiple-image">
+                    <div class="wrapper-upload choose-imgmain">
+                        <input class="file-input-imgmain" type="file" name="image_news" hidden>
+                        <section class="uploaded-icon uploaded-icon-imgmain">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Chọn ảnh tải lên (Chọn một ảnh)</p>
+                        </section>
+                        <section class="uploaded-area uploaded-area-imgmain w-100"></section>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-outline-primary float-end">Thêm tin tức</button>
         </form>

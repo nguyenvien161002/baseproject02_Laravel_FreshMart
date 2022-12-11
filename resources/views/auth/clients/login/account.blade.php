@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="wrapper login-account">
-        <form action="{{URL::to('/login/account')}}" method="POST" name="form" autocomplete="off" class="form" id="form-1">
+        <form action="{{URL::to('/login/account')}}" method="POST" name="form" autocomplete="off" class="form" id="form-login-account">
             @csrf
             <span class="icon-back">
                 <a href="{{URL::to('/login')}}">
@@ -36,12 +36,12 @@
             </div>
             <div class="form-group">
                 <label for="email" class="form-label">Email của bạn:</label>
-                <input id="email" name="email" value="" type="text" placeholder="Nhập email của bạn" class="form-control" required>
+                <input id="email" name="email" rules="required|email" value="" type="text" placeholder="Nhập email của bạn" class="form-control">
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
                 <label for="password" class="form-label">Mật khẩu</label>
-                <input id="password" name="password" value="" type="password" placeholder="Mật khẩu" class="form-control" required>
+                <input id="password" name="password" rules="required|min:1" value="" type="password" placeholder="Mật khẩu" class="form-control">
                 <span class="form-message"></span>
             </div>
             <div class="form-help">
@@ -78,5 +78,9 @@
             </div>
         </form>
     </div>
+    <script src="{{asset('js/validate.js')}}"></script>
+    <script>
+        new Validator('#form-login-account');
+    </script>
 </body>
 </html>

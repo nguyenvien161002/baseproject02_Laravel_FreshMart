@@ -103,16 +103,18 @@
                         </div>
                         <div class="navbar-right_item --modifier profile jsbtnprofile">
                             <img src="{{asset('images/proflie/quá đã.jpg')}}" alt="image-profile" class="img-profile"></img>
-                            <span class="username-profile">ADMIN<i class="mdi mdi-menu-down d-none d-sm-block"></i></span>
+                            <span class="username-profile">{{ Session::get('id_authorization') == 1 ? "ADMIN" : "NHÂN VIÊN"}}<i class="mdi mdi-menu-down d-none d-sm-block"></i></span>
                             <div class="box-profile">
-                                <span class="signedbyname">Đăng nhập với tư cách <p>ADMIN</p></span>
+                                <span class="signedbyname">Đăng nhập với tư cách 
+                                    <p>{{ Session::get('id_authorization') == 1 ? "ADMIN" : "NHÂN VIÊN"}}</p>
+                                </span>
                                 <div class="container-itemprofile">
                                     <div class="profile-item">
                                         <a href="">
                                             <p class="item-title">Hồ sơ</p>
                                         </a>
                                     </div>
-                                    <div class="profile-item">
+                                    <!-- <div class="profile-item">
                                         <a href="">
                                             <p class="item-title">Dự án</p>
                                         </a>
@@ -121,7 +123,7 @@
                                         <a href="">
                                             <p class="item-title">Sao</p>
                                         </a>
-                                    </div>
+                                    </div> -->
                                     <div class="profile-item">
                                         <a href="">
                                             <p class="item-title">Nâng cấp</p>
@@ -138,7 +140,7 @@
                                         </a>
                                     </div>
                                     <div class="profile-item">
-                                        <a href="">
+                                        <a href="{{URL::to('')}}">
                                             <p class="item-title">Trở về</p>
                                         </a>
                                     </div>
@@ -160,8 +162,8 @@
                 <div class="navbar-right_item profile">
                     <img src="{{asset('images/proflie/quá đã.jpg')}}" alt="image-profile" class="img-profile"></img>
                     <div class="box-infouser d-flex justify-content-center flex-column">
-                        <span class="username-profile">Nguyễn Viên</span>
-                        <span class="username-reviews">ADMIN</span>
+                        <span class="username-profile">{{ Session::get('id_authorization') == 1 ? "Nguyễn Viên" : "Nhân viên"}}</span>
+                        <span class="username-reviews">{{ Session::get('id_authorization') == 1 ? "ADMIN" : "NHÂN VIÊN"}}</span>
                     </div>
                     <i class="mdi mdi-dots-vertical"></i>
                 </div>
@@ -197,7 +199,7 @@
                             Đơn hàng
                         </a>
                     </li>
-                    <li class="menu-item menu-item-account @yield('active.accounts')">
+                    <li class="menu-item menu-item-account @yield('active.accounts') {{ Session::get('id_authorization') == 1 ? '' : 'd-none'}}">
                         <div class="menu-item--link">
                             <i class="fa-solid fa-users"></i>
                             Tài khoản
@@ -218,6 +220,12 @@
                         <a class="menu-item--link" href="{{URL::to('/admin/banner')}}">
                             <i class="fa-brands fa-nfc-symbol"></i>
                             Banner
+                        </a>
+                    </li>
+                    <li class="menu-item @yield('active.report')">
+                        <a class="menu-item--link" href="{{URL::to('/admin/report')}}">
+                            <i class="mdi mdi-bookmark"></i>
+                            Báo cáo
                         </a>
                     </li>
                     <li class="menu-item @yield('active.logout')">
@@ -246,6 +254,10 @@
     <script src="{{asset('js/chart.js')}}"></script>
     <script src="{{asset('js/ckeditor.js')}}"></script>
     <script src="{{asset('js/admin.js')}}"></script>
+    <script src="{{asset('js/validate.js')}}"></script>
+    <script>
+        new Validator("#form-horizontal");
+    </script>
 </body>
 
 </html>

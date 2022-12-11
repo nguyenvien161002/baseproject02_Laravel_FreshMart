@@ -25,12 +25,12 @@
                         $queryShowAmount = "&query=show&amount=$amount";
                     }
                     if(Request::has('sortby') && Request::has('type')) {
-                        $sortby = Request::get('sortby'); 
-                        $type = Request::get('type'); 
+                        $sortby = Request::get('sortby');
+                        $type = Request::get('type');
                         $querySort = "&sortby=$sortby&type=$type";
                     }
-                    if(Request::has('search')) {
-                        $search = Request::get('search'); 
+                        if(Request::has('search')) {
+                        $search = Request::get('search');
                         $querySearch = "&search=$search";
                     }
                 @endphp
@@ -46,7 +46,7 @@
             </div>
             <p>sản phẩm</p>
         </div>
-        <form action="{{URL::to('/admin/products')}}" class="form-search" method="GET"> 
+        <form action="{{URL::to('/admin/products')}}" class="form-search" method="GET">
             @if(Request::has('amount'))
             <input type="hidden" name="query" value="show">
             <input type="hidden" name="amount" value="{{Request::get('amount')}}">
@@ -126,11 +126,18 @@
                 <td>{{ $value -> name }} </td>
                 <td>{{ number_format($value -> price, 0, ",", ".") }} VND</td>
                 <td>{{ (int)($value -> discount) ? $value -> discount . '%' : $value -> discount}}</td>
-                <td>{{ $value -> state == 1 ? 'Hiển thị' : 'Ẩn' }}</td>
+                <td>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <a href="{{URL::to('admin/product/updated?id=' . $value -> id . '&state=')}}{{ $value -> state == 1 ? 'private' : 'public' }}" class="btn-state py-0 btn btn-outline-secondary rounded-pill d-flex align-items-center {{ $value -> state == 1 ? 'text-primary' : 'text-danger' }} ">
+                            <i class="mdi mdi-adjust me-1"></i>
+                            {{ $value -> state == 1 ? 'Hiển thị' : 'Ẩn' }}
+                        </a>
+                    </div>
+                </td>
                 <td>
                     <a class="btn btn-outline-success" href="{{URL::to('admin/product/details/' . $value -> id)}}" type="button" target="">Xem</a>
                     <a class="btn btn-outline-warning" href="{{URL::to('admin/product/edit/' . $value -> id)}}" type="button">Sửa</a>
-                    <a class="btn btn-outline-danger" href="{{URL::to('admin/product/delete/' . $value -> id)}}" onclick="return confirm('Bạn có thật sự muốn xóa ');" type="button">Xóa</a>
+                    <a class="btn btn-outline-danger" href="{{URL::to('admin/product/delete/' . $value -> id)}}" onclick="return z" type="button">Xóa</a>
                 </td>
             </tr>
             @endforeach

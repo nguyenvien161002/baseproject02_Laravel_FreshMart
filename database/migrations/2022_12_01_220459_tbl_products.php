@@ -21,10 +21,8 @@ return new class extends Migration
             $table->text('description');
             $table->text('details');
             $table->integer('state');
-            $table->string('image_main', 100);
-            $table->string('image_two', 100);
-            $table->string('image_three', 100);
-            $table->string('image_four', 100);
+            $table->string('image_main');
+            $table->string('images_sub');
             $table->unsignedInteger('id_category_product');
             $table->foreign('id_category_product')
                 ->references('id')

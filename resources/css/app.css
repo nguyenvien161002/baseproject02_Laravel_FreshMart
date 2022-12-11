@@ -536,6 +536,10 @@ ul {
     border-right: none;
 }
 
+.category-product .sectiontwo-item:last-child {
+    border: 1px solid #e6e6e6;
+}
+
 .sectiontwo-item img {
     max-width: 100%;
     transition: 0.3s all ease;

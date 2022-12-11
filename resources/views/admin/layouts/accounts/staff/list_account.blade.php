@@ -21,19 +21,19 @@
             <p>Hiển thị</p>
             <div class="btn-group mx-2">
                 @php
-                    if(Request::has('amount')) {
-                        $amount = Request::get('amount');
-                        $queryShowAmount = "&query=show&amount=$amount";
-                    }
-                    if(Request::has('sortby') && Request::has('type')) {
-                        $sortby = Request::get('sortby'); 
-                        $type = Request::get('type'); 
-                        $querySort = "&sortby=$sortby&type=$type";
-                    }
-                    if(Request::has('search')) {
-                        $search = Request::get('search'); 
-                        $querySearch = "&search=$search";
-                    }
+                if(Request::has('amount')) {
+                $amount = Request::get('amount');
+                $queryShowAmount = "&query=show&amount=$amount";
+                }
+                if(Request::has('sortby') && Request::has('type')) {
+                $sortby = Request::get('sortby');
+                $type = Request::get('type');
+                $querySort = "&sortby=$sortby&type=$type";
+                }
+                if(Request::has('search')) {
+                $search = Request::get('search');
+                $querySearch = "&search=$search";
+                }
                 @endphp
                 <button type="button" class="btn btn-outline-primary py-1 px-2 dropdown-toggle">{{ $staffs -> perPage() }}</button>
                 <div class="dropdown-menu py-1">
@@ -46,7 +46,7 @@
             </div>
             <p>tài khoản</p>
         </div>
-        <form action="{{URL::to('/admin/accounts/staffs')}}" class="form-search" method="GET"> 
+        <form action="{{URL::to('/admin/accounts/staffs')}}" class="form-search" method="GET">
             @if(Request::has('amount'))
             <input type="hidden" name="query" value="show">
             <input type="hidden" name="amount" value="{{Request::get('amount')}}">
@@ -67,7 +67,7 @@
                     <div class="title-column">
                         <p>Mã người dùng</p>
                         <div class="box-icon-sort d-flex ms-2">
-                           <a href="{{URL::to('/admin/accounts/staffs?sortby=id&type=asc')}}{{isset($queryShowAmount) ? $queryShowAmount : ''}}{{isset($querySearch) ? $querySearch : ''}}"><i class="fa-solid fa-arrow-up sort-asc"></i></a>
+                            <a href="{{URL::to('/admin/accounts/staffs?sortby=id&type=asc')}}{{isset($queryShowAmount) ? $queryShowAmount : ''}}{{isset($querySearch) ? $querySearch : ''}}"><i class="fa-solid fa-arrow-up sort-asc"></i></a>
                             <a href="{{URL::to('/admin/accounts/staffs?sortby=id&type=desc')}}{{isset($queryShowAmount) ? $queryShowAmount : ''}}{{isset($querySearch) ? $querySearch : ''}}"><i class="fa-solid fa-arrow-down sort-desc"></i></a>
                         </div>
                     </div>
@@ -116,7 +116,14 @@
                 <td>{{ $value['id'] }}</td>
                 <td>{{ $value['staff_name'] }}</td>
                 <td>{{ $value['password'] }}</td>
-                <td>{{ $value['name'] }}</td>
+                <td>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <p class="btn-state py-0 btn btn-outline-secondary pe-none rounded-pill d-flex align-items-center text-success }}">
+                            <i class="mdi mdi-adjust me-1"></i>
+                            {{ $value['name'] }}
+                        </p>
+                    </div>
+                </td>
                 <td>
                     <a class="btn btn-outline-success" href="{{URL::to('admin/account/staff/details/' . $value['id'])}}" type="button" target="">Xem</a>
                     <a class="btn btn-outline-warning" href="{{URL::to('admin/account/staff/edit/' . $value['id'])}}" type="button">Sửa</a>

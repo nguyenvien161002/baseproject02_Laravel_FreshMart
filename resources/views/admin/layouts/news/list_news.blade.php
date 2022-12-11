@@ -128,12 +128,19 @@
                     </div>
                 </td>
                 <td>
-                    <div class="box-content_news">
+                    <div class="box-content_">
                         {!!$value -> content!!}
                     </div>
                 </td>
                 <td>{{ $value -> author }}</td>
-                <td>{{ $value -> state == 1 ? "Hiển thị" : "Ẩn" }}</td>
+                <td>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <a href="{{URL::to('admin/news/updated?id=' . $value -> id . '&state=')}}{{ $value -> state == 1 ? 'private' : 'public' }}" class="btn-state py-0 btn btn-outline-secondary rounded-pill d-flex align-items-center {{ $value -> state == 1 ? 'text-primary' : 'text-danger' }} ">
+                            <i class="mdi mdi-adjust me-1"></i>
+                            {{ $value -> state == 1 ? 'Hiển thị' : 'Ẩn' }}
+                        </a>
+                    </div>
+                </td>
                 <td>
                     <a class="btn btn-outline-success" href="{{URL::to('/admin/news/details/' . $value -> id)}}" type="button" target="">Xem</a>
                     <a class="btn btn-outline-warning" href="{{URL::to('/admin/news/edit/' . $value -> id)}}" type="button">Sửa</a>

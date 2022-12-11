@@ -18,7 +18,7 @@
     <div class="container">
         <div class="content-about">
             <div class="section-infoandprice">
-                <div class="row">
+                <div class="row w-100">
                     <div class="col-xl-5">
                         <div class="content-item content-slide">
                             <div class="content-slider">
@@ -27,14 +27,10 @@
                                 </div>
                                 <div class="content-slide--gallery">
                                     <img src="{{asset('images/' . $product['image_main'])}}" alt="" class="content-slide--item active js--imagegallery">
-                                    @if($product['image_two'])
-                                    <img src="{{asset('images/' . $product['image_two'])}}" alt="" class="content-slide--item js--imagegallery">
-                                    @endif
-                                    @if($product['image_three'])
-                                    <img src="{{asset('images/' . $product['image_three'])}}" alt="" class="content-slide--item js--imagegallery">
-                                    @endif
-                                    @if($product['image_four'])
-                                    <img src="{{asset('images/' . $product['image_four'])}}" alt="" class="content-slide--item js--imagegallery">
+                                    @if($images_sub)
+                                        @foreach($images_sub as $key => $url)
+                                        <img src="{{asset('images/' . $url)}}" alt="" class="content-slide--item js--imagegallery">
+                                        @endforeach
                                     @endif
                                 </div>
                                 <div class="content-slide--icon content-slide--down">
@@ -147,12 +143,12 @@
                                 <div class="product--group">
                                     <a class="product--name" href="{{URL::to('product/details/' . $product['id'])}}">{{ $product['name'] }}</a>
                                     <div class="product--price">
-                                        @if($product['discount'] != 0)
-                                        <p class="product--cost">{{ floor((int)$product['price'] * (1 - ((int)$product['discount']/100))) . '.000' }}<a>đ</a></p>
-                                        <p class="product-price">{{ $product['price'] }}<a>đ</a></p>
-                                        @else
-                                        <p class="product-cost">{{ $product['price'] }}<a>đ</a></p>
-                                        @endif
+                                    @if($product['discount'] != 0)
+                                    <p class="item-sp--cost">{{ floor(((int)$product['price'] / 1000) * (1 - ((int)$product['discount']/100))) . '.000' }}<a>đ</a></p>
+                                    <p class="item-sp--price">{{ number_format($product['price'], 0, "", ".") }}<a>đ</a></p>
+                                    @else
+                                    <p class="item-sp--cost">{{ number_format($product['price'], 0, "", ".") }}<a>đ</a></p>
+                                    @endif
                                     </div>
                                 </div>
                             </div>

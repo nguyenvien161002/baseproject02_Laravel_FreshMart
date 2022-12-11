@@ -29,7 +29,7 @@
             <!-- SECTION--TWO.ABOUT -->
             <div class="favorite-about sectiontwo-about">
                 <div class="content-item text-center content-description">
-                    <p>Bạn chưa có sản phẩm yêu thích, <a href="{{URL::to('products')}}" class="text-decoration-none">vào đây</a> để thêm thật nhiều sản phẩm yêu thích nào.</p>
+                    <p>Bạn chưa có sản phẩm yêu thích, <a href="{{URL::to('/products')}}" class="text-decoration-none">vào đây</a> để thêm thật nhiều sản phẩm yêu thích nào.</p>
                 </div>
             </div>
         </div>

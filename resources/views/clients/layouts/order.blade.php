@@ -75,11 +75,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="numberphone">Số điện thoại:</label>
-                    <input type="text" value="0372695578" class="form-control" placeholder="Nhập số điện thoại" name="phone" required>
+                    <input type="text" value="" class="form-control" placeholder="Nhập số điện thoại" name="phone" required>
                 </div>
                 <div class="mb-3">
                     <label for="address">Địa chỉ:</label>
-                    <input type="text" value="Quận Ngũ Hành Sơn, Đà Nẵng" class="form-control" placeholder="Nhập địa chỉ của bạn" name="address" required>
+                    <input type="text" value="" class="form-control" placeholder="Nhập địa chỉ của bạn" name="address" required>
                 </div>
                 <div class="mb-3">
                     <label for="note">Ghi chú:</label>

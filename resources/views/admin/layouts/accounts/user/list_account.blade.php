@@ -63,7 +63,7 @@
     <table class="table table-bordered" cellspacing="0" border="1">
         <thead>
             <tr>
-                <th width="150px">
+                <th width="180px">
                     <div class="title-column">
                         <p>Mã người dùng</p>
                         <div class="box-icon-sort d-flex ms-2">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </th>
-                <th width="150px">
+                <th width="180px">
                     <div class="title-column">
                         <p>Tên người dùng</p>
                         <div class="box-icon-sort d-flex ms-2">
@@ -90,16 +90,7 @@
                         </div>
                     </div>
                 </th>
-                <th>
-                    <div class="title-column">
-                        <p>Mật khẩu (MD5)</p>
-                        <div class="box-icon-sort d-flex ms-2">
-                            <a href="{{URL::to('/admin/accounts/users?sortby=id&type=asc')}}{{isset($queryShowAmount) ? $queryShowAmount : ''}}{{isset($querySearch) ? $querySearch : ''}}"><i class="fa-solid fa-arrow-up sort-asc"></i></a>
-                            <a href="{{URL::to('/admin/accounts/users?sortby=id&type=desc')}}{{isset($queryShowAmount) ? $queryShowAmount : ''}}{{isset($querySearch) ? $querySearch : ''}}"><i class="fa-solid fa-arrow-down sort-desc"></i></a>
-                        </div>
-                    </div>
-                </th>
-                <th>
+                <th width="160px">
                     <div class="title-column">
                         <p>Phân quyềnh</p>
                         <div class="box-icon-sort d-flex ms-2">
@@ -125,8 +116,14 @@
                 <td>{{ $value['id'] }}</td>
                 <td>{{ $value['fullname'] }}</td>
                 <td>{{ $value['email'] }}</td>
-                <td>{{ $value['password'] }}</td>
-                <td>{{ $value['name'] }}</td>
+                <td>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <p class="btn-state py-0 btn btn-outline-secondary pe-none rounded-pill d-flex align-items-center {{ $value['name'] == 'Khách hàng' ? 'text-info' : 'text-primary'}}">
+                            <i class="mdi mdi-adjust me-1"></i>
+                            {{ $value['name'] }}
+                        </p>
+                    </div>
+                </td>
                 <td>
                     <a class="btn btn-outline-success" href="{{URL::to('admin/account/user/details/' . $value['id'])}}" type="button" target="">Xem</a>
                     <a class="btn btn-outline-warning" href="{{URL::to('admin/account/user/edit/' . $value['id'])}}" type="button">Sửa</a>

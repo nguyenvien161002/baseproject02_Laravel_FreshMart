@@ -134,4 +134,20 @@ class A_CategoryProductController extends Controller
         $totalCategoryProduct = CategoryProduct::count();
         return View::make('admin.layouts.category_product.details_category_product', compact('category_product', 'totalCategoryProduct'));
     }
+
+    public function updateStateCategoryProduct(Request $request) {
+        $id = $request-> id;
+        $state = $request -> state == 'public' ? '1' : '0';
+        $result = CategoryProduct::where('id', $id) -> update([
+            'state' => $state,
+            'updated_at' => Carbon::now()
+        ]);
+        if($result) {
+            Session::flash('success', "Cập nhật trạng thái danh mục sản phẩm thành công!");
+            return Redirect::route('admin.category_product');
+        } else {
+            Session::flash('failed', "Cập nhật trạng thái danh mục sản phẩm thất bại!");
+            return Redirect::route('admin.category_product');
+        }
+    }
 }

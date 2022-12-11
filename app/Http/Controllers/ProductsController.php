@@ -28,8 +28,9 @@ class ProductsController extends Controller
             ['discount', '>', 0]            
         ])
         -> inRandomOrder() -> limit(5) -> get() -> toArray();
+        $images_sub = explode('|', $product['images_sub']);
         return View::make('clients.layouts.details.details_product', compact([
-            'category_product', 'product', 'related_p',
+            'category_product', 'product', 'related_p', 'images_sub'
         ]));
     }
 }

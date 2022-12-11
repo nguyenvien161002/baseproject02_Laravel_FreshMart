@@ -120,10 +120,10 @@ class A_BannerController extends Controller
             'updated_at' => Carbon::now()
         ]);
         if($result && $rsRemoveImg && $uploadImage) {
-            Session::flash('success', "Sửa thông banner thành công!");
+            Session::flash('success', "Sửa thông tin banner thành công!");
             return Redirect::route('admin.banner');
         } else {
-            Session::flash('failed', "Sửa thông banner thất bại!");
+            Session::flash('failed', "Sửa thông tin banner thất bại!");
             return Redirect::route('admin.banner');
         }
     }
@@ -150,5 +150,21 @@ class A_BannerController extends Controller
         $banner = Banner::find($id) -> getOriginal();
         $totalBanner = Banner::count();
         return View::make('admin.layouts.banner.details_banner', compact('banner', 'totalBanner'));
+    }
+
+    public function updateStateBanner(Request $request) {
+        $id = $request-> id;
+        $state = $request -> state == 'public' ? '1' : '0';
+        $result = Banner::where('id', $id) -> update([
+            'state' => $state,
+            'updated_at' => Carbon::now()
+        ]);
+        if($result) {
+            Session::flash('success', "Cập nhật trạng thái banner thành công!");
+            return Redirect::route('admin.banner');
+        } else {
+            Session::flash('failed', "Cập nhật trạng thái banner thất bại!");
+            return Redirect::route('admin.banner');
+        }
     }
 }

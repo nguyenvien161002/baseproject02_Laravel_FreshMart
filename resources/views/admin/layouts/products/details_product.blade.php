@@ -74,48 +74,32 @@
                         <tr>
                             <th>
                                 <div class="title-column">
-                                    <p>Hình ảnh 1</p>
+                                    <p>Hình ảnh chính</p>
                                     <div class="box-icon-sort d-flex ms-2">
                                         <i class="fa-solid fa-arrow-up sort-asc"></i>
                                         <i class="fa-solid fa-arrow-down sort-desc"></i>
                                     </div>
                                 </div>
                             </th>
+                            @foreach($images_sub as $key => $url)
                             <th>
                                 <div class="title-column">
-                                    <p>Hình ảnh 2</p>
+                                    <p>Hình ảnh phụ</p>
                                     <div class="box-icon-sort d-flex ms-2">
                                         <i class="fa-solid fa-arrow-up sort-asc"></i>
                                         <i class="fa-solid fa-arrow-down sort-desc"></i>
                                     </div>
                                 </div>
                             </th>
-                            <th>
-                                <div class="title-column">
-                                    <p>Hình ảnh 3</p>
-                                    <div class="box-icon-sort d-flex ms-2">
-                                        <i class="fa-solid fa-arrow-up sort-asc"></i>
-                                        <i class="fa-solid fa-arrow-down sort-desc"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="title-column">
-                                    <p>Hình ảnh 4</p>
-                                    <div class="box-icon-sort d-flex ms-2">
-                                        <i class="fa-solid fa-arrow-up sort-asc"></i>
-                                        <i class="fa-solid fa-arrow-down sort-desc"></i>
-                                    </div>
-                                </div>
-                            </th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><img src="{{asset('images/' . $product['image_main'])}}" alt=""></td>
-                            <td><img src="{{ $product['image_two'] ? asset('images/' . $product['image_two']) : ''}}" alt=""></td>
-                            <td><img src="{{ $product['image_three'] ? asset('images/' . $product['image_three']) : ''}}" alt=""></td>
-                            <td><img src="{{ $product['image_four'] ? asset('images/' . $product['image_four']) : ''}}" alt=""></td>
+                            @foreach($images_sub as $key => $url)
+                            <td><img src="{{asset('images/' . $url)}}" alt=""></td>
+                            @endforeach
                         </tr>
                     </tbody>
                 </table>

@@ -122,7 +122,7 @@
                             </div>
                         </div>
                     </th>
-                    <th width="142px">
+                    <th  {{ Session::get('id_authorization') == 1 ? 'width="140px"' : 'width="90px"'}}>
                         <div class="title-column">
                             <p>#</p>
                             <div class="box-icon-sort d-flex ms-2">
@@ -141,10 +141,16 @@
                     <td>{{ $order['number_phone'] }}</td>
                     <td>{{ $order['address'] }}</td>
                     <td>{{ number_format($order['total_money'], 0, "", ".") }} VND</td>
-                    <td>{{ $order['state'] }}</td>
                     <td>
-                        <a href="{{URL::to('admin/order/details/' . $order['order_code'])}}" class="btn btn-outline-success">Xem</a>
-                        <a href="{{URL::to('admin/order/delete/' . $order['order_code'])}}" class="btn btn-outline-danger " onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button">Xóa</a>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="btn-state py-0 btn btn-outline-secondary pe-none rounded-pill d-flex align-items-center {{ $order['state'] == 'Chờ xử lý' ? 'text-warning' : 'text-success' }}">
+                                {{ $order['state'] }}
+                            </p>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{URL::to('admin/order/details/' . $order['order_code'])}}" class="btn btn-outline-success {{ Session::get('id_authorization') == 1 ? '' : 'w-100'}}">Xem</a>
+                        <a href="{{URL::to('admin/order/delete/' . $order['order_code'])}}" class="btn btn-outline-danger {{ Session::get('id_authorization') == 1 ? '' : 'd-none'}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button">Xóa</a>
                     </td>
                 </tr>
                 @endforeach

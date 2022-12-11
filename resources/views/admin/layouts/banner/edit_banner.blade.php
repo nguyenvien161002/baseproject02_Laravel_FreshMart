@@ -25,7 +25,16 @@
                 <div>
                     <img src="{{asset('images/banner/' . $banner['image'])}}" alt="" width="400px" style="margin: 10px 0 20px 0; border: 1px solid #ccc; border-radius: 5px;">
                 </div>
-                <input type="file" class="form-control" name="image_banner" required> 
+                <div class="preview-multiple-image">
+                    <div class="wrapper-upload choose-imgmain">
+                        <input class="file-input-imgmain" type="file" name="image_banner" hidden>
+                        <section class="uploaded-icon uploaded-icon-imgmain">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Chọn ảnh tải lên (Chọn một ảnh)</p>
+                        </section>
+                        <section class="uploaded-area uploaded-area-imgmain w-100"></section>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-outline-primary float-end">Cập nhật</button>
         </form>

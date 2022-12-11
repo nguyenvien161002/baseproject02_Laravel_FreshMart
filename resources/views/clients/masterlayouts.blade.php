@@ -306,6 +306,7 @@
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/swiper.js')}}"></script>
     <script src="{{asset('js/cart.js')}}"></script>
+    <script src="{{asset('js/favorite.js')}}"></script>
     <script src="{{asset('js/search.js')}}"></script>
     <script src="{{asset('js/order.js')}}"></script>
     <script>{{Session::has('orderSuccess') ? 'orderSuccess()' : ""}}</script>

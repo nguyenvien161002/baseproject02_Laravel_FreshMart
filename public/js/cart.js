@@ -113,11 +113,11 @@ $j.ajax({
         function totalMoneyToCart() {
             var sum = 0;
             cart.forEach(function(item){
-                if (item.discount != "Không") {
+                if (item.discount != 0) {
                     price = (item.price / 1000) * (1 - item.discount / 100);
                     price = Math.floor(price);
                 } else {
-                    price = item.price;
+                    price = item.price / 1000;
                 }
                 sum = sum + price * item.quantity;
                 totalMoney.innerText = sum;
@@ -129,11 +129,11 @@ $j.ajax({
             noCartItem.classList.add('hidden');
             insideCart.classList.remove('hidden');
             cart.forEach(function(item){
-                if (item.discount != "Không") {
+                if (item.discount != 0) {
                     price = (item.price / 1000) * (1 - item.discount / 100);
                     price = Math.floor(price);
                 } else {
-                    price = item.price;
+                    price = item.price / 1000;
                 }
                 insideCart.innerHTML += `
                     <div class="cart__item">

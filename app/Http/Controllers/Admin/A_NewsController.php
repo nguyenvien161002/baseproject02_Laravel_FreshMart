@@ -161,4 +161,20 @@ class A_NewsController extends Controller
         $totalNews = News::count();
         return View::make('admin.layouts.news.details_news', compact('news', 'totalNews'));
     }
+
+    public function updateStateNews(Request $request) {
+        $id = $request-> id;
+        $state = $request -> state == 'public' ? '1' : '0';
+        $result = News::where('id', $id) -> update([
+            'state' => $state,
+            'updated_at' => Carbon::now()
+        ]);
+        if($result) {
+            Session::flash('success', "Cập nhật trạng thái tin tức thành công!");
+            return Redirect::route('admin.news');
+        } else {
+            Session::flash('failed', "Cập nhật trạng thái tin tức thất bại!");
+            return Redirect::route('admin.news');
+        }
+    }
 }

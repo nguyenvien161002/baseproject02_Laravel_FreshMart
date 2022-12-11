@@ -8,8 +8,8 @@
         </div>
         <div class="box-addproduct">
             @foreach($orders as $key => $order)
-            <div data-order_code="{{ $order['order_code'] }}" class="btn btn-outline-success btn-order-browsing">Duyệt đơn hàng</div>
-            <a href="{{URL::to('admin/order/delete/' . $order['order_code'])}}" class="btn btn-outline-danger ms-1" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button">Xóa</a>
+            <div data-order_code="{{ $order['order_code'] }}" class="btn btn-outline-success btn-order-browsing {{ Session::get('id_authorization') == 1 ? '' : 'pe-none'}}">Duyệt đơn hàng</div>
+            <a href="{{URL::to('admin/order/delete/' . $order['order_code'])}}" class="btn btn-outline-danger ms-1 {{ Session::get('id_authorization') == 1 ? '' : 'pe-none'}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button">Xóa</a>
             @endforeach
         </div>
     </div>
@@ -143,11 +143,11 @@
                         @foreach($details_order as $key => $value)
                         <tr>
                             <td>{{ $value['id_product'] }}</td>
-                            <td>{{ $value['name'] }}</td>
+                            <td><div class="box-name_">{{ $value['name'] }}</div></td>
                             <td>{{ $value['quantity'] }}</td>
                             <td>{{ number_format($value['price'], 0, "", ".") . " "}}VND</td>  
-                            <td>{{ $value['discount'] }}</td>  
-                            <td>{{ $value['into_money'] }}.000 VND</td>
+                            <td>{{ $value['discount'] }}%</td>  
+                            <td>{{ number_format($value['into_money'], 0, "", ".") }} VND</td>
                         </tr>
                         @endforeach
                     </tbody>

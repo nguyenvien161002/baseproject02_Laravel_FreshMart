@@ -94,35 +94,21 @@ class A_ProductsController extends Controller
             $pathUpload = 'images\merge';
             $pathSave = 'merge/';
         }
+        $pathImageSub = [];
+        if($request -> has('images_sub')) {
+            $imageSubArray = $request -> images_sub;
+            foreach($imageSubArray as $imageSub) {
+                $imageName = $imageSub -> getClientOriginalName();
+                $uploadImgSub = $imageSub -> move(public_path($pathUpload), $imageName);
+                array_push($pathImageSub, "$pathSave" . "$imageName");
+            }
+        } 
+
         if($request -> has('image_main')) {
             $imageMain = $request -> image_main;
-            $imageNameMain = $imageMain -> getClientOriginalName();
+            $imageNameMain =  $imageMain -> getClientOriginalName();
             $uploadImgMain = $imageMain -> move(public_path($pathUpload), $imageNameMain);
-            $pathImageMain = $pathSave . $imageNameMain;
-        } 
-        if($request -> has('image_two')) {
-            $imageTwo = $request -> image_two;
-            $imageNameTwo = $imageTwo -> getClientOriginalName();
-            $uploadImgTwo = $imageTwo -> move(public_path($pathUpload), $imageNameTwo);
-            $pathImageTwo = $pathSave . $imageNameTwo;
-        } else {
-            $pathImageTwo = "";
-        }
-        if($request -> has('image_three')) {
-            $imageThree = $request -> image_three;
-            $imageNameThree = $imageThree -> getClientOriginalName();
-            $uploadImgThree = $imageThree -> move(public_path($pathUpload), $imageNameThree);
-            $pathImageThree = $pathSave . $imageNameThree;
-        } else {
-            $pathImageThree = "";
-        }
-        if($request -> has('image_four')) {
-            $imageFour = $request -> image_four;
-            $imageNameFour = $imageFour -> getClientOriginalName();
-            $uploadImgFour = $imageFour -> move(public_path($pathUpload), $imageNameFour);
-            $pathImageFour = $pathSave . $imageNameFour;
-        } else {
-            $pathImageFour = "";
+            $pathImageMain = "$pathSave" . "$imageNameMain";
         }
         $result = Products::insert([
             'name' => $name,
@@ -132,14 +118,12 @@ class A_ProductsController extends Controller
             'details' => $details,
             'state' => $state,
             'image_main' => $pathImageMain,
-            'image_two' => $pathImageTwo,
-            'image_three' => $pathImageThree,
-            'image_four' => $pathImageFour,
+            'images_sub' => implode("|", $pathImageSub),
             'id_category_product' => $id_category_product,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-        if($result && $uploadImgMain) {
+        if($result && $uploadImgSub && $uploadImgMain) {
             Session::flash('success', "Thêm sản phẩm thành công!");
             return Redirect::route('admin.products');
         } else {
@@ -151,9 +135,10 @@ class A_ProductsController extends Controller
     public function viewEditProduct($id)
     {
         $product = Products::find($id) -> getOriginal();
+        $images_sub = explode("|", $product['images_sub']);
         $categoryProduct = CategoryProduct::select('id', 'name') -> get() -> toArray();
         return View::make('admin.layouts.products.edit_product', compact([
-            'product', 'categoryProduct'
+            'product', 'categoryProduct', 'images_sub'
         ]));
     }
 
@@ -171,24 +156,15 @@ class A_ProductsController extends Controller
         $product = Products::find($id) -> toArray();
         $pathUnlink = 'images/';
         $rsRemoveImg = false;
+        $images_sub = explode("|", $product['images_sub']);
+        foreach($images_sub as $image => $url) { 
+            if(File::exists($pathUnlink . $url)) {
+                $rsRemoveImg = File::delete($pathUnlink . $url);
+            }
+        }
         if($product['image_main']) {
             if(File::exists($pathUnlink . $product['image_main'])) {
                 $rsRemoveImg = File::delete($pathUnlink . $product['image_main']);
-            }
-        }
-        if($product['image_two']) {
-            if(File::exists($pathUnlink . $product['image_two'])) {
-                File::delete($pathUnlink . $product['image_two']);
-            }
-        }
-        if($product['image_three']) {
-            if(File::exists($pathUnlink . $product['image_three'])) {
-                File::delete($pathUnlink . $product['image_three']);
-            }
-        }
-        if($product['image_four']) {
-            if(File::exists($pathUnlink . $product['image_four'])) {
-                File::delete($pathUnlink . $product['image_four']);
             }
         }
         // Upload ảnh mới
@@ -205,35 +181,21 @@ class A_ProductsController extends Controller
             $pathUpload = 'images\merge';
             $pathSave = 'merge/';
         }
+        $pathImageSub = [];
+        if($request -> has('images_sub')) {
+            $imageSubArray = $request -> images_sub;
+            foreach($imageSubArray as $imageSub) {
+                $imageName = $imageSub -> getClientOriginalName();
+                $uploadImgSub = $imageSub -> move(public_path($pathUpload), $imageName);
+                array_push($pathImageSub, "$pathSave" . "$imageName");
+            }
+        } 
+
         if($request -> has('image_main')) {
             $imageMain = $request -> image_main;
-            $imageNameMain = $imageMain -> getClientOriginalName();
+            $imageNameMain =  $imageMain -> getClientOriginalName();
             $uploadImgMain = $imageMain -> move(public_path($pathUpload), $imageNameMain);
-            $pathImageMain = $pathSave . $imageNameMain;
-        } 
-        if($request -> has('image_two')) {
-            $imageTwo = $request -> image_two;
-            $imageNameTwo = $imageTwo -> getClientOriginalName();
-            $uploadImgTwo = $imageTwo -> move(public_path($pathUpload), $imageNameTwo);
-            $pathImageTwo = $pathSave . $imageNameTwo;
-        } else {
-            $pathImageTwo = "";
-        }
-        if($request -> has('image_three')) {
-            $imageThree = $request -> image_three;
-            $imageNameThree = $imageThree -> getClientOriginalName();
-            $uploadImgThree = $imageThree -> move(public_path($pathUpload), $imageNameThree);
-            $pathImageThree = $pathSave . $imageNameThree;
-        } else {
-            $pathImageThree = "";
-        }
-        if($request -> has('image_four')) {
-            $imageFour = $request -> image_four;
-            $imageNameFour = $imageFour -> getClientOriginalName();
-            $uploadImgFour = $imageFour -> move(public_path($pathUpload), $imageNameFour);
-            $pathImageFour = $pathSave . $imageNameFour;
-        } else {
-            $pathImageFour = "";
+            $pathImageMain = "$pathSave" . "$imageNameMain";
         }
         // Cập nhật dữ liệu trong MySQL
         $result = Products::where('id', $id) -> update([
@@ -244,9 +206,7 @@ class A_ProductsController extends Controller
             'details' => $details,
             'state' => $state,
             'image_main' => $pathImageMain,
-            'image_two' => $pathImageTwo,
-            'image_three' => $pathImageThree,
-            'image_four' => $pathImageFour,
+            'images_sub' => implode("|", $pathImageSub),
             'id_category_product' => $id_category_product,
             'updated_at' => Carbon::now()
         ]);
@@ -263,28 +223,18 @@ class A_ProductsController extends Controller
     {
         $product = Products::find($id) -> toArray();
         $pathUnlink = 'images/';
-        if($product['image_main']) {
-            if(File::exists($pathUnlink . $product['image_main'])) {
-                $rsRemoveImg = File::delete($pathUnlink . $product['image_main']);
-            }
+        $image_main = $product['image_main'];
+        if(File::exists($pathUnlink . $image_main)) {
+            $rsRemoveImgMain = File::delete($pathUnlink . $image_main);
         }
-        if($product['image_two']) {
-            if(File::exists($pathUnlink . $product['image_two'])) {
-                File::delete($pathUnlink . $product['image_two']);
-            }
-        }
-        if($product['image_three']) {
-            if(File::exists($pathUnlink . $product['image_three'])) {
-                File::delete($pathUnlink . $product['image_three']);
-            }
-        }
-        if($product['image_four']) {
-            if(File::exists($pathUnlink . $product['image_four'])) {
-                File::delete($pathUnlink . $product['image_four']);
+        $images_sub = explode("|", $product['images_sub']);
+        foreach($images_sub as $image => $url) { 
+            if(File::exists($pathUnlink . $url)) {
+                $rsRemoveImgSub = File::delete($pathUnlink . $url);
             }
         }
         $result = Products::where('id', $id) -> delete();
-        if($result && $rsRemoveImg) {
+        if($result && $rsRemoveImgMain && $rsRemoveImgSub) {
             Session::flash('success', "Xóa sản phẩm thành công!");
             return Redirect::route('admin.products');
         } else {
@@ -296,33 +246,25 @@ class A_ProductsController extends Controller
     public function viewDetailsProduct($id)
     {
         $product = Products::find($id) -> getOriginal();
+        $images_sub = explode("|", $product['images_sub']);
         $totalProducts = Products::count();
-        return View::make('admin.layouts.products.details_product', compact('product', 'totalProducts'));
+        return View::make('admin.layouts.products.details_product', compact('product', 'images_sub', 'totalProducts'));
     }
 
-    public function searchProductInDetails(Request $request) {
-        if($request -> ajax()){
-            $result = "";
-            $query = $request -> all();
-            $products = Products::select('name') -> search($query['query']) -> get() -> toArray();
-            foreach ($products as $key => $value) { 
-                $result .= "<div href='' class='result-search d-flex align-items-center' data-name='{$value['name']}'>
-                                <img src='{$request -> getSchemeAndHttpHost()}/images/svg/search2.svg' alt=''>
-                                <p class='title-result' title='{$value['name']}'>{$value['name']}</p>
-                            </div>";
-            }
-            return Response::json($result);
+    public function updateStateProduct(Request $request) {
+        $id = $request-> id;
+        $state = $request -> state == 'public' ? '1' : '0';
+        $result = Products::where('id', $id) -> update([
+            'state' => $state,
+            'updated_at' => Carbon::now()
+        ]);
+        if($result) {
+            Session::flash('success', "Cập nhật trạng thái sản phẩm thành công!");
+            return Redirect::route('admin.products');
         } else {
-            $query = $request -> search;
-            $products = Products::search($query) -> paginate(10);
-            return  View::make('admin.layouts.products.list_product', compact('products'));
-        }
-    }
-
-    public function searchProduct(Request $request)
-    {
-        $products = Products::orderBy('id', 'desc') -> search($request -> search) -> paginate(1);
-        return View::make('admin.layouts.products.list_product', compact('products'));
+            Session::flash('failed', "Cập nhật trạng thái sản phẩm thất bại!");
+            return Redirect::route('admin.products');
+        } 
     }
 
 }
