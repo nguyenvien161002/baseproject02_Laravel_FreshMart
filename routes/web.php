@@ -45,6 +45,15 @@ Route::post('/order', [OrderController::class, "insertOrder"]);
 Route::get('/user/ordered/{id}', [OrderController::class, "viewOrdered"]) -> name('ordered');
 Route::get('/product/details/{id}', [ProductsController::class, "detailsProduct"]);
 Route::get('/news/details/{id}', [NewsController::class, "detailsNews"]);
+// CONFIRM EMAIL
+Route::get('/user/confirm/{id}/{token}', [AuthenticateController::class, "confirmEmail"]) -> name('user.confirm.email');
+
+// FORGET PASSWORD
+Route::get('/user/forgot/password', [AuthenticateController::class, "forgotPassword"]) -> name('user.forgot.password');
+Route::post('/user/forgot/password', [AuthenticateController::class, "authForgotPassword"]);
+Route::get('/user/reset/password/{id}/{token}', [AuthenticateController::class, "resetPassword"]);
+Route::post('/user/reset/password/{id}/{token}', [AuthenticateController::class, "auhtResetPassword"]);
+
 // ORDERED WITH LOGIN SOCIAL
 Route::get('/user/google/profile/{id}', [ProfileController::class, "index"]);
 Route::get('/user/facebook/profile/{id}', [ProfileController::class, "index"]);

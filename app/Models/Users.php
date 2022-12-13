@@ -11,7 +11,7 @@ class Users extends Model
     public $timestamps = false;
     protected $table = 'tbl_users';
     protected $fillable = [
-        'fullname', 'email', 'avatar', 'password', 'confirm_password', 'id_authorization'
+        'fullname', 'email', 'avatar', 'password', 'confirm_password', 'state', 'token', 'id_authorization'
     ];
     protected $primaryKey = 'id';
     public function scopeSearch ($users, $query)

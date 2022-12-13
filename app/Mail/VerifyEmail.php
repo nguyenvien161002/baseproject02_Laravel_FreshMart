@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Attachment;
 
-class OrderMail extends Mailable
+class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
     private $recipient;
@@ -24,7 +24,7 @@ class OrderMail extends Mailable
     public function __construct($recipient)
     {
         $this -> recipient = $recipient;
-        $this -> queue = 'OrderEmail';
+        $this -> queue = 'verifyEmail';
     }
 
     /**
@@ -39,7 +39,7 @@ class OrderMail extends Mailable
             replyTo: [
                 new Address('nguyenvien161002@gmail.com', 'FreshMart'),
             ],
-            subject: 'Cảm ơn bạn đã đặt hàng trên FreshMart',
+            subject: 'FreshMart - Xác thực đăng kí tài khoản',
         );
     }
 
@@ -51,10 +51,13 @@ class OrderMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.order',
+            view: 'email.verify',
             with: [
+                'id' => $this -> recipient -> id,
                 'fullname' => $this -> recipient -> fullname,
-                'pathToImageLogo' => env('SRC_LOGOMAIN'),
+                'token' => $this -> recipient -> token,
+                'urlLogo' => env('SRC_LOGOMAIN'),
+                'urlIP' => env('APP_URL_IP'),
             ],
         );
     }

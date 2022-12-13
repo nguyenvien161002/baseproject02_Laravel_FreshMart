@@ -8,18 +8,19 @@
     <div class="table-responsive">
         <form action="{{URL::to('admin/banner/insert')}}" class="form-horizontal" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="mb-3 mt-3">
+            <div class="form-group mt-3">
                 <label for="name_banner">Tên banner:</label>
-                <input type="text" class="form-control" placeholder="Nhập tên banner" name="name_banner" required>
+                <input type="text" rules="required" class="form-control" placeholder="Nhập tên banner" name="name_banner" required>
+                <span class="form-message"></span>
             </div>
-            <div class="mb-3 mt-3">
+            <div class="form-group mt-3">
                 <label for="state_banner">Trạng thái:</label>
                 <select name="state_banner" id="" class="form-select" required>
                     <option value="0">Ẩn</option>
                     <option selected value="1">Hiển thị</option>
                 </select>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="image_banner">Hình ảnh:</label>
                 <div class="preview-multiple-image">
                     <div class="wrapper-upload choose-imgmain">

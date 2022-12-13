@@ -44,11 +44,11 @@ p {
     width: 400px;
     min-height: 100px;
     color: #fff;
-    border: 1px solid rgba(255,255,255,0.5);
-    border-right: 1px solid rgba(255,255,255,0.2);
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    background-color: rgba(255,255,255,0.1);
-    box-shadow: 0px 25px 45px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 25px 45px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     position: relative;
     padding: 15px 30px;
@@ -62,7 +62,7 @@ p {
     top: 30px;
 }
 
-.icon-back > a > i {
+.icon-back>a>i {
     font-size: 20px;
     padding: 8px 15px;
     cursor: pointer;
@@ -76,7 +76,7 @@ p {
     line-height: 1.4;
 }
 
-.form .heading > a {
+.form .heading>a {
     color: var(--white);
     text-decoration: none;
     font-size: 2.2rem;
@@ -93,6 +93,15 @@ p {
     width: 240px;
     padding: 10px;
     border-radius: 20px;
+}
+
+.form-forgot-passowrd .logo-login img {
+    width: 220px;
+}
+
+.form-forgot-passowrd .icon-back>a>i {
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 .form-group {
@@ -160,7 +169,7 @@ p {
 
 .gender .form-control {
     height: initial;
-} 
+}
 
 .form-control:hover {
     border-color: #1dbfaf;
@@ -195,7 +204,7 @@ p {
 }
 
 .form-submit:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .spacer {
@@ -207,12 +216,36 @@ p {
     align-items: center;
     justify-content: space-between;
     font-size: 1.4rem;
+    position: relative;
 }
 
 .check-remember input {
-   margin-right: 5px;
-   width: 15px;
-   height: 15px;
+    margin-right: 5px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    z-index: 10;
+}
+
+.check-remember input[type=checkbox] {
+    accent-color: #10d68b;
+}
+
+.check-remember input[type="checkbox"]:checked {
+    color: #fff;
+}
+
+.check-remember input::before {
+    position: absolute;
+    content: "";
+    width: 110px;
+    height: 100%;
+    background-color: transparent;
+    left: 100%;
+}
+
+.check-remember label {
+    margin-left: 20px;
 }
 
 .login-withgg {
@@ -385,11 +418,10 @@ p {
 }
 
 /* TABLET */
-@media (min-width: 46.25em) and (max-width:63.9375em){
-    
-}
+@media (min-width: 46.25em) and (max-width:63.9375em) {}
+
 /* MOBILE */
-@media (max-width: 46.1875em){
+@media (max-width: 46.1875em) {
     .form {
         width: 330px;
         height: 530px;
@@ -401,6 +433,3 @@ p {
         width: 200px;
     }
 }
-
-
-

@@ -43,12 +43,12 @@
             </div>
             <div class="form-group mb-5px">
                 <label for="password" class="form-label">Mật khẩu</label>
-                <input value="{{Session::get('password')}}" rules="required|min:6" name="password" type="password" placeholder="Mật khẩu" class="form-control">
+                <input value="{{Session::get('password')}}" rules="required|min:1" name="password" type="password" placeholder="Mật khẩu" class="form-control">
                 <span class="form-message"></span>
             </div>
             <div class="form-group mb-5px">
                 <label for="confirm_password" class="form-label">Nhập lại mật khẩu</label>
-                <input value="{{Session::get('confirm_password')}}" rules="required|min:6" name="confirm_password" type="password" placeholder="Nhập lại mật khẩu" class="form-control">
+                <input value="{{Session::get('confirm_password')}}" rules="required|min:1" name="confirm_password" type="password" placeholder="Nhập lại mật khẩu" class="form-control">
                 <span class="form-message"></span>
             </div>
             <button class="form-submit mt-10px">Đăng ký</button>

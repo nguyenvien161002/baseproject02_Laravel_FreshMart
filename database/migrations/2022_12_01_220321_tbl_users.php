@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('avatar', 255)->nullable();
             $table->string('password', 255)->nullable();
             $table->string('confirm_password', 255)->nullable();
+            $table->tinyInteger('state');
+            $table->string('token', 100);
             $table->unsignedInteger('id_authorization');
             $table->foreign('id_authorization')
                 ->references('id')

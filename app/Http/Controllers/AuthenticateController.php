@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\A_AccountsUserController;
+use App\Mail\ForgotPwMail;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use App\Models\Admin;
@@ -11,6 +12,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthenticateController extends Controller
 {
@@ -132,7 +136,7 @@ class AuthenticateController extends Controller
 
     public function authLoginAccount(Request $request)
     {
-        $email = $request->email; 
+        $email = $request->email;
         $password = md5($request->password);
         $data['email'] = Users::select('email')->where('email', $email)->first();
         if ($data['email']) {
@@ -145,19 +149,41 @@ class AuthenticateController extends Controller
                 $data['password'] = $data['password']->password;
             }
         } else {
-            $data['password'] = Users::select('password')->where('password', $password)->first(); 
+            $data['password'] = Users::select('password')->where('password', $password)->first();
         }
         if ($data['email'] && $data['password']) {
-            $user = Users::select('id', 'fullname', 'email', 'id_authorization')->where('email', $data['email'])
-                ->where('password', $data['password'])->get()->toArray();
-            foreach ($user as $key) {
-                Session::put('id', $key['id']);
-                Session::put('fullname', $key['fullname']);
-                Session::put('email', $key['email']);
-                Session::put('id_authorization', $key['id_authorization']);
+            $user = Users::select('id', 'fullname', 'email', 'id_authorization')
+                ->where([
+                    ['email', $data['email']],
+                    ['password', $data['password']],
+                    ['state', 1],
+                ])
+                ->get()->toArray();
+
+            if ($user) {
+                foreach ($user as $key) {
+                    Session::put('id', $key['id']);
+                    Session::put('fullname', $key['fullname']);
+                    Session::put('email', $key['email']);
+                    Session::put('id_authorization', $key['id_authorization']);
+                }
+                if ($request->remember_me) {
+                    Cookie::queue('email', $email, 1440);
+                    Cookie::queue('password', $request->password, 1440);
+                    Cookie::queue('remember_me', $request->remember_me, 1440);
+                } else {
+                    if (Cookie::has('remember_me')) {
+                        Cookie::queue(Cookie::forget('email'));
+                        Cookie::queue(Cookie::forget('password'));
+                        Cookie::queue(Cookie::forget('remember_me'));
+                    }
+                }
+                Session::put('is_login', true);
+                return Redirect::route('home');
+            } else {
+                Session::flash('failed', "Bạn chưa xác thực tài khoản, vui lòng kiểm tra email!");
+                return Redirect::route('login.account');
             }
-            Session::put('is_login', true);
-            return Redirect::route('home');
         }
         if ($data['email'] && $data['password'] == null) {
             Session::flash('failed', "Sai mât khẩu, vui lòng nhâp lại!");
@@ -179,54 +205,66 @@ class AuthenticateController extends Controller
         return Redirect::route('home');
     }
 
-    public function registerAccount() {
+    public function registerAccount()
+    {
         return View::make('auth.clients.register');
     }
 
     public function authRegisterAccount(Request $request)
     {
-        $fullname = $request -> fullname;
-        $email = $request -> email;
-        $passwordNotMd5 = $request -> password;
-        $password = md5($request -> password);
-        $confirm_passwordNotMd5 = $request -> confirm_password;
-        $confirm_password = md5($request -> confirm_password);
-        $duplicate_email = Users::where('email', $email) -> get() -> toArray();
-        if($password === $confirm_password && !$duplicate_email) {
+        $id = A_AccountsUserController::randomCode();
+        $token = csrf_token();
+        $fullname = $request->fullname;
+        $email = $request->email;
+        $passwordNotMd5 = $request->password;
+        $password = md5($request->password);
+        $confirm_passwordNotMd5 = $request->confirm_password;
+        $confirm_password = md5($request->confirm_password);
+        $duplicate_email = Users::where('email', $email)->get()->toArray();
+        if ($password === $confirm_password && !$duplicate_email) {
             $result = Users::insert([
-                'id' => A_AccountsUserController::randomCode(),
+                'id' => $id,
                 'fullname' => $fullname,
                 'email' => $email,
                 'password' => $password,
                 'confirm_password' => $confirm_password,
+                'state' => 0,
+                'token' => $token,
                 'id_authorization' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
-            if($result) {
-                Session::flash('success', "Chúc mừng bạn đã đăng ký thành công!");
-                return Redirect::route('login.account');
+            if ($result) {
+                $recipient = Users::find($id);
+                $isMailer = Mail::to($recipient->email)->queue(new VerifyEmail($recipient));
+                if ($isMailer) {
+                    Session::flash('success', "Vui lòng kiểm tra email và xác thực tài khoản!");
+                    return Redirect::route('login.account');
+                } else {
+                    Session::flash('failed', "Đăng kí tài khoản thất bại, vui lòng thử lại!");
+                    return Redirect::route('register.account');
+                }
             } else {
                 Session::flash('failed', "Đăng ký thất bại, vui lòng thử lại!");
-                return Redirect::route('login.account');
+                return Redirect::route('register.account');
             }
-        } 
+        }
 
-        if($password !== $confirm_password && $duplicate_email) {
+        if ($password !== $confirm_password && $duplicate_email) {
             Session::flash('fullname', $fullname);
             Session::flash('password', $passwordNotMd5);
             Session::flash('failed', "Mật khẩu không trùng khớp và email đã được sử dụng, vui lòng nhâp lại!");
             return Redirect::route('register.account');
         }
 
-        if($password !== $confirm_password) {
+        if ($password !== $confirm_password) {
             Session::flash('fullname', $fullname);
             Session::flash('email', $email);
             Session::flash('password', $passwordNotMd5);
             Session::flash('failed', "Mật khẩu không trùng khớp vui lòng nhâp lại!");
             return Redirect::route('register.account');
         }
-        if($duplicate_email) {
+        if ($duplicate_email) {
             Session::flash('fullname', $fullname);
             Session::flash('password', $passwordNotMd5);
             Session::flash('confirm_password', $confirm_passwordNotMd5);
@@ -235,4 +273,75 @@ class AuthenticateController extends Controller
         }
     }
 
+    public function confirmEmail($id, $token)
+    {
+        $user = Users::find($id);
+        if ($user->token === $token) {
+            $result = Users::where('id', $id)->update([
+                'state' => 1
+            ]);
+            if ($result) {
+                Session::flash('success', "Xác thực thành công, bây giờ bạn có thể đăng nhập");
+                return Redirect::route('login.account');
+            }
+        } else {
+            Session::flash('failed', "Mã xác thực không lợp lệ!");
+            return Redirect::route('login.account');
+        }
+    }
+
+    public function forgotPassword()
+    {
+        return View::make("auth.clients.login.forgotpassword");
+    }
+
+    public function authForgotPassword(Request $request)
+    {
+        $email = $request->email;
+        $recipient = Users::where('email', $email)-> first();
+        if($recipient) {
+            $isMailer = Mail::to($email)->queue(new ForgotPwMail($recipient));
+            if ($isMailer) {
+                Session::flash('success', "Vui lòng kiểm tra email để lấy lại mật khẩu!");
+                return back();
+            }
+        } else {
+            Session::flash('failed', "Email này không tồn tại trong hệ thống!");
+            return back();
+        }
+    }
+
+    public function resetPassword($id, $token)
+    {
+        $user = Users::find($id);
+        if ($user->token === $token) {
+            return View::make("auth.clients.login.resetpassword");
+        } 
+        return abort(404);
+    }
+
+    public function auhtResetPassword($id, $token, Request $request)
+    {
+        $validator = $request -> validate([
+            'confirm_password' => 'min:6|required_with:password|same:password'
+        ], [
+            'confirm_password' => 'Mật khẩu xác nhận và mật khẩu phải khớp nhau!'
+        ]);
+        if($validator) {
+            $token = $request -> _token;
+            $password = md5($request -> password);
+            $result = Users::where('id', $id)->update([
+                'password' => $password,
+                'confirm_password' => $password,
+                'token' => $token
+            ]);
+            if($result) { 
+                Session::flash('success', "Đặt lại mật khẩu thành công, bây giờ bạn có thể đăng nhập");
+                return Redirect::route('login.account');
+            } else {
+                Session::flash('failed', "Đặt lại mật khẩu thất bại, bây giờ bạn có thể đăng nhập");
+                return Redirect::route('login.account');
+            }
+        }
+    }
 }

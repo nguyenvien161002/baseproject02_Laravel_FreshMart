@@ -24,12 +24,15 @@ class GoogleAuthController extends Controller
             $googleUser = Socialite::driver('google') -> user();
             $check = Users::where('email', $googleUser -> email) -> where('id_authorization', 5) -> get() -> toArray();
             $id = A_AccountsUserController::randomCode();
+            $token = csrf_token();
             if(!$check) {
                 $result = Users::insert([
                     'id' => $id,
                     'fullname' => $googleUser -> name,
                     'email' => $googleUser -> email,
                     'avatar' => $googleUser -> avatar,
+                    'state' => 1,
+                    'token' => $token,
                     'id_authorization' => 5,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()

@@ -1,4 +1,4 @@
-<div style="width: 500px; margin: 0 auto;">
+<div style="width: 500px; margin: 0 auto; border-radius: 5px; border: 1px solid #ccc; background-color: #f2fcfe; padding: 20px;">
     <div style="width: 100%; text-align: center;">
         <img src="{{ $message->embed($pathToImageLogo) }}" alt="">
     </div>

@@ -256,7 +256,7 @@
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/validate.js')}}"></script>
     <script>
-        new Validator("#form-horizontal");
+        new Validator(".form-horizontal");
     </script>
 </body>
 

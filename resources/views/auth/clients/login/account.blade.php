@@ -36,20 +36,20 @@
             </div>
             <div class="form-group">
                 <label for="email" class="form-label">Email của bạn:</label>
-                <input id="email" name="email" rules="required|email" value="" type="text" placeholder="Nhập email của bạn" class="form-control">
+                <input id="email" name="email" rules="required|email" value="{{Cookie::has('email') ? Cookie::get('email') : '' }}" type="text" placeholder="Nhập email của bạn" class="form-control">
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
                 <label for="password" class="form-label">Mật khẩu</label>
-                <input id="password" name="password" rules="required|min:1" value="" type="password" placeholder="Mật khẩu" class="form-control">
+                <input id="password" name="password" rules="required|min:1" value="{{Cookie::has('password') ? Cookie::get('password') : '' }}" type="password" placeholder="Mật khẩu" class="form-control">
                 <span class="form-message"></span>
             </div>
             <div class="form-help">
                 <div class="check-remember">
-                    <input id="rememberme" name="rememberme" type="checkbox">
+                    <input name="remember_me" type="checkbox" {{Cookie::has('remember_me') ? 'checked' : '' }}>
                     <label for="rememberme">Nhớ mật khẩu</label>
                 </div>
-                <a href="">Quên mật khẩu</a>
+                <a href="{{URL::to('user/forgot/password')}}">Quên mật khẩu</a>
             </div>
             <button class="form-submit">Đăng nhập</button>
             <div class="__-with__">

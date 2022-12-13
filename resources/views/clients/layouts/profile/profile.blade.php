@@ -60,7 +60,7 @@
                             <p>Thông tin tài khoản</p>
                         </a>
                         <a href="" class="toolbar__item d-flex pb-2 nav-link">
-                            <img class="me-3" src="{{asset('images/svg/manage.svg')}}" alt="">
+                            <img class="me-3" src="{{asset('images/svg/manageaddress.svg')}}" alt="">
                             <p>Quản lí địa chỉ</p>
                         </a>
                         <a href="" class="toolbar__item d-flex pb-2 nav-link">

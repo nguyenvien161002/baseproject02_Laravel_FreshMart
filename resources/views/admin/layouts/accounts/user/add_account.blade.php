@@ -9,23 +9,24 @@
     <div class="table-responsive">
         <form action="{{URL::to('admin/account/user/insert')}}" class="form-horizontal" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="mb-3 mt-3">
+            <div class="form-group mt-3">
                 <label for="fullname">Họ và tên:</label>
-                <input type="text" class="form-control" placeholder="Nhập họ và tên" name="fullname" required>
+                <input type="text" rules="required" class="form-control" placeholder="Nhập họ và tên" name="fullname" required>
+                <span class="form-message"></span>
             </div>
-            <div class="mb-3 mt-3">
+            <div class="form-group mt-3">
                 <label for="email">Email:</label>
-                <input type="text" class="form-control" placeholder="Nhập email" name="email" required>
+                <input type="text" rules="required|email" class="form-control" placeholder="Nhập email" name="email" required>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="password">Mật khẩu:</label>
-                <input type="text" class="form-control" placeholder="Nhập mật khẩu" name="password" required>
+                <input type="text" rules="required|min:6" class="form-control" placeholder="Nhập mật khẩu" name="password" required>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="confirm_password">Nhập lại mật khẩu:</label>
-                <input type="text" class="form-control" placeholder="Nhập lại mật khẩu" name="confirm_password" required>
+                <input type="text" rules="required|min:6" class="form-control" placeholder="Nhập lại mật khẩu" name="confirm_password" required>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="id_authorization">Phân quyền:</label>
                 <select name="id_authorization" id="" class="form-select">
                     @foreach($authorization as $key => $value)

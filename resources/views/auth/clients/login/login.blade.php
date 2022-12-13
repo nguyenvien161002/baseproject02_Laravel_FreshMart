@@ -19,7 +19,7 @@
             </span>
             <div class="logo-login">
                 <a href="{{URL::to('')}}">
-                    <img src="images/explore/logo.webp" alt="">
+                    <img src="{{asset('images/explore/logo.webp')}}" alt="">
                 </a>
             </div>
             <div class="form-title">Đăng nhập vào Fresh Mart</div>
