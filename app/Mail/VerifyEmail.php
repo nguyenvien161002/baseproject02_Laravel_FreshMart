@@ -24,7 +24,7 @@ class VerifyEmail extends Mailable
     public function __construct($recipient)
     {
         $this -> recipient = $recipient;
-        $this -> queue = 'verifyEmail';
+        // $this -> queue = 'verifyEmail';
     }
 
     /**

@@ -24,7 +24,7 @@ class ForgotPwMail extends Mailable
     public function __construct($recipient)
     {
         $this -> recipient = $recipient;
-        $this -> queue = 'forgotPwEmail';
+        // $this -> queue = 'forgotPwEmail';
     }
 
     /**

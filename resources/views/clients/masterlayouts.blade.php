@@ -304,11 +304,12 @@
     <script src="{{asset('notiflix/node_modules/notiflix/dist/notiflix-3.2.5.min.js')}}"></script>
     <script src="{{asset('swiper-8.4/package/swiper-bundle.min.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/validate.js')}}"></script>
     <script src="{{asset('js/swiper.js')}}"></script>
     <script src="{{asset('js/cart.js')}}"></script>
     <script src="{{asset('js/favorite.js')}}"></script>
     <script src="{{asset('js/search.js')}}"></script>
     <script src="{{asset('js/order.js')}}"></script>
-    <script>{{Session::has('orderSuccess') ? 'orderSuccess()' : ""}}</script>
+    <script>{{Session::has('orderSuccess') ? 'orderSuccess();' : ""}}</script>
 </body>
 </html>

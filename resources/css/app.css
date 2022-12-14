@@ -1578,7 +1578,13 @@ ul {
 }
 
 .checkout__form-checkout .form-checkout {
-    width: 60%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.checkout__form-checkout .form-checkout .checkout-address{
+    width: 50%;
     padding: 0 30px 10px 0;
     border-right: 1px solid #ccc;
 }
@@ -1594,7 +1600,7 @@ ul {
 
 .form-methods-payment {
     padding: 10px 0 10px 30px;
-    width: 40%;
+    width: 50%;
 }
 
 .form-methods-payment .title-transport,
@@ -1627,7 +1633,7 @@ ul {
     transform: translateY(-50%);
 }
 
-.form-methods-payment .methods-payment div {
+.form-methods-payment .methods-payment > div {
     display: flex;
     flex-direction: column;
 }
@@ -1640,22 +1646,22 @@ ul {
     border-radius: 5px;
     border: 1px solid #ccc;
     opacity: 0.7;
+    font-size: 15px;
+}
+
+.form-methods-payment .label-group > img {
+    width: 33px;
+    margin-right: 10px;
+}
+
+.form-methods-payment .btn-payment_methods > input {
+    width: 18px;
+    height: 18px;
 }
 
 .form-methods-payment .btn-payment_methods.active {
     border: 1px solid #3ba66b;
     opacity: 1;
-    position: relative;
-}
-
-.form-methods-payment .btn-payment_methods.active::after {
-    position: absolute;
-    content: "\f00c";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    color: #3ba66b;
-    font-size: 18px;
-    right: 15px;
 }
 
 .form-methods-payment .btn-payment_methods:hover {
@@ -1678,14 +1684,14 @@ ul {
     align-items: flex-end;
 }
 
-.checkout .totalMoney {
+.checkout .cost-order {
     width: 60%;
     padding: 15px 0 5px 0;
     display: flex;
     justify-content: space-between;
 }
 
-.checkout .totalMoney span {
+.checkout .cost-order span {
     color: red;
 }
 

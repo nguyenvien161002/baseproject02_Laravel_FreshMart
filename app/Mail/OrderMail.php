@@ -24,7 +24,7 @@ class OrderMail extends Mailable
     public function __construct($recipient)
     {
         $this -> recipient = $recipient;
-        $this -> queue = 'OrderEmail';
+        // $this -> queue = 'OrderEmail';
     }
 
     /**

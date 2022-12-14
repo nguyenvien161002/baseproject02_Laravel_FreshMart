@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\FacebookAuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\A_DashboardController;
 use App\Http\Controllers\Admin\A_ProductsController;
 use App\Http\Controllers\Admin\A_CategoryProductController;
@@ -47,19 +48,16 @@ Route::get('/product/details/{id}', [ProductsController::class, "detailsProduct"
 Route::get('/news/details/{id}', [NewsController::class, "detailsNews"]);
 // CONFIRM EMAIL
 Route::get('/user/confirm/{id}/{token}', [AuthenticateController::class, "confirmEmail"]) -> name('user.confirm.email');
-
 // FORGET PASSWORD
 Route::get('/user/forgot/password', [AuthenticateController::class, "forgotPassword"]) -> name('user.forgot.password');
 Route::post('/user/forgot/password', [AuthenticateController::class, "authForgotPassword"]);
 Route::get('/user/reset/password/{id}/{token}', [AuthenticateController::class, "resetPassword"]);
 Route::post('/user/reset/password/{id}/{token}', [AuthenticateController::class, "auhtResetPassword"]);
-
 // ORDERED WITH LOGIN SOCIAL
 Route::get('/user/google/profile/{id}', [ProfileController::class, "index"]);
 Route::get('/user/facebook/profile/{id}', [ProfileController::class, "index"]);
 Route::get('/user/google/ordered/{id}', [OrderController::class, "viewUserGgOrdered"]) -> name('user.google.ordered');
 Route::get('/user/facebook/ordered/{id}', [OrderController::class, "viewUserFbOrdered"]) -> name('user.facebook.ordered');
-
 // LOGIN
 Route::prefix("/register") -> group(function() {
     Route::get("/account", [AuthenticateController::class, "registerAccount"]) -> name('register.account');
@@ -80,7 +78,6 @@ Route::prefix("/login") -> group(function() {
     Route::get('/callback/facebook', [FacebookAuthController::class, 'handleCallback']);
 });
 Route::get("/logout", [AuthenticateController::class, "logout"]);
-
 // ADMIN
 Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
     Route::get('/dashboard', [A_DashboardController::class, "index"]) -> name('admin');
@@ -149,5 +146,8 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
         Route::get('/details/{order_code}', [A_OrdersController::class, "viewDetailsOrder"]);
     });
 });
+// CHECKOUT PAYMENTS
+Route::post("/order/checkout", [CheckoutController::class, "index"]);
+Route::get("/order/checkout/momo", [CheckoutController::class, "paymentMomo"]);
 
 

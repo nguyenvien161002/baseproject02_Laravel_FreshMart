@@ -68,58 +68,96 @@
         </div>
         <div class="checkout__location-checkout">ĐỊA CHỈ NHẬN HÀNG<img src="{{asset('images/svg/location2.svg')}}" alt=""></div>
         <div class="checkout__form-checkout">
-            <form action="" method="" class="form-checkout">
-                <div class="mb-3">
-                    <label for="username">Họ và tên:</label>
-                    <input type="text" value="{{ Session::get('fullname') }}" class="form-control username" placeholder="Nhập họ và tên của bạn" name="username" required>
+            <form action="{{URL::to('/order/checkout')}}" method="POST" class="form-checkout">
+                @csrf
+                <div class="d-flex">
+                    <div class="checkout-address">
+                        <div class="mb-3">
+                            <label for="fullname">Họ và tên:</label>
+                            <input type="text" value="{{ Session::get('fullname') }}" class="form-control username" placeholder="Nhập họ và tên của bạn" name="fullname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="number_phone">Số điện thoại:</label>
+                            <input type="text" value="" class="form-control" placeholder="Nhập số điện thoại" name="number_phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address">Địa chỉ:</label>
+                            <input type="text" value="" class="form-control" placeholder="Nhập địa chỉ của bạn" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="note">Ghi chú:</label>
+                            <textarea class="form-control" placeholder="Nhập ghi chú" name="note" cols="30" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-methods-payment">
+                        <div class="transport">
+                            <p class="title-transport">Phí vận chuyển</p>
+                            <div class="content-transport">
+                                <p class="radio-button">Giao hàng tận nơi</p>
+                                <p class="cost-transport">20.000đ</p>
+                            </div>
+                        </div>
+                        <div class="methods-payment">
+                            <p class="title-methods-payment">Phương thức thanh toán</p>
+                            <div>
+                                <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
+                                    <div class="label-group d-flex align-items-center">
+                                        <img src="{{asset('images/svg/payment-methods/livemoney.svg')}}" alt="" class="me-3">
+                                        <p>Thanh toán tiền mặt khi nhận hàng</p>
+                                    </div>
+                                    <input type="radio" name="payment_method" id="" value="cash_payment" class="input-payment_methods">
+                                </div>
+                                <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
+                                    <div class="label-group d-flex align-items-center">
+                                        <img src="{{asset('images/svg/payment-methods/momo.svg')}}" alt="" class="me-3">
+                                        <p>Thanh toán bằng ví MoMo</p>
+                                    </div>
+                                    <input type="radio" name="payment_method" id="" value="momo_payment" class="input-payment_methods">
+                                </div>
+                                <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
+                                    <div class="label-group d-flex align-items-center">
+                                        <img src="{{asset('images/svg/payment-methods/vnpay.svg')}}" alt="" class="me-3">
+                                        <p>Thanh toán bằng VNPAY</p>
+                                    </div>
+                                    <input type="radio" name="payment_method" id="" value="vnpay_payment" class="input-payment_methods">
+                                </div>
+                                <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
+                                    <div class="label-group d-flex align-items-center">
+                                        <img src="{{asset('images/svg/payment-methods/atm.svg')}}" alt="" class="me-3">
+                                        <p>Thẻ ATM nội địa/Internet Banking (Hỗ trợ Internet Banking)</p>
+                                    </div>
+                                    <input type="radio" name="payment_method" id="" value="atm_payment" class="input-payment_methods">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="numberphone">Số điện thoại:</label>
-                    <input type="text" value="" class="form-control" placeholder="Nhập số điện thoại" name="phone" required>
+                <div class="checkout_payment">
+                    <span class="message-error"></span>
+                    <div class="box-payment">
+                        <div class="cost-order costProduct">
+                            <label for="">Sản phẩm: </label>
+                            <span class="fw-bold money">40.000đ</span>
+                            <input type="text" name="total_product_fee" value="" hidden>
+                        </div>
+                        <div class="cost-order pt-0">
+                            <label for="">Phí giao hàng: </label>
+                            <span class="fw-bold money">20.000đ</span>
+                            <input type="text" name="transport_fee" value="" hidden>
+                        </div>
+                        <div class="totalMoney cost-order pt-0">
+                            <label for="">Tổng: </label>
+                            <span class="fw-bold money">20.000đ</span>
+                            <input type="text" name="total_money" value="" hidden>
+                        </div>
+                        <div class="box-totalproduct">
+                            <p>Tổng sản phẩm (<span class="total-product">1</span> sản phẩm)</p>
+                            <button type="submit" class="btn btn-success btn-order-button">ĐẶT HÀNG</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="address">Địa chỉ:</label>
-                    <input type="text" value="" class="form-control" placeholder="Nhập địa chỉ của bạn" name="address" required>
-                </div>
-                <div class="mb-3">
-                    <label for="note">Ghi chú:</label>
-                    <textarea class="form-control" placeholder="Nhập ghi chú" name="note" required cols="30" rows="3"></textarea>
-                </div>
+                <div class="input-group-hidden"></div>
             </form>
-            <div class="form-methods-payment">
-                <div class="transport">
-                    <p class="title-transport">Phí vận chuyển</p>
-                    <div class="content-transport">
-                        <p class="radio-button">Giao hàng tận nơi</p>
-                        <p class="cost-transport">20.000đ</p>
-                    </div>
-                </div>
-                <div class="methods-payment">
-                    <p class="title-methods-payment">Phương thức thanh toán</p>
-                    <div>
-                        <button class="btn-payment_methods payment_methods" payment_methods="Thẻ tín dụng/ thẻ ghi nợ">Thẻ tín dụng/ thẻ ghi nợ</button>
-                        <button class="btn-payment_methods payment_methods" payment_methods="Ví điện tử">Ví điện tử</button>
-                        <button class="btn-payment_methods payment_methods" payment_methods="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</button>
-                    </div>
-                </div>
-                <div class="form-note">
-                    <p class="title-methods-payment title-form-note">Lưu ý</p>
-                    <p class="text-primary">Quý khách kiểm tra hàng trước khi thanh toán (bằng phương thức "thanh toán khi nhận hàng")</p>
-                </div>
-            </div>
-        </div>
-        <div class="checkout_payment">
-            <span class="message-error"></span>
-            <div class="box-payment">
-                <div class="totalMoney">
-                    <label for="">Tổng tiền: </label>
-                    <span class="fw-bold money">40.000đ</span>
-                </div>
-                <div class="box-totalproduct">
-                    <p>Tổng sản phẩm (<span class="total-product">1</span> sản phẩm)</p>
-                    <button class="btn btn-success btn-order-button">ĐẶT HÀNG</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>

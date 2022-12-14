@@ -25,9 +25,11 @@ return new class extends Migration
             $table->string('number_phone', 40);
             $table->string('address');
             $table->string('payment_method', 255);
+            $table->integer('total_product_fee');
+            $table->integer('transport_fee');
             $table->integer('total_money');
             $table->string('state', 255);
-            $table->text('note');
+            $table->text('note') -> nullable();
             $table->timestamps();
         });
     }
