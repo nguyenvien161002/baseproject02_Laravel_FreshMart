@@ -68,25 +68,60 @@
         </div>
         <div class="checkout__location-checkout">ĐỊA CHỈ NHẬN HÀNG<img src="{{asset('images/svg/location2.svg')}}" alt=""></div>
         <div class="checkout__form-checkout">
-            <form action="{{URL::to('/order/checkout')}}" method="POST" class="form-checkout">
+            <form action="{{URL::to('/order/checkout')}}" method="POST" class="form-checkout" autocomplete="off">
                 @csrf
                 <div class="d-flex">
-                    <div class="checkout-address">
-                        <div class="mb-3">
-                            <label for="fullname">Họ và tên:</label>
-                            <input type="text" value="{{ Session::get('fullname') }}" class="form-control username" placeholder="Nhập họ và tên của bạn" name="fullname" required>
+                    <div class="checkout-address d-flex flex-column justify-content-center">
+                        <div class="mb-3 d-flex align-items-center justify-content-between">
+                            <label class="fw-bold fs-15" for="fullname">Họ và tên</label>
+                            <input type="text" value="{{ Session::get('fullname') }}" class="w-75 form-control username" placeholder="Nhập họ tên" name="fullname" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="number_phone">Số điện thoại:</label>
-                            <input type="text" value="" class="form-control" placeholder="Nhập số điện thoại" name="number_phone" required>
+                        <div class="mb-3 d-flex align-items-center justify-content-between">
+                            <label class="fw-bold fs-15" for="number_phone">Điện thoại di động</label>
+                            <input type="text" value="" class="w-75 form-control" placeholder="Nhập số điện thoại" name="number_phone" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="address">Địa chỉ:</label>
-                            <input type="text" value="" class="form-control" placeholder="Nhập địa chỉ của bạn" name="address" required>
+                        <div class="address-group mb-3 d-flex align-items-center justify-content-between">
+                            <label class="fw-bold fs-15" for="number_phone">Tỉnh/Thành phố</label>
+                            <div class="w-75 position-relative">
+                                <input type="text" hidden value="" placeholder="Chọn Tỉnh/Thành phố" name="province" required>
+                                <i class="fa-solid fa-caret-down position-absolute"></i>
+                                <div class="form-control form-province d-flex align-items-center">
+                                    <p class="group-placeholder">Chọn Tỉnh/Thành phố</p>
+                                </div>
+                                <div class="list-address">
+                                    <ul name="" class="dropdown-address dropdown-province mt-1" id="province"></ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="note">Ghi chú:</label>
-                            <textarea class="form-control" placeholder="Nhập ghi chú" name="note" cols="30" rows="3"></textarea>
+                        <div class="address-group mb-3 d-flex align-items-center justify-content-between">
+                            <label class="fw-bold fs-15" for="number_phone">Quận/Huyện</label>
+                            <div class="w-75 position-relative">
+                                <input type="text" hidden value="" class="form-control form-address" placeholder="Chọn Quận/Huyện" name="district" required>
+                                <i class="fa-solid fa-caret-down position-absolute"></i>
+                                <div class="form-control form-district d-flex align-items-center">
+                                    <p class="group-placeholder">Chọn Quận/Huyện</p>
+                                </div>
+                                <div class="list-address">
+                                    <ul name="" class="dropdown-address dropdown-district mt-1" id="district"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="address-group mb-3 d-flex align-items-center justify-content-between">
+                            <label class="fw-bold fs-15" for="number_phone">Phường/Xã</label>
+                            <div class="w-75 position-relative">
+                                <input type="text" hidden value="" class="form-control form-address" placeholder="Chọn Quận/Huyện" name="ward" required>
+                                <i class="fa-solid fa-caret-down position-absolute"></i>
+                                <div class="form-control form-ward d-flex align-items-center">
+                                    <p class="group-placeholder">Phường/Xã</p>
+                                </div>
+                                <div class="list-address">
+                                    <ul name="" class="dropdown-address dropdown-ward mt-1" id="ward"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 d-flex align-items-center justify-content-between">
+                            <label class="fw-bold fs-15" for="address">Địa chỉ</label>
+                            <input type="text" value="" class="w-75 form-control" placeholder="Ví dụ: 450, đường Trần Đại Nghĩa" name="street" required>
                         </div>
                     </div>
                     <div class="form-methods-payment">
@@ -110,9 +145,9 @@
                                 <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
                                     <div class="label-group d-flex align-items-center">
                                         <img src="{{asset('images/svg/payment-methods/momo.svg')}}" alt="" class="me-3">
-                                        <p>Thanh toán bằng ví MoMo</p>
+                                        <p>Thanh toán bằng ví MoMo (QR)</p>
                                     </div>
-                                    <input type="radio" name="payment_method" id="" value="momo_payment" class="input-payment_methods">
+                                    <input type="radio" name="payment_method" id="" value="momo_payment_QR" class="input-payment_methods">
                                 </div>
                                 <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
                                     <div class="label-group d-flex align-items-center">
@@ -120,6 +155,20 @@
                                         <p>Thanh toán bằng VNPAY</p>
                                     </div>
                                     <input type="radio" name="payment_method" id="" value="vnpay_payment" class="input-payment_methods">
+                                </div>
+                                <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
+                                    <div class="label-group d-flex align-items-center">
+                                        <img src="{{asset('images/svg/payment-methods/momo.svg')}}" alt="" class="me-3">
+                                        <p>Thanh toán bằng ví MoMo (Thẻ ATM)</p>
+                                    </div>
+                                    <input type="radio" name="payment_method" id="" value="momo_payment_ATM" class="input-payment_methods">
+                                </div>
+                                <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
+                                    <div class="label-group d-flex align-items-center">
+                                        <img src="{{asset('images/svg/payment-methods/paypal.svg')}}" alt="" class="me-3 logo-payment-paypal">
+                                        <p>Thanh toán bằng PAYPAL</p>
+                                    </div>
+                                    <input type="radio" name="payment_method" id="" value="paypal_payment" class="input-payment_methods">
                                 </div>
                                 <div class="btn-payment_methods payment_methods d-flex align-items-center justify-content-between">
                                     <div class="label-group d-flex align-items-center">

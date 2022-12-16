@@ -68,10 +68,10 @@
                                 <div class="column-price">
                                     <div class="product--price">
                                         @if($value3['discount'] != 0)
-                                        <p class="item-sp--cost">{{ floor(((int)$value3['price'] / 1000) * (1 - ((int)$value3['discount']/100))) . '.000' }}<a>đ</a></p>
-                                        <p class="item-sp--price">{{ number_format($value3['price'], 0, "", ".") }}<a>đ</a></p>
+                                        <p class="item-sp--cost fw-normal">{{ floor(((int)$value3['price'] / 1000) * (1 - ((int)$value3['discount']/100))) . '.000' }}<a>đ</a></p>
+                                        <p class="item-sp--price fw-normal">{{ number_format($value3['price'], 0, "", ".") }}<a>đ</a></p>
                                         @else 
-                                        <p class="item-sp--cost">{{ number_format($value3['price'], 0, "", ".") }}<a>đ</a></p>
+                                        <p class="item-sp--cost fw-normal">{{ number_format($value3['price'], 0, "", ".") }}<a>đ</a></p>
                                         @endif
                                     </div>
                                 </div>
@@ -80,15 +80,25 @@
                                         <p class="__button-item input-quantity--modifi text-center rounded-1">{{ $value3['quantity'] }}</p>
                                     </div>
                                 </div>
-                                <div class="column-intomoney column-intomoneyOrdered fw-bold fs-16">{{ number_format($value3['into_money'], 0, "", ".") }}đ</div>
+                                <div class="column-intomoney column-intomoneyOrdered fs-16">{{ number_format($value3['into_money'], 0, "", ".") }}đ</div>
                             </div>
                             @endif
                         @endforeach
                     @endforeach
                     <div class="totalmoney-ordered">
-                        <div>
-                            <span class="lable"><img src="{{asset('images/svg/warrant.svg')}}" alt="">Tổng số tiền: </span>
-                            <span class="money fw-bold">{{ number_format($value['total_money'], 0, "", ".") }}<span>đ</span></span>
+                        <div class="d-flex totalmoney-ordered-right">
+                            <div class="d-flex align-items-center">
+                                <span class="lable d-block w-75 fs-15 fw-bold">Tổng sản phẩm: </span>
+                                <span class="money fs-17">{{ number_format($value['total_product_fee'], 0, "", ".") }}<span>đ</span></span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="lable d-block w-75 fs-15 fw-bold">Phí vận chuyển: </span>
+                                <span class="money fs-17">{{ number_format($value['transport_fee'], 0, "", ".") }}<span>đ</span></span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="lable d-block w-75 fs-15 fw-bold"><img src="{{asset('images/svg/warrant.svg')}}" alt="">Tổng số tiền: </span>
+                                <span class="money fs-17 border-top border-danger">{{ number_format($value['total_money'], 0, "", ".") }}<span>đ</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>

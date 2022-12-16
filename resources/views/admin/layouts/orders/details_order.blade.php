@@ -74,8 +74,16 @@
                     <span class="value_column">{{ $order['state'] }}</span>
                 </div>
                 <div class="group-order">
+                    <label for="value_column">Tổng tiền sản phẩm: </label>
+                    <span class="value_column">{{ number_format($order['total_product_fee'], 0, "", ".") }} VND</span>
+                </div>
+                <div class="group-order">
+                    <label for="value_column">Phí vận chuyển: </label>
+                    <span class="value_column">{{ number_format($order['transport_fee'], 0, "", ".") }} VND</span>
+                </div>
+                <div class="group-order">
                     <label for="value_column">Tổng tiền: </label>
-                    <span class="value_column text-danger">{{ number_format($order['total_money'], 0, "", ".") . " VND"}}</span>
+                    <span class="value_column text-danger">{{ number_format($order['total_money'], 0, "", ".") }} VND</span>
                 </div>
                 @endforeach
             </div>

@@ -301,6 +301,7 @@
     <div id="toastLogin"></div>
     <!-- EMBEDDING JS FILES -->
     <script src="{{asset('jquery-3.6.1/jquery-3.6.1.min.js')}}"></script>
+    <script src="{{asset('axios/dist/axios.min.js')}}"></script>
     <script src="{{asset('notiflix/node_modules/notiflix/dist/notiflix-3.2.5.min.js')}}"></script>
     <script src="{{asset('swiper-8.4/package/swiper-bundle.min.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>

@@ -46,6 +46,8 @@ Route::post('/order', [OrderController::class, "insertOrder"]);
 Route::get('/user/ordered/{id}', [OrderController::class, "viewOrdered"]) -> name('ordered');
 Route::get('/product/details/{id}', [ProductsController::class, "detailsProduct"]);
 Route::get('/news/details/{id}', [NewsController::class, "detailsNews"]);
+// SORT PRODUCTS
+Route::post('/products/sort', [ProductsController::class, "sortProducts"]);
 // CONFIRM EMAIL
 Route::get('/user/confirm/{id}/{token}', [AuthenticateController::class, "confirmEmail"]) -> name('user.confirm.email');
 // FORGET PASSWORD
@@ -149,5 +151,9 @@ Route::prefix("/admin") -> middleware('checklogin') -> group(function() {
 // CHECKOUT PAYMENTS
 Route::post("/order/checkout", [CheckoutController::class, "index"]);
 Route::get("/order/checkout/momo", [CheckoutController::class, "paymentMomo"]);
+Route::get("/order/checkout/vnpay", [CheckoutController::class, "paymentVNPAY"]);
+Route::get('/order/checkout/paypal/process-transaction', [CheckoutController::class, 'processTransaction']) -> name('processTransaction');
+Route::get('/order/checkout/paypal/success-transaction/{id}', [CheckoutController::class, 'successTransaction']) -> name('successTransaction');
+Route::get('/order/checkout/paypal/cancel-transaction', [CheckoutController::class, 'cancelTransaction']) -> name('cancelTransaction');
 
 

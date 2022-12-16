@@ -53,8 +53,16 @@ ul {
     margin-left: -10px;
 }
 
+.fs-17 {
+    font-size: 17px !important;
+}
+
 .fs-16 {
     font-size: 16px !important;
+}
+
+.fs-15 {
+    font-size: 15px !important;
 }
 
 .px20 {
@@ -1116,8 +1124,14 @@ ul {
 
 #content-products .section-about .sort-products {
     display: flex;
+    align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #ccc;
+}
+
+#content-products .sort-products ul {
+    display: flex;
+    align-items: center;    
 }
 
 #content-products .sort-products ul li {
@@ -1125,7 +1139,7 @@ ul {
     margin-left: 10px;
 }
 
-#content-products .sort-products .btn-quick-sort a {
+#content-products .sort-products .btn-quick-sort > div {
     color: #000;
     font-size: 14px;
     position: relative;
@@ -1596,6 +1610,8 @@ ul {
 .checkout__form-checkout .form-control {
     font-size: 14px;
     resize: none;
+    border-radius: 4px;
+    height: 37px;
 }
 
 .form-methods-payment {
@@ -1647,6 +1663,7 @@ ul {
     border: 1px solid #ccc;
     opacity: 0.7;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .form-methods-payment .label-group > img {
@@ -1715,6 +1732,68 @@ ul {
 
 .checkout .box-totalproduct .total-product {
     font-weight: 500;
+}
+
+.address-group > div > i {
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+.address-group .form-control {
+    cursor: pointer;
+}
+
+.address-group .form-control .group-placeholder {
+    color: #777;
+}
+
+.address-group .form-control.active {
+    border: 1px solid #3ba66b;
+}
+
+.address-group .form-control:hover{
+    border: 1px solid #3ba66b;
+}
+
+.address-group > div > input {
+    cursor: pointer;
+    background-color: #f8fafc !important;
+}
+
+.address-group .list-address .dropdown-address {
+    max-height: 155px;
+    background-color: #fff;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    display: none;
+}
+
+.address-group .list-address .dropdown-address.active {
+    display: block;
+}
+
+.address-group .list-address .address-item {
+    display: block;
+    width: 100%;
+    padding: .2rem 0.7rem;
+    clear: both;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.address-group .list-address .address-item:hover {
+    background-color: #2cccff;
 }
 
 .message-error {
@@ -1869,13 +1948,13 @@ ul {
     justify-content: flex-end;
     align-items: flex-end;
     padding: 10px;
+    border-top: 1px solid #e6e6e6;
 }
 
-.ordered__section .totalmoney-ordered > div {
-    display: flex;
-    align-items: center;
-    padding: 10px 40px;
+.ordered__section .totalmoney-ordered .totalmoney-ordered-right {
+    flex-direction: column;
     border: 1px solid #ccc;
+    padding: 5px 30px;
     border-radius: 5px;
 }
 

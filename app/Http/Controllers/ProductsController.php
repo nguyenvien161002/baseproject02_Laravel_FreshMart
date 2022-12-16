@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use App\Models\CategoryProduct;
 use App\Models\Products;
+use App\Models\CategoryProduct;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class ProductsController extends Controller
 {
@@ -32,5 +34,22 @@ class ProductsController extends Controller
         return View::make('clients.layouts.details.details_product', compact([
             'category_product', 'product', 'related_p', 'images_sub'
         ]));
+    }
+
+    public function sortProducts()
+    {
+        if(Request::ajax()){
+            $data = Request::all();
+            if($data['query'] == 'alpha-asc') {
+                $sort = 'asc';
+            }
+            $products = Products::orderBy('name', $sort) -> where('state', 1) -> paginate(12);
+            $paginate = $products -> appends(Request::all()) -> links('clients.layouts.pagination');
+            if($products) {
+                return Response::json($products);
+            } else {
+                return Response::json($products);
+            } 
+        }
     }
 }

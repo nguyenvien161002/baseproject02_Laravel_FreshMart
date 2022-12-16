@@ -239,3 +239,77 @@ function showLoginToast() {
     }, toastLogin);
 }
 
+// SORT PRODUCTS
+const btnSort = $$('.btnQuickSort');
+btnSort.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        var query = {
+            query: btn.getAttribute('name')
+        };
+        var row = "";
+        $j.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $j('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $j.ajax({
+            type: "POST",
+            url: 'http://127.0.0.1:8000/products/sort',
+            data: JSON.stringify(query),
+            dataType: 'JSON',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            success: function (response) {
+                response.data.forEach((product) => {
+                    var costProduct = 0;
+                    var eleSubColuPrice = "";
+                    var eleDiscount = "";
+                    if (product.discount != 0) {
+                        costProduct = (product.price / 1000) * (1 - parseInt(product.discount) / 100);
+                        costProduct = Math.floor(costProduct);
+                        eleDiscount = `<div class="product--lbrprice">- ${product.discount}%</div>`
+                        eleSubColuPrice = `
+                            <div class="product--price">
+                                <p class="item-sp--cost fs-16">${costProduct}.000<a>đ</a></p>
+                                <p class="item-sp--price ">${product.price / 1000}.000<a>đ</a></p>
+                            </div>`
+                    } else {
+                        costProduct = product.price / 1000;
+                        eleSubColuPrice = `
+                            <div class="product--price">
+                                <p class="item-sp--cost fs-16">${costProduct}.000<a>đ</a></p>
+                            </div>`
+                    }
+                    row += `<div class="sectiontwo-item product" data-id="1">
+                                ${eleDiscount}
+                                <div class="product--group">
+                                    <a href="http://127.0.0.1:8000/product/details/${product.id}">
+                                        <img src="http://127.0.0.1:8000/images/${product.image_main}" alt="${product.name}">
+                                    </a>
+                                    <div class="product-action">
+                                        <div class="btn_action btn_favorite">
+                                            <img class="img-pro-action" src="http://127.0.0.1:8000/images/svg/heart.svg" alt="">
+                                        </div>
+                                        <div class="btn_action btn_addtocart">
+                                            <img class="img-pro-action" src="http://127.0.0.1:8000/images/svg/shopping-carts.svg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product--group">
+                                    <a class="product--name" href="http://127.0.0.1:8000/product/details/1">${product.name}</a>
+                                    ${eleSubColuPrice}
+                                </div>
+                            </div>`
+                })
+                console.log(row);
+                // $('.category-product').innerHTML = "";
+                // $('.category-product').innerHTML = row;
+                // $('.next-sheet').innerHTML = "";
+            }
+        });
+    });
+});
+

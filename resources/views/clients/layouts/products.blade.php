@@ -77,29 +77,29 @@
                         <p class="ms-1">Xếp theo</p>
                     </div>
                     <ul>
-                        <li class="btn-quick-sort alpha-asc ">
-                            <a href="?sort=alpha-asc" onclick="" title="Tên A-Z">
+                        <li class="btn-quick-sort">
+                            <div class="btnQuickSort" name="alpha-asc">
                                 <i></i>
                                 <label for="">Tên A-Z</label>
-                            </a>
+                            </div>
                         </li>
-                        <li class="btn-quick-sort alpha-desc ">
-                            <a href="?sort=alpha-desc" onclick="" title="Tên Z-A">
+                        <li class="btn-quick-sort">
+                            <div class="btnQuickSort" name="alpha-desc">
                                 <i></i>
                                 <label for="">Tên Z-A</label>
-                            </a>
+                            </div>
                         </li>
-                        <li class="btn-quick-sort price-asc ">
-                            <a href="?sort=price-asc" onclick="" title="Giá thấp đến cao">
+                        <li class="btn-quick-sort">
+                            <div class="btnQuickSort" name="price-asc">
                                 <i></i>
                                 <label for="">Giá thấp đến cao</label>
-                            </a>
+                            </div>
                         </li>
-                        <li class="btn-quick-sort price-desc ">
-                            <a href="?sort=price-desc" onclick="" title="Giá cao xuống thấp">
+                        <li class="btn-quick-sort">
+                            <div class="btnQuickSort" name="price-desc">
                                 <i></i>
                                 <label for="">Giá cao xuống thấp</label>
-                            </a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -137,7 +137,7 @@
                     @endforeach
                 </div>
                 <div class="next-sheet">
-                   {{ $products -> links('clients.layouts.pagination') }}
+                    {{ $products -> appends(Request::all()) -> links('clients.layouts.pagination') }}
                 </div>
             </div>
         </div>

@@ -3,9 +3,9 @@
 <div class="paging_simple_numbers">
 
     @if ($paginator -> onFirstPage())
-    <a href="#" class="paginate_button previous btn">Previous</a>
+    <a href="#" class="paginate_button previous btn">Trước</a>
     @else
-    <a href="{{ $paginator->previousPageUrl() }}" class="paginate_button previous btn">Previous</a>
+    <a href="{{ $paginator->previousPageUrl() }}" class="paginate_button previous btn">Trước</a>
     @endif
 
     <span class="number_paging">
@@ -23,9 +23,9 @@
     </span>
 
     @if ($paginator -> hasMorePages())
-    <a href="{{ $paginator->nextPageUrl() }}" class="paginate_button next btn">Next</a>
+    <a href="{{ $paginator->nextPageUrl() }}" class="paginate_button next btn">Sau</a>
     @else
-    <a href="#" class="paginate_button next btn">Next</a>
+    <a href="#" class="paginate_button next btn">Sau</a>
     @endif
 </div>
 @endif
