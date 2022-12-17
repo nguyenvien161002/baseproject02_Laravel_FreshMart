@@ -35,33 +35,33 @@
                     <div class="sidebar-title">LỌC SẢN PHẨM</div>
                     <div class="sidebar-content">
                         <b>Giá sản phẩm</b>
-                        <ul class="sidebar-content-list">
-                            <li class="item-name itemcheckbox " name="price less than 100.000 VND" data-id="1">
-                                <a href="?filter=price<100000" class="d-flex align-items-center">
+                        <ul class="sidebar-content-list" id="sidebar-content-list">
+                            <li class="item-name itemcheckbox" data-field="price_under:100000" data-id="1">
+                                <a href="" class="d-flex align-items-center">
                                     <i class="checkboxfa"></i>
                                     <p>Giá dưới 100.000đ</p>
                                 </a>
                             </li>
-                            <li class="item-name itemcheckbox " name="price from 100 to 200 VND" data-id="2">
-                                <a href="?filter=price(100000-200000)" class="d-flex align-items-center">
+                            <li class="item-name itemcheckbox" data-field="(range_price:100000-200000)" data-id="2">
+                                <a href="" class="d-flex align-items-center">
                                     <i class="checkboxfa"></i>
                                     <p>100.000đ - 200.000đ</p>
                                 </a>
                             </li>
-                            <li class="item-name itemcheckbox " name="price from 200 to 300 VND" data-id="3">
-                                <a href="?filter=price(200000-300000)" class="d-flex align-items-center">
+                            <li class="item-name itemcheckbox" data-field="(range_price:200000-300000)" data-id="3">
+                                <a href="" class="d-flex align-items-center">
                                     <i class="checkboxfa"></i>
                                     <p>200.000đ - 300.000đ</p>
                                 </a>
                             </li>
-                            <li class="item-name itemcheckbox " name="price from 300 to 500 VND" data-id="4">
-                                <a href="?filter=price(300000-500000)" class="d-flex align-items-center">
+                            <li class="item-name itemcheckbox" data-field="(range_price:300000-500000)" data-id="4">
+                                <a href="" class="d-flex align-items-center">
                                     <i class="checkboxfa"></i>
                                     <p>300.000đ - 500.000đ</p>
                                 </a>
                             </li>
-                            <li class="item-name itemcheckbox " name="price over 500 VND" data-id="5">
-                                <a href="?filter=price>500000" class="d-flex align-items-center">
+                            <li class="item-name itemcheckbox" data-field="price_over:500000" data-id="5">
+                                <a href="" class="d-flex align-items-center">
                                     <i class="checkboxfa"></i>
                                     <p>Giá trên 500.000đ</p>
                                 </a>
@@ -103,44 +103,111 @@
                         </li>
                     </ul>
                 </div>
-                <div class="category-product">
-                    @foreach($products as $key => $product)
-                    <div class="sectiontwo-item product" data-id="{{ $product['id'] }}">
-                        @if($product['discount'] != 0)
-                        <div class="product--lbrprice">- {{ $product['discount'] }}%</div>
-                        @endif
-                        <div class="product--group">
-                            <a href="{{URL::to('product/details/' . $product['id'])}}">
-                                <img src="{{asset('images/' . $product['image_main'])}}" alt="{{ $product['name'] }}">
-                            </a>
-                            <div class="product-action">
-                                <div class="btn_action btn_favorite">
-                                    <img class="img-pro-action" src="{{asset('images/svg/heart.svg')}}" alt="">
-                                </div>
-                                <div class="btn_action btn_addtocart">
-                                    <img class="img-pro-action" src="{{asset('images/svg/shopping-carts.svg')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product--group">
-                            <a class="product--name" href="{{URL::to('product/details/' . $product['id'])}}">{{ $product['name'] }}</a>
-                            <div class="product--price">
-                                @if($product['discount'] != 0)
-                                <p class="item-sp--cost">{{ floor(((int)$product['price'] / 1000) * (1 - ((int)$product['discount']/100))) . '.000' }}<a>đ</a></p>
-                                <p class="item-sp--price">{{ number_format($product['price'], 0, "", ".") }}<a>đ</a></p>
-                                @else
-                                <p class="item-sp--cost">{{ number_format($product['price'], 0, "", ".") }}<a>đ</a></p>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-                <div class="next-sheet">
-                    {{ $products -> appends(Request::all()) -> links('clients.layouts.pagination') }}
+                <div class="content-product-main" id="content-product-main">
+                    @include('clients.layouts.products.main')
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    //PAGINATION AJAX JQUERY: SORT
+    $j(document).ready(function() {
+        //FILTER RADIO
+        $j(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var url = $j(this).attr('href');
+            window.history.pushState("", "", url);
+            getProductsMeGet(window.location.href);
+        });
+
+        $j(document).on('click', '.btnQuickSort', function(event) {
+            $$('.btnQuickSort').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            var sort = event.target.getAttribute('name');
+            var url = "{{ route('products') }}" + "?sort_by=" + sort;
+            window.history.pushState("", "", url);
+            getProductsMePost(window.location.href);
+        });
+        //FILTER CHECKBOX
+        // var arrayParams = [];
+        // var count = 1;
+        // var url = "";
+        // var data_field = "";
+        // var data_checkbox_id = "";
+        // $j(document).on('click', '.itemcheckbox', function(event) {
+        //     $j(this).toggleClass('active');
+        //     var isTrue = $j(this).hasClass('active');
+        //     if(isTrue) {
+        //         data_field = $j(this).attr('data-field');
+        //         data_checkbox_id = $j(this).attr('data-id');
+        //         if(count == 1) { 
+        //             arrayParams.push({
+        //                 id: data_checkbox_id,
+        //                 field: data_field
+        //             });
+        //             url = "{{ route('products') }}" + "?filter=" + data_field;
+        //         } else {
+        //             arrayParams.push({
+        //                 id: data_checkbox_id,
+        //                 field: data_field
+        //             });
+        //             var params = "";
+        //             var length = arrayParams.length;
+        //             for(var i = 0; i < length ; i++) { 
+        //                 if( i == 0) {
+        //                     params = `${arrayParams[i].field}`
+        //                 } else {
+        //                     params += `&${arrayParams[i].field}`
+        //                 }
+        //             }
+        //             url = window.location.origin + window.location.pathname + "?filter=" + params;
+        //         }
+        //         count++;
+        //         window.history.pushState("", "", url);
+        //     } else { 
+        //         data_field = $j(this).attr('data-field');
+        //         console.log("còn cái nịt");
+        //     }
+        //     getProductsMePost(window.location.href);
+        // });
+    });
+
+    function getProductsMeGet(url) {
+        $j.ajax({
+            type: "GET",
+            url: url,
+            success: function(response) {
+                $j('#content-product-main').html(response);
+            }
+        });
+    }
+    
+    function getProductsMePost(url) {
+        $j.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $j('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $j.ajax({
+            type: "POST",
+            url: "{{route('post.products')}}",
+            data: JSON.stringify({
+                url: url
+            }),
+            dataType: 'JSON',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            success: function(response) {
+                $j('#content-product-main').html(response);
+            }
+        });
+    }
+</script>
+@endpush

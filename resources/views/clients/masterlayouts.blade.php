@@ -312,5 +312,6 @@
     <script src="{{asset('js/search.js')}}"></script>
     <script src="{{asset('js/order.js')}}"></script>
     <script>{{Session::has('orderSuccess') ? 'orderSuccess();' : ""}}</script>
+    @stack('scripts')
 </body>
 </html>

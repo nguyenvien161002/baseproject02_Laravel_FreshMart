@@ -318,7 +318,8 @@
 }
 
 #content-product .sectionfour-about {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
     gap: 20px;
     justify-content: initial;
 }

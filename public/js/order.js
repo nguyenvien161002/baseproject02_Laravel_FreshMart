@@ -333,6 +333,10 @@ btnsMethods.forEach((btn, index) => {
 //     window.localStorage.removeItem('CART');
 // });
 
+function removeItemLocalStorage() {
+    localStorage.setItem('CART', []);
+}
+
 // ORDER SUCCESSh
 function orderSuccess() {
     var toastOrder = $('.box-toast');

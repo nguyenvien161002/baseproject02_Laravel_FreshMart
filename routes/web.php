@@ -36,7 +36,8 @@ use Illuminate\Support\Facades\Route;
 // CLIENTS
 Route::get('/', [HomeController::class, "index"]) -> name('home');
 Route::get('/introduction', [IntroductionController::class, "index"]);
-Route::get('/products', [ProductsController::class, "index"]);
+Route::get('/products', [ProductsController::class, "index"])-> name('products');
+Route::post('/products', [ProductsController::class, "getProductsFromCondi"])-> name('post.products');
 Route::get('/news', [NewsController::class, "index"]);
 Route::get('/contact', [ContactController::class, "index"]);
 Route::get('/favorite', [FavoriteController::class, "index"]);
@@ -46,8 +47,7 @@ Route::post('/order', [OrderController::class, "insertOrder"]);
 Route::get('/user/ordered/{id}', [OrderController::class, "viewOrdered"]) -> name('ordered');
 Route::get('/product/details/{id}', [ProductsController::class, "detailsProduct"]);
 Route::get('/news/details/{id}', [NewsController::class, "detailsNews"]);
-// SORT PRODUCTS
-Route::post('/products/sort', [ProductsController::class, "sortProducts"]);
+Route::get('/categoryproduct/{id}', [ProductsController::class, "getProductOfCategory"]);
 // CONFIRM EMAIL
 Route::get('/user/confirm/{id}/{token}', [AuthenticateController::class, "confirmEmail"]) -> name('user.confirm.email');
 // FORGET PASSWORD
