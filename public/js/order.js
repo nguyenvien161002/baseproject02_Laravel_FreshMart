@@ -90,7 +90,10 @@ boxQuantity.forEach((box) => {
     const btnPlusOP = box.querySelector('.btn-incrOderPage');
     const btnMinusOP = box.querySelector('.btn-decrOderPage');
     const inputQuantity = box.querySelector('.quantityOrderPage');
-    var valueInputQuantity = inputQuantity.value;
+    var valueInputQuantity = "";
+    if(inputQuantity) {
+        valueInputQuantity = inputQuantity.value
+    }
     var message = "";
     var data = "";
     var product = getParent(box, ".product-in-checkout");
@@ -329,9 +332,9 @@ btnsMethods.forEach((btn, index) => {
     });
 });
 
-// btnCheckout.click(function () {
-//     window.localStorage.removeItem('CART');
-// });
+btnCheckout.click(function () {
+    window.localStorage.removeItem('CART');
+});
 
 function removeItemLocalStorage() {
     localStorage.setItem('CART', []);
@@ -346,97 +349,5 @@ function orderSuccess() {
             toastOrder.classList.remove('active');
         }, 5000);
         removeItemLocalStorage();
-    }
-}
-
-// CALL API PROVINCE
-const host = "https://provinces.open-api.vn/api/";
-var callAPIProvince = (api) => {
-    return axios.get(api)
-        .then((response) => {
-            var options = {
-                "data": response.data,
-                "renderSelect": "#province",
-                "formSelect": ".form-province",
-                "inputSelect": "input[name='province']",
-                "dropdownSelect": ".dropdown-province",
-            };
-            renderData(options);
-        });
-}
-
-var callApiDistrict = (api) => {
-    return axios.get(api)
-        .then((response) => {
-            var options = {
-                "data": response.data.districts,
-                "renderSelect": "#district",
-                "formSelect": ".form-district",
-                "inputSelect": "input[name='district']",
-                "dropdownSelect": ".dropdown-district",
-            };
-            renderData(options);
-        });
-}
-
-var renderData = (options) => {
-    let row = '';
-    options.data.forEach(element => {
-        row += `<li class="address-item" value="${element.code}">${element.name}</li>`
-    });
-    $(options.renderSelect).innerHTML = row;
-    chooseAddress($$('.address-item'), options.formSelect, options.inputSelect, options.dropdownSelect);
-}
-
-function chooseAddress(addessSelector, formSelect, inputSelect, dropdownSelect) {
-    addessSelector.forEach(element => {
-        element.onclick = () => {
-            $(formSelect).innerHTML = element.innerText;
-            $(inputSelect).value = element.innerText;
-            $(inputSelect).setAttribute('data-id', element.value);
-            $(dropdownSelect).classList.toggle('active');
-        }
-    })
-}
-
-if($('.form-province')) {
-    $('.form-province').onclick = () => {
-        $$('.dropdown-address').forEach(element =>{
-            element.classList.remove('active');
-        });
-        callAPIProvince('https://provinces.open-api.vn/api/?depth=1');
-        $('.dropdown-province').classList.toggle('active');
-    }
-    
-    $('.form-district').onclick = () => {
-        $$('.dropdown-address').forEach(element =>{
-            element.classList.remove('active');
-        });
-        var province_id = $("input[name='province']").getAttribute('data-id');
-        if(province_id) {
-            callApiDistrict(`${host}p/${province_id}?depth=2`)
-            $('.dropdown-district').classList.toggle('active');
-        }
-    }
-    
-    $('.form-ward').onclick = () => {
-        var district_id = $("input[name='district']").getAttribute('data-id');
-        if(district_id) {
-            $('.dropdown-ward').classList.toggle('active');
-            $j.ajax({
-                type: 'GET',
-                url: `${host}d/${district_id}?depth=2`,
-                success: function(response) { 
-                    var options = {
-                        "data": response.wards,
-                        "renderSelect": "#ward",
-                        "formSelect": ".form-ward",
-                        "inputSelect": "input[name='ward']",
-                        "dropdownSelect": ".dropdown-ward",
-                    };
-                    renderData(options);
-                }
-            });
-        }
     }
 }

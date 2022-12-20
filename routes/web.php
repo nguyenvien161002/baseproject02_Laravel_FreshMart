@@ -41,9 +41,7 @@ Route::post('/products', [ProductsController::class, "getProductsFromCondi"])-> 
 Route::get('/news', [NewsController::class, "index"]);
 Route::get('/contact', [ContactController::class, "index"]);
 Route::get('/favorite', [FavoriteController::class, "index"]);
-Route::get('/user/profile/{id}', [ProfileController::class, "index"]);
-Route::get('/order', [OrderController::class, "index"]);
-Route::post('/order', [OrderController::class, "insertOrder"]);
+Route::get('/order/{id}', [OrderController::class, "index"]);
 Route::get('/user/ordered/{id}', [OrderController::class, "viewOrdered"]) -> name('ordered');
 Route::get('/product/details/{id}', [ProductsController::class, "detailsProduct"]);
 Route::get('/news/details/{id}', [NewsController::class, "detailsNews"]);
@@ -55,9 +53,28 @@ Route::get('/user/forgot/password', [AuthenticateController::class, "forgotPassw
 Route::post('/user/forgot/password', [AuthenticateController::class, "authForgotPassword"]);
 Route::get('/user/reset/password/{id}/{token}', [AuthenticateController::class, "resetPassword"]);
 Route::post('/user/reset/password/{id}/{token}', [AuthenticateController::class, "auhtResetPassword"]);
-// ORDERED WITH LOGIN SOCIAL
-Route::get('/user/google/profile/{id}', [ProfileController::class, "index"]);
+// PERSONAL PAGE LOGIN SOCIAL
+Route::prefix("/user/profile") -> group(function() { 
+    Route::get('/{id}', [ProfileController::class, "index"]);
+    Route::get('/manageaddress/{id}', [ProfileController::class, "manageAddress"]) -> name('manage.address');
+    Route::post('/address/add/{id}', [ProfileController::class, "addAddress"]);
+    Route::get('/address/get/{id}', [ProfileController::class, "getAddress"]);
+    Route::get('/address/delete/{id_user}/{id}', [ProfileController::class, "deleteAddress"]);
+    Route::get('/changepassword/{id}', [ProfileController::class, "changePassword"]);
+    Route::get('/changeavatar/{id}', [ProfileController::class, "changeAvatar"]);
+});
+Route::prefix("/user/google/profile") -> group(function() { 
+    Route::get('/{id}', [ProfileController::class, "index"]);
+    Route::get('/manageaddress/{id}', [ProfileController::class, "manageAddress"]) -> name('manage.address');
+    Route::post('/address/add/{id}', [ProfileController::class, "addAddress"]);
+    Route::get('/address/get/{id}', [ProfileController::class, "getAddress"]);
+    Route::post('/address/update/{id_user}/{id}', [ProfileController::class, "updateAddress"]);
+    Route::get('/address/delete/{id_user}/{id}', [ProfileController::class, "deleteAddress"]);
+    Route::get('/changepassword/{id}', [ProfileController::class, "changePassword"]);
+    Route::get('/changeavatar/{id}', [ProfileController::class, "changeAvatar"]);
+});
 Route::get('/user/facebook/profile/{id}', [ProfileController::class, "index"]);
+// ORDERED WITH LOGIN SOCIAL
 Route::get('/user/google/ordered/{id}', [OrderController::class, "viewUserGgOrdered"]) -> name('user.google.ordered');
 Route::get('/user/facebook/ordered/{id}', [OrderController::class, "viewUserFbOrdered"]) -> name('user.facebook.ordered');
 // LOGIN

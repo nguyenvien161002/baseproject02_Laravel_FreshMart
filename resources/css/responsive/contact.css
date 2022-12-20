@@ -1,0 +1,36 @@
+/* TABLET */
+@media (min-width: 46.25em) and (max-width:63.9375em){
+    
+}
+/* MOBILE */
+@media (max-width: 46.1875em){
+    #content-contact {
+        padding-bottom: 20px;
+    }
+
+    #content-contact .content-about {
+        margin-top: 40px;
+    }
+
+    #content-contact .content-infoandform {
+        display: block;
+    }
+
+    #content-contact .content-contact-form .form-personal {
+        justify-content: space-between;
+    }
+
+    #content-contact .content-contact--info {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    #content-contact .form-peronal--item {
+        width: 49%;
+    }
+
+    #content-contact .form-personal .item-email {
+        margin: 0;
+    }
+}

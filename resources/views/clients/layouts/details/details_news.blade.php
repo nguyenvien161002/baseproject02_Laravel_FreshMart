@@ -8,7 +8,7 @@
     <div class="slider-navtitle">
         <div class="slider-title">{!!$newsById['title']!!}</div>
         <div class="slider-nav d-flex justify-content-center align-items-center ">
-            <a href="" class="slider-nav-item">Trang chủ</a><i>/</i>
+            <a href="" class="slider-nav-item">Trang chủ /</a>
             <b class="slider-nav-item">{!!$newsById['title']!!}</b>
         </div>
     </div>

@@ -13,27 +13,31 @@ btnDropdowns.forEach((btn, index) => {
 var modal = $('.js-modal');
 var modalCart = $('.js-modal__cartshopping');
 var modalSidebar = $('.js-modal__sidebar');
+var modalAddress = $('.js-modal__address');
 var modalOverlay = $('.modal__overlay');
 // Buttons
 var btnCartClose = $('.js-cartClose');
 var btnCartShopping = $('.js-cart-shopping');
 var btnSidebar = $('.js-sidebar');
 
+
 btnCartClose.addEventListener('click', () => {
     modal.classList.remove('active');
 });
 
 btnCartShopping.addEventListener('click', () => {
-    if (modalSidebar.classList.contains('active')) {
+    if (modalSidebar.classList.contains('active') || modalAddress.classList.contains('active')) {
         modalSidebar.classList.remove('active');
+        modalAddress.classList.remove('active');
     }
     modal.classList.add('active');
     modalCart.classList.add('active');
 });
 
 btnSidebar.addEventListener('click', () => {
-    if (modalCart.classList.contains('active')) {
+    if (modalCart.classList.contains('active') || modalAddress.classList.contains('active')) {
         modalCart.classList.remove('active');
+        modalAddress.classList.remove('active');
     }
     modal.classList.add('active');
     modalSidebar.classList.add('active');
@@ -41,6 +45,9 @@ btnSidebar.addEventListener('click', () => {
 
 modalOverlay.addEventListener('click', () => {
     modal.classList.remove('active');
+    $('.dropdown-province').classList.remove('active');
+    $('.dropdown-district').classList.remove('active');
+    $('.dropdown-ward').classList.remove('active');
 });
 
 // Transfer photos of product details: chuyển ảnh của trang chi tiết sản phẩm
@@ -237,4 +244,103 @@ function showLoginToast() {
         type: "warning",
         duration: 5000
     }, toastLogin);
+}
+
+// REMOVE LOCALSTORAGE ITEM "SORT", "FILTER", "FILTER_MERGE_SORT"
+function removeLocalStorageFOS() {
+    localStorage.removeItem("SORT");
+    localStorage.removeItem("FILTER");
+    localStorage.removeItem("FILTER_MERGE_SORT");
+}
+
+// CALL API PROVINCE
+const host = "https://provinces.open-api.vn/api/";
+var callAPIProvince = (api) => {
+    return axios.get(api)
+        .then((response) => {
+            var options = {
+                "data": response.data,
+                "renderSelect": "#province",
+                "formSelect": ".form-province",
+                "inputSelect": "input[name='province']",
+                "dropdownSelect": ".dropdown-province",
+            };
+            renderData(options);
+        });
+}
+
+var callApiDistrict = (api) => {
+    return axios.get(api)
+        .then((response) => {
+            var options = {
+                "data": response.data.districts,
+                "renderSelect": "#district",
+                "formSelect": ".form-district",
+                "inputSelect": "input[name='district']",
+                "dropdownSelect": ".dropdown-district",
+            };
+            renderData(options);
+        });
+}
+
+var renderData = (options) => {
+    let row = '';
+    options.data.forEach(element => {
+        row += `<li class="address-item" value="${element.code}">${element.name}</li>`
+    });
+    $(options.renderSelect).innerHTML = row;
+    chooseAddress($$('.address-item'), options.formSelect, options.inputSelect, options.dropdownSelect);
+}
+
+function chooseAddress(addessSelector, formSelect, inputSelect, dropdownSelect) {
+    addessSelector.forEach(element => {
+        element.onclick = () => {
+            $(formSelect).innerHTML = element.innerText;
+            $(inputSelect).value = element.innerText;
+            $(inputSelect).setAttribute('data-id', element.value);
+            $(dropdownSelect).classList.remove('active');
+        }
+    })
+}
+
+if($('.form-province')) {
+    $('.form-province').onclick = () => {
+        $('.dropdown-district').classList.remove('active');
+        $('.dropdown-ward').classList.remove('active');
+        callAPIProvince('https://provinces.open-api.vn/api/?depth=1');
+        $('.dropdown-province').classList.toggle('active');
+    }
+    
+    $('.form-district').onclick = () => {
+        $('.dropdown-province').classList.remove('active');
+        $('.dropdown-ward').classList.remove('active');
+        var province_id = $("input[name='province']").getAttribute('data-id');
+        if(province_id) {
+            callApiDistrict(`${host}p/${province_id}?depth=2`)
+            $('.dropdown-district').classList.toggle('active');
+        }
+    }
+    
+    $('.form-ward').onclick = () => {
+        var district_id = $("input[name='district']").getAttribute('data-id');
+        if(district_id) {
+            $('.dropdown-province').classList.remove('active');
+            $('.dropdown-district').classList.remove('active');
+            $('.dropdown-ward').classList.toggle('active');
+            $j.ajax({
+                type: 'GET',
+                url: `${host}d/${district_id}?depth=2`,
+                success: function(response) { 
+                    var options = {
+                        "data": response.wards,
+                        "renderSelect": "#ward",
+                        "formSelect": ".form-ward",
+                        "inputSelect": "input[name='ward']",
+                        "dropdownSelect": ".dropdown-ward",
+                    };
+                    renderData(options);
+                }
+            });
+        }
+    }
 }

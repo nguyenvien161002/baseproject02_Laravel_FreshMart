@@ -7,7 +7,11 @@
     </li>
     @else
     <li class="page-item">
-        <a href="{{ $paginator->previousPageUrl() }}">
+        @php
+            $prePageUrl = urldecode($paginator->previousPageUrl());
+            
+        @endphp
+        <a href="{{ isset($prePageUrl) ? $prePageUrl : $paginator->previousPageUrl() }}">
             <i class="fa-solid fa-backward"></i>
         </a>
     </li>
@@ -22,7 +26,7 @@
             @if ($page == $paginator->currentPage())
                 <li class="page-item active"><a href="">{{ $page }}</a></li>
             @elseif ($page == $paginator->currentPage() + 1 || $page == $paginator->lastPage())
-                <li class="page-item"><a href="{{ isset($url_components[1]) ? $url_components[1] : $url }}">{{ $page }}</a></li>
+                <li class="page-item"><a href="{{ isset($url_components[1]) ? $url_components[1] : $urlde }}">{{ $page }}</a></li>
             @elseif ($page == $paginator->lastPage() - 1)
                 <i class="fa fa-ellipsis-h mt-2"></i>
             @endif
@@ -35,7 +39,7 @@
             $nextPageUrl = urldecode($paginator->nextPageUrl());
             $url_ComNextPage = explode("url=", $nextPageUrl);
         @endphp
-        <a href="{{ isset($url_ComNextPage[1]) ? $url_ComNextPage[1] : $paginator->nextPageUrl() }}">
+        <a href="{{ isset($url_ComNextPage[1]) ? $url_ComNextPage[1] : $nextPageUrl }}">
             <i class="fa-solid fa-forward"></i>
         </a>
     </li>

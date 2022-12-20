@@ -338,6 +338,13 @@
     padding: 20px 0 20px 20px; 
 }
 
+.sidebar--btn-login .logged-in-icon {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #3ba66b;
+}
+
 .sidebar--btn-login .user-picture.user-loginAccount {
     width: 50px;
     height: 50px;
@@ -372,4 +379,103 @@
 .modal__sidebar--item:hover {
     background: #f0f0f0;
 }
+/* MODAL ADDRESS */
+.modal__address {
+    position: absolute;
+    z-index: 10;
+    background-color: #fff;
+    width: 100%;
+    height: max-content;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    max-width: 800px;
+    animation: modalAddress 0.3s ease-in-out;
+    display: none;
+}
+
+@keyframes modalAddress {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -65%);;
+    }
+    to {
+        opacity: 1;
+        transform: 0;
+    }
+}
+
+.modal__address.active {
+    display: block;
+}
+
+.modal__address .form-group label {
+    font-weight: bold;
+}
+
+.modal__address .form-group .form-control,
+.modal__address .address-group .form-control {
+    border-radius: 4px;
+}
+
+.modal__address .form-group .form-message {
+    font-size: 12px;
+}
+
+.modal__address .form-control:hover {
+    border: 1px solid #3ba66b;
+}
+
+.modal__address .btn-close-addr {
+    cursor: pointer;
+}
+
+.modal__address .btn-row .btn {
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+.modal__address .btn-row .btn-submit {
+    background-color: #3ba66b;
+    border: 1px solid #3ba66b;
+}
+
+.modal__address .btn-row .btn-submit:hover {
+    background-color: #2e8053;
+    border: 1px solid #2e8053;
+}
+
+.modal__address .address__header--midifi {
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.modal__address .address__header--midifi h5 {
+    color: #3ba66b;
+    margin-bottom: 0;
+}
+
+.modal__address .address-default-checkbox {
+    width: 15px;
+    height: 15px;
+}
+
+.box-address-checkbox {
+    width: max-content;
+}
+
+.modal__address .address-default-checkbox::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+@media (max-width: 46.1875em) { 
+    .modal__sidebar {
+        padding: 12px 0 0 12px;
+    }
+}
+
 /* THE END CSS MODAL */

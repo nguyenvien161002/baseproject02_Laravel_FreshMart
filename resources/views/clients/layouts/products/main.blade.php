@@ -32,7 +32,7 @@
     @endforeach
 </div>
 <div class="next-sheet {{count($products) == 0 ? 'd-none' : ''}}">
-    {{ $products -> appends(Request::all()) -> links('clients.layouts.pagination') }}
+    {{ $products -> appends(Request::all()) -> appends(Request::capture()->except('page')) -> links('clients.layouts.pagination') }}
 </div>
 <div class="justify-content-center {{count($products) == 0 ? 'd-flex' : 'd-none'}} flex-column align-items-center mt-4 w-100">
     <img src="{{asset('images/explore/no-ordered.png')}}" alt="">

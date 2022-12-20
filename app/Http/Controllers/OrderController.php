@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\OrderMail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Models\CategoryProduct;
-use App\Models\Products;
 use App\Models\Orders;
-use App\Models\Users;
 use App\Models\DetailsOrder;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Mail;
+use App\Models\AddressUser;
 
 class OrderController extends Controller
 {
-    public function index() {
+    public function index($id_user) {
         $category_product = CategoryProduct::where('state', 1) -> get() -> toArray();
-        return View::make('clients.layouts.order', compact([
-            'category_product'
-        ]));
+        $address_user = AddressUser::where('id_user', $id_user) -> where('state', 1) -> get() -> toArray();
+        if($address_user) {
+            $address_components = explode("|", $address_user[0]['address_default']);
+            return View::make('clients.layouts.order', compact([
+                'category_product', 'address_components', 'address_user'
+            ]));
+        } else {
+            return View::make('clients.layouts.order', compact('category_product'));
+        }
     }
 
     public function viewOrdered($id) {

@@ -78,15 +78,19 @@
                         </div>
                         <div class="mb-3 d-flex align-items-center justify-content-between">
                             <label class="fw-bold fs-15" for="number_phone">Điện thoại di động</label>
-                            <input type="text" value="" class="w-75 form-control" placeholder="Nhập số điện thoại" name="number_phone" required>
+                            <input type="text" value="{{isset($address_components) ? $address_user[0]['number_phone'] : ''}}" class="w-75 form-control" placeholder="Nhập số điện thoại" name="number_phone" required>
                         </div>
                         <div class="address-group mb-3 d-flex align-items-center justify-content-between">
                             <label class="fw-bold fs-15" for="number_phone">Tỉnh/Thành phố</label>
                             <div class="w-75 position-relative">
-                                <input type="text" hidden value="" placeholder="Chọn Tỉnh/Thành phố" name="province" required>
+                                <input type="text" hidden value="{{isset($address_components) ? $address_components[3] : ''}}" placeholder="Chọn Tỉnh/Thành phố" name="province" required>
                                 <i class="fa-solid fa-caret-down position-absolute"></i>
                                 <div class="form-control form-province d-flex align-items-center">
-                                    <p class="group-placeholder">Chọn Tỉnh/Thành phố</p>
+                                    @if(isset($address_components))
+                                        {{ $address_components[3] }}
+                                    @else
+                                        <p class="group-placeholder">Chọn Tỉnh/Thành phố</p>
+                                    @endif
                                 </div>
                                 <div class="list-address">
                                     <ul name="" class="dropdown-address dropdown-province mt-1" id="province"></ul>
@@ -96,10 +100,14 @@
                         <div class="address-group mb-3 d-flex align-items-center justify-content-between">
                             <label class="fw-bold fs-15" for="number_phone">Quận/Huyện</label>
                             <div class="w-75 position-relative">
-                                <input type="text" hidden value="" class="form-control form-address" placeholder="Chọn Quận/Huyện" name="district" required>
+                                <input type="text" hidden value="{{isset($address_components) ? $address_components[2] : ''}}" class="form-control form-address" placeholder="Chọn Quận/Huyện" name="district" required>
                                 <i class="fa-solid fa-caret-down position-absolute"></i>
                                 <div class="form-control form-district d-flex align-items-center">
-                                    <p class="group-placeholder">Chọn Quận/Huyện</p>
+                                    @if(isset($address_components))
+                                        {{ $address_components[2] }}
+                                    @else
+                                        <p class="group-placeholder">Chọn Quận/Huyện</p>
+                                    @endif
                                 </div>
                                 <div class="list-address">
                                     <ul name="" class="dropdown-address dropdown-district mt-1" id="district"></ul>
@@ -109,10 +117,14 @@
                         <div class="address-group mb-3 d-flex align-items-center justify-content-between">
                             <label class="fw-bold fs-15" for="number_phone">Phường/Xã</label>
                             <div class="w-75 position-relative">
-                                <input type="text" hidden value="" class="form-control form-address" placeholder="Chọn Quận/Huyện" name="ward" required>
+                                <input type="text" hidden value="{{isset($address_components) ? $address_components[1] : ''}}" class="form-control form-address" placeholder="Chọn Quận/Huyện" name="ward" required>
                                 <i class="fa-solid fa-caret-down position-absolute"></i>
                                 <div class="form-control form-ward d-flex align-items-center">
-                                    <p class="group-placeholder">Phường/Xã</p>
+                                    @if(isset($address_components))
+                                        {{ $address_components[1] }}
+                                    @else
+                                        <p class="group-placeholder">Phường/Xã</p>
+                                    @endif
                                 </div>
                                 <div class="list-address">
                                     <ul name="" class="dropdown-address dropdown-ward mt-1" id="ward"></ul>
@@ -121,7 +133,7 @@
                         </div>
                         <div class="mb-3 d-flex align-items-center justify-content-between">
                             <label class="fw-bold fs-15" for="address">Địa chỉ</label>
-                            <input type="text" value="" class="w-75 form-control" placeholder="Ví dụ: 450, đường Trần Đại Nghĩa" name="street" required>
+                            <input type="text" value="{{isset($address_components) ? $address_components[0] : ''}}" class="w-75 form-control" placeholder="Ví dụ: 450, đường Trần Đại Nghĩa" name="street" required>
                         </div>
                     </div>
                     <div class="form-methods-payment">

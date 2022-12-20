@@ -33,7 +33,6 @@ class AuthenticateController extends Controller
     {
         $admin_name = $request->admin_name; // (u1)
         $password = md5($request->password); // (p1)
-        $passwordNotMd5 = $request->password; // (p1)
         $data['admin_name'] = Admin::select('admin_name')->where('admin_name', $admin_name)->first(); // (tvu)
         if ($data['admin_name']) {
             $data['password'] = Admin::select('password')
@@ -60,6 +59,15 @@ class AuthenticateController extends Controller
                 Session::put('id_authorization', $key['id_authorization']);
             }
             Session::put('is_login', true);
+            if ($request->remember_me) {
+                Cookie::queue('admin_name', $user[0]['admin_name'], 1440);
+                Cookie::queue('password_admin', $request->password, 1440);
+                Cookie::queue('remember_me_admin', $request->remember_me, 1440);
+            } else {
+                Cookie::queue(Cookie::forget('admin_name'));
+                Cookie::queue(Cookie::forget('password_admin'));
+                Cookie::queue(Cookie::forget('remember_me_admin'));
+            }
             return Redirect::route('admin');
         }
         if ($data['admin_name'] && $data['password'] == null) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,14 +15,19 @@
     <link rel="stylesheet" href="{{asset('swiper-8.4/package/swiper-bundle.min.css')}}">
     <!-- Vite -->
     @vite([
-        "resources/sass/app.scss", 
-        "resources/css/app.css", 
-        "resources/css/modal.css", 
-        "resources/css/toast.css", 
+        "resources/sass/app.scss",
+        "resources/css/app.css",
+        "resources/css/modal.css",
+        "resources/css/toast.css",
         "resources/css/details/product.css",
         "resources/css/details/news.css",
+        "resources/css/responsive/news.css",
+        "resources/css/responsive/contact.css",
+        "resources/css/responsive/products.css",
+        "resources/css/responsive/favorite.css",
     ])
 </head>
+
 <body>
     <!-- HEADER -->
     <header id="header">
@@ -38,7 +44,7 @@
                             </li>
                             <li class="nav-item">
                                 <div class="nav-product">
-                                    <a class="nav-link" href="{{URL::to('/products')}}">Sản phẩm <i class="fa-solid fa-sort-down"></i></a>
+                                    <a class="nav-link" href="{{URL::to('/products')}}" onclick="removeLocalStorageFOS()">Sản phẩm <i class="fa-solid fa-sort-down"></i></a>
                                 </div>
                                 <ul class="subnav">
                                     @foreach($category_product as $key => $cate)
@@ -58,7 +64,7 @@
                     </nav>
                 </div>
                 <div class="col-xl-2 col-lg-3 col-md-3">
-                    <a href=""><img src="{{asset('images/explore/logo.webp')}}" alt="logo" class="nav-logo"></a>
+                    <a href="{{URL::to('')}}"><img src="{{asset('images/explore/logo.webp')}}" alt="logo" class="nav-logo"></a>
                 </div>
                 <div class="header-right col-xl-5 col-md-9 col-12 d-flex justify-content-end">
                     <div class="navbar mxr--">
@@ -121,7 +127,6 @@
                                         <a href="{{URL::to('/user/google/ordered/' . Session::get('id'))}}" class="loggedin__item nav-link">Đơn mua</a>
                                         @endif
                                         <a href=" " class="loggedin__item nav-link">Yêu thích</a>
-                                        <a href=" " class="loggedin__item nav-link">Cài đặt</a>
                                         <a href="{{URL::to('/logout')}}" class="loggedin__item nav-link">Đăng xuất</a>
                                     </div>
                                 </div>
@@ -258,7 +263,7 @@
                             <p class="unitprice">đ</p>
                         </div>
                     </div>
-                    <a {{ Session::get('is_login') ? "href=".URL::to('/order') : "onclick=showLoginToast()" }} class="btn btn-payment payment-item">Đặt hàng</a>
+                    <a {{ Session::get('is_login') ? "href=".URL::to('/order').'/'.Session::get('id') : "onclick=showLoginToast()" }} class="btn btn-payment payment-item">Đặt hàng</a>
                 </div>
             </div>
         </div>
@@ -267,31 +272,132 @@
                 <div class="modal__sidebar--nav">
                     <ul class="sidebar__login">
                         <li class="sidebar__login-inner">
-                            <a href="loginController/loginClient" class="nav-link">
-                                <!-- <span class="sidebar--btn-login js-btn-loginRps">
-                                        <img src='images/svg/user.svg' alt='' class='user-picture user-loginAccount'>
-                                    </span> -->
+                            <a href="{{URL::to('/login')}}" class="nav-link">
+                                @if(Session::has('is_login') && Session::has('id_authorization'))
+                                    <span class="sidebar--btn-login ps-0 js-btn-loginRps">
+                                        @if(Session::has('avatar'))
+                                        <img src="{{ Session::get('avatar') }}" alt="" class="user-icon logged-in-icon">
+                                        @else
+                                        <img src="{{asset('images/svg/user.svg')}}" alt="" class="user-picture user-loginAccount">
+                                        @endif
+                                        <p class="fw-bold">{{ Session::get('fullname') }}</p>
+                                    </span>
+                                @else 
                                 <span class="sidebar--btn-login js-btn-loginRps"><i class="fa-solid fa-right-to-bracket"></i>Đăng nhập</span>
+                                @endif
                             </a>
                         </li>
                     </ul>
                     <ul class="modal__sidebar--list">
                         <li class="modal__sidebar--item">
-                            <a href=""><i class="fa-solid fa-house"></i>Trang chủ </a>
+                            <a href="{{URL::to('')}}"><i class="fa-solid fa-house"></i>Trang chủ </a>
                         </li>
                         <li class="modal__sidebar--item">
-                            <a href="index/products"><i class="fa-solid fa-clipboard-list"></i>Sản phẩm</a>
+                            <a href="{{URL::to('/products')}}"><i class="fa-solid fa-clipboard-list"></i>Sản phẩm</a>
                         </li>
                         <li class="modal__sidebar--item">
-                            <a href="index/news"><i class="fa-solid fa-newspaper"></i>Tin tức</a>
+                            <a href="{{URL::to('/news')}}"><i class="fa-solid fa-newspaper"></i>Tin tức</a>
                         </li>
                         <li class="modal__sidebar--item">
-                            <a href="index/contact"><i class="fa-solid fa-square-phone"></i>Liên hệ</a>
+                            <a href="{{URL::to('/contact')}}"><i class="fa-solid fa-square-phone"></i>Liên hệ</a>
                         </li>
                         <li class="modal__sidebar--item">
-                            <a href="index/introduction"><i class="fa-solid fa-circle-info"></i>Giới thiệu</a>
+                            <a href="{{URL::to('/introduction')}}"><i class="fa-solid fa-circle-info"></i>Giới thiệu</a>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="modal__address js-modal__address">
+            <div class="modal__address--inner">
+                <div class="address__header--midifi p-3 d-flex align-items-center justify-content-between">
+                    <h5>Cập nhật địa chỉ</h5>
+                    <div class="btn-close-addr px-2">
+                        <i class="fa-solid fa-xmark fs-5"></i>
+                    </div>
+                </div>
+                <div class="address__content--midifi p-3">
+                    <form action="{{URL::to('user/google/profile/address/add/' . Session::get('id'))}}" method="POST" id="" class="form-modal-address" autocomplete="off">
+                        @csrf
+                        <div class="row">
+                            <div class="field col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="d-block mb-1">Họ và tên</label>
+                                    <input type="text" name="fullname" class="form-control" rules="required" value="" autocapitalize="words" placeholder="Họ và tên">
+                                    <span class="form-message text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field col-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="d-block mb-1">Số điện thoại</label>
+                                    <input type="number" pattern="\d+" class="form-control valid" rules="required" id="number_phone" name="number_phone" maxlength="12" value="" placeholder="Số điện thoại">
+                                    <span class="form-message text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field col-12 col-md-12 mt-2">
+                                <div class="form-group">
+                                    <label class="d-block mb-1">Địa chỉ</label>
+                                    <input type="text" class="form-control" name="street" rules="required" value="" placeholder="Địa chỉ">
+                                    <span class="form-message text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field col-12 col-md-4 mt-2">
+                                <div class="address-group mb-3 d-flex flex-column justify-content-between">
+                                    <label class="d-block mb-1 fw-bold fs-15" for="number_phone">Tỉnh/Thành phố</label>
+                                    <div class="position-relative">
+                                        <input type="text" hidden value="" class="form-control form-address" name="province" required>
+                                        <i class="fa-solid fa-caret-down position-absolute"></i>
+                                        <div class="form-control form-province d-flex align-items-center">
+                                            <p class="group-placeholder">Tỉnh/Thành phố</p>
+                                        </div>
+                                        <div class="list-address">
+                                            <ul name="" class="dropdown-address dropdown-province mt-1" id="province"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field col-12 col-md-4 mt-2">
+                                <div class="address-group mb-3 d-flex flex-column justify-content-between">
+                                    <label class="d-block mb-1 fw-bold fs-15" for="number_phone">Quận/Huyện</label>
+                                    <div class="position-relative">
+                                        <input type="text" hidden value="" class="form-control form-address" name="district" required>
+                                        <i class="fa-solid fa-caret-down position-absolute"></i>
+                                        <div class="form-control form-district d-flex align-items-center">
+                                            <p class="group-placeholder">Quận/Huyện</p>
+                                        </div>
+                                        <div class="list-address">
+                                            <ul name="" class="dropdown-address dropdown-district mt-1" id="district"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field col-12 col-md-4 mt-2">
+                                <div class="address-group mb-3 d-flex flex-column justify-content-between">
+                                    <label class="d-block mb-1 fw-bold fs-15" for="number_phone">Phường/Xã</label>
+                                    <div class="position-relative">
+                                        <input type="text" hidden value="" class="form-control form-address" name="ward" required>
+                                        <i class="fa-solid fa-caret-down position-absolute"></i>
+                                        <div class="form-control form-ward d-flex align-items-center">
+                                            <p class="group-placeholder">Phường/Xã</p>
+                                        </div>
+                                        <div class="list-address">
+                                            <ul name="" class="dropdown-address dropdown-ward mt-1" id="ward"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group box-address-checkbox d-flex align-items-center position-relative">
+                                <input type="checkbox" name="address_default_checkbox" id="" class="address-default-checkbox me-1">
+                                <label class="d-block fw-normal fs-6">Đặt làm địa chỉ mặc định</label>
+                            </div>
+                            <div class="btn-row mt-2">
+                                <button class="btn btn-close-addr btn-outline-secondary close" type="button">Huỷ</button>
+                                <button class="btn btn-primary btn-submit" id="update">Cập nhật địa chỉ</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -312,6 +418,10 @@
     <script src="{{asset('js/search.js')}}"></script>
     <script src="{{asset('js/order.js')}}"></script>
     <script>{{Session::has('orderSuccess') ? 'orderSuccess();' : ""}}</script>
+    <script>
+        new Validator('.form-modal-address');
+    </script>
     @stack('scripts')
 </body>
+
 </html>

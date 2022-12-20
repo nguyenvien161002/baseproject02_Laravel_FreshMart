@@ -6,6 +6,7 @@ use App\Mail\OrderMail;
 use Illuminate\Http\Request;
 use App\Models\Orders;
 use App\Models\Users;
+use App\Models\AddressUser;
 use App\Models\DetailsOrder;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -66,6 +67,22 @@ class CheckoutController extends Controller
         $recipient = Users::find($id_user);
         $isMailer = Mail::to($recipient->email)->queue(new OrderMail($recipient));
         if ($resultOrders && $resultDOrder && $isMailer) {
+            $address = AddressUser::where([
+                ['id_user', $id_user],
+                ['address_default', "$request->street|$request->ward|$request->district|$request->province"],
+                ['number_phone', $request->number_phone]
+            ])->get()->count();
+            if ($address == 0) {
+                AddressUser::insert([
+                    'id_user' => $recipient->id,
+                    'fullname' => $request->fullname,
+                    'address_default' => "$request->street|$request->ward|$request->district|$request->province",
+                    'number_phone' => $request->number_phone,
+                    'state' => 1,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
             $data = [
                 'id_user' => $id_user,
                 'order_code' => $order_code,

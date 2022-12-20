@@ -66,7 +66,18 @@ $j.ajax({
                 addToCart(idProduct);
             }); 
         });
-
+        // AFTER SORT, FILTE
+        $j(document).on('click', '.btn_addtocart', (event) => {
+            var product = getParent(event.target, ".sectiontwo-item");
+            var idProduct = parseInt(product.getAttribute('data-id'));
+            var checkAfterSF = JSON.parse(localStorage.getItem("FILTER_MERGE_SORT"));
+            if(checkAfterSF) {
+                if(checkAfterSF.length !== 0) { 
+                    addToCart(idProduct);
+                }
+            }
+        })
+        // LOGIC ADD PRODUCT TO CART
         function addToCart(id) {
             if(cart.some(function(item){return item.id === id})) {
                 cart.forEach(function(item) {

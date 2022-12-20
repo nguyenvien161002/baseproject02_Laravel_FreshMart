@@ -92,8 +92,8 @@
             @endforeach
         </section>
         <section class="sectionfour">
-            <div class="row">
-                <div class="col-xl-3 col-md-4 col-12">
+            <div class="row w-100 m-0">
+                <div class="col-xl-3 col-md-4 col-12 ps-0 pe-20 pe-mb-0">
                     <div class="sectionfour-menu">
                         <div class="menu-title">
                             <a href="./subnavfruits.html">Trái cây</a>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-9 col-md-8 col-12 pe-0">
+                <div class="col-xl-9 col-md-8 col-12 p-0">
                     <div class="sectionfour-about">
                         @foreach($promotional_f as $key => $product)
                         <div class="product" data-id="{{ $product['id'] }}">
@@ -176,8 +176,8 @@
         </section>
         <section class="sectionfive">
             <div class="sectionfour">
-                <div class="row inverse-child">
-                    <div class="col-xl-9 col-md-8">
+                <div class="row w-100 m-0 inverse-child">
+                    <div class="col-xl-9 p-0 col-md-8">
                         <div class="sectionfour-about">
                             @foreach($vegetables as $key => $product)
                             <div class="product" data-id="{{ $product['id'] }}">
@@ -212,7 +212,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-4">
+                    <div class="col-xl-3 p-0 col-md-4 ps-20 ps-mb-0">
                         <div class="sectionfour-menu">
                             <div class="menu-title">
                                 <a href="./subnavfruits.html">Rau củ quả</a>
@@ -261,8 +261,8 @@
         </section>
         <section class="sectionsix">
             <div class="sectionfour">
-                <div class="row">
-                    <div class="col-xl-3 col-md-4">
+                <div class="row w-100 m-0">
+                    <div class="col-xl-3 col-md-4 p-0 pe-20 pe-mb-0">
                         <div class="sectionfour-menu">
                             <div class="menu-title">
                                 <a href="./subnavfruits.html">Thực phẩm tươi</a>
@@ -306,7 +306,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-9 col-md-8">
+                    <div class="col-xl-9 col-md-8 p-0">
                         <div class="sectionfour-about">
                             @foreach($meat as $key => $product)
                             <div class="product" data-id="{{ $product['id'] }}">

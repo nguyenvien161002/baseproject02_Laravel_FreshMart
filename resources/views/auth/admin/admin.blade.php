@@ -34,17 +34,24 @@
             </div>
             <div class="form-group">
                 <label for="fullname" class="form-label">Tên tài khoản</label>
-                <input value="{{Session::has('admin_name') ? Session::get('admin_name') : '' }}" name="admin_name" value="" type="text" placeholder="Họ và tên của bạn" class="form-control" required>
+                @php
+                    if(Session::has('admin_name')) {
+                        $admin_name = Session::get('admin_name');
+                    } elseif(Cookie::has('admin_name')) {
+                        $admin_name = Cookie::get('admin_name');
+                    }
+                @endphp
+                <input name="admin_name" value="{{isset($admin_name) ? $admin_name : ''}}" type="text" placeholder="Họ và tên của bạn" class="form-control" required>
                 <span class="form-message"></span>
             </div>
             <div class="form-group">
                 <label for="password" class="form-label">Mật khẩu</label>
-                <input value="" name="password" value="" type="password" placeholder="Mật khẩu" class="form-control" required>
+                <input name="password" value="{{Cookie::has('password_admin') ? Cookie::get('password_admin') : '' }}" type="password" placeholder="Mật khẩu" class="form-control" required>
                 <span class="form-message"></span>
             </div>
             <div class="form-help">
                 <div class="check-remember">
-                    <input id="rememberme" name="rememberme" type="checkbox">
+                    <input id="rememberme" name="remember_me" type="checkbox" {{Cookie::has('remember_me_admin') ? 'checked' : '' }}>
                     <label for="rememberme">Nhớ mật khẩu</label>
                 </div>
                 <a href="">Quên mật khẩu</a>
