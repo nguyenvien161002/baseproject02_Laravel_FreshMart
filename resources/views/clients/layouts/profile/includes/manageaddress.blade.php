@@ -16,7 +16,7 @@
             }
         @endphp
         @if(isset($address_default))
-        <div class="address-group align-items-start mt-2 mb-2 justify-content-between {{ isset($address_default) ? 'd-flex' : 'd-none' }}">
+        <div class="address-group align-items-start pt-3 pb-2 justify-content-between {{ isset($address_default) ? 'd-flex' : 'd-none' }}">
             <div class="fs-15">
                 <p class="mt-1"><strong>Họ và tên: </strong>{{ $address_default[0]['fullname'] }} (<span class="text-success">Địa chỉ mặc định</span>)</p>
                 <p class="mt-1"><strong>Địa chỉ: </strong>{{ $address_default_fm }}</p>
@@ -29,7 +29,7 @@
         @endif
         @if(isset($address_different))
         @foreach($address_different as $key => $value)
-        <div class="address-group align-items-start pt-3 mb-2 justify-content-between {{ isset($address_different) ? 'd-flex' : 'd-none' }} {{ $key==0 ? 'border-0' : 'border-1 border-top' }}">
+        <div class="address-group align-items-start pt-3 mb-2 justify-content-between {{ isset($address_different) ? 'd-flex' : 'd-none' }} {{ $key==0 && !isset($address_default) ? 'border-0' : 'border-1 border-top' }}">
             <div class="fs-15">
                 <p class="mt-1"><strong>Họ và tên: </strong>{{ $value['fullname'] }}</p>
                 @php

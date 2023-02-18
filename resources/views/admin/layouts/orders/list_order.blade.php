@@ -122,7 +122,7 @@
                             </div>
                         </div>
                     </th>
-                    <th  {{ Session::get('id_authorization') == 1 ? 'width="140px"' : 'width="90px"'}}>
+                    <th width="145px">
                         <div class="title-column">
                             <p>#</p>
                             <div class="box-icon-sort d-flex ms-2">

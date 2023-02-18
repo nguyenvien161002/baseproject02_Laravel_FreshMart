@@ -107,10 +107,10 @@ class A_AccountsUserController extends Controller
         ]);
         if ($result) {
             Session::flash('success', "Thêm tài khoản thành công!");
-            return Redirect::route('admin.accounts.user');
+            return Redirect::route('admin.accounts.users');
         } else {
             Session::flash('failed', "Thêm tài khoản thất bại!");
-            return Redirect::route('admin.accounts.user');
+            return Redirect::route('admin.accounts.users');
         }
     }
 
@@ -141,10 +141,10 @@ class A_AccountsUserController extends Controller
         ]);
         if($result) {
             Session::flash('success', "Sửa thông tin tài khoản thành công!");
-            return Redirect::route('admin.accounts.user');
+            return Redirect::route('admin.accounts.users');
         } else {
             Session::flash('failed', "Sửa thông tin tài khoản thất bại!");
-            return Redirect::route('admin.accounts.user');
+            return Redirect::route('admin.accounts.users');
         }
     }
 
@@ -154,10 +154,10 @@ class A_AccountsUserController extends Controller
         $result = Users::where('id', $id) -> delete();
         if($result) {
             Session::flash('success', "Xóa tài khoản thành công!");
-            return Redirect::route('admin.accounts.user');
+            return Redirect::route('admin.accounts.users');
         } else {
             Session::flash('failed', "Xóa tài khoản thất bại!");
-            return Redirect::route('admin.accounts.user');
+            return Redirect::route('admin.accounts.users');
         }
     }
 

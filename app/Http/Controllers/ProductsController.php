@@ -63,7 +63,7 @@ class ProductsController extends Controller
         return View::make('clients.layouts.products', compact([
             'category_product', 'products'
         ]));
-    }
+    }   
 
     public function detailsProduct($id)
     {
@@ -80,7 +80,6 @@ class ProductsController extends Controller
             'category_product', 'product', 'related_p', 'images_sub'
         ]));
     }
-
 
     public function getProductsFromCondi(Request $request)
     {

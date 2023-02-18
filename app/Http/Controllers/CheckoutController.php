@@ -67,21 +67,34 @@ class CheckoutController extends Controller
         $recipient = Users::find($id_user);
         $isMailer = Mail::to($recipient->email)->queue(new OrderMail($recipient));
         if ($resultOrders && $resultDOrder && $isMailer) {
-            $address = AddressUser::where([
+            $address_exist = AddressUser::where([
                 ['id_user', $id_user],
                 ['address_default', "$request->street|$request->ward|$request->district|$request->province"],
                 ['number_phone', $request->number_phone]
             ])->get()->count();
-            if ($address == 0) {
-                AddressUser::insert([
-                    'id_user' => $recipient->id,
-                    'fullname' => $request->fullname,
-                    'address_default' => "$request->street|$request->ward|$request->district|$request->province",
-                    'number_phone' => $request->number_phone,
-                    'state' => 1,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
+            if ($address_exist == 0) {
+                $address_default = AddressUser::where('state', 1)->where('id_user', $id_user)->get()->toArray();
+                if ($address_default) {
+                    AddressUser::insert([
+                        'id_user' => $recipient->id,
+                        'fullname' => $request->fullname,
+                        'address_default' => "$request->street|$request->ward|$request->district|$request->province",
+                        'number_phone' => $request->number_phone,
+                        'state' => 0,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                } else {
+                    AddressUser::insert([
+                        'id_user' => $recipient->id,
+                        'fullname' => $request->fullname,
+                        'address_default' => "$request->street|$request->ward|$request->district|$request->province",
+                        'number_phone' => $request->number_phone,
+                        'state' => 1,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
             }
             $data = [
                 'id_user' => $id_user,

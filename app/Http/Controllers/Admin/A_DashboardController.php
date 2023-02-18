@@ -28,8 +28,8 @@ class A_DashboardController extends Controller
         $totalOUnapp = Orders::where('state', 'Chờ xử lý') -> count();
         $revenue = [];
         $revenue['monthly'] = Orders::whereYear('created_at', date('Y')) 
-        -> whereMonth('created_at', date('m')) -> sum('total_money');
-        $revenue['yearly'] = Orders::whereYear('created_at', date('Y')) -> sum('total_money');
+        -> whereMonth('created_at', date('m')) -> where('state', 'Đã duyệt') -> sum('total_money');
+        $revenue['yearly'] = Orders::whereYear('created_at', date('Y')) -> where('state', 'Đã duyệt') -> sum('total_money');
         return View::make("admin.layouts.dashboard", compact([
             'totalProduct', 'totalNews', 'totalOrder', 'totalCustomer', 'totalStaff', 'totalOUnapp', 'revenue'
         ]));
