@@ -1,4 +1,3 @@
-q
 const btnsAdd = $$('.btn_addtocart');
 const insideCart = $('.cart__content');
 const noCartItem = $('.cart-noproduct');

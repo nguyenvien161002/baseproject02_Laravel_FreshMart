@@ -64,3 +64,48 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Learn More
+
+### `php artisan serve`
+
+Runs the app in the development mode.\
+
+```bash
+npm php artisan serve
+```
+
+Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm run dev`
+
+In this project, you can use the following command to start the development environment:
+
+```bash
+npm run dev
+```
+
+This command will execute a series of operations to initialize the development environment, including starting a server on the backend and opening a web browser. This allows you to easily develop and test your application in a development environment.
+
+Make sure you have Node.js and npm installed before using this command.
+
+You can adjust the information to suit your specific project.
+
+### `php artisan queue:work`
+
+In this Laravel project, you can leverage the power of queues to process background jobs efficiently. The `php artisan queue:work` command is used to execute these queued jobs.
+
+To start processing jobs in the queue, run the following command:
+
+```bash
+php artisan queue:work
+```
+
+This command will continuously process jobs that are added to the queue. It's useful for handling tasks like sending emails, processing file uploads, or any long-running operations without causing delays in your application's HTTP request handling.
+
+Make sure to configure your queue system, such as using databases or Redis, according to your project's requirements.
+
+For more details on working with queues in Laravel, refer to the official Laravel documentation.
