@@ -69,7 +69,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ### `php artisan serve`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.
 
 ```bash
 php artisan serve
