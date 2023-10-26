@@ -5,7 +5,7 @@ const notiFavo = $('.favorite-notification');
 notiFavo.innerText = cartFavorite.length; 
 $j.ajax({
     type: "GET",
-    url: 'http://127.0.0.1:8000/api/all_product',
+    url: 'http://localhost:8989/api/all_product',
     success: function (response) {
         const products = response;
         const insideCoFavo = $('.favorite-about.sectiontwo-about');

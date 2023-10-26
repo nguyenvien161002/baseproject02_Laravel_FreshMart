@@ -48,5 +48,11 @@ services:
     ports:
       - 8082:80
 
+  vite:
+    build: ./docker  
+    volumes:
+      - .:/application
+    command: npm run build
+
 volumes:
   db_data:

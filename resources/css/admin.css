@@ -5,8 +5,8 @@
 }
 
 @font-face {
-    src: url(../../public/notosans/NotoSans-Light.ttf);
-    font-family: 'Nunito', sans-serif !important;
+    src: url(../../public/nunito-sans/static/NunitoSans_7pt-Light.ttf);
+    font-family: 'Nunito Sans', sans-serif !important;
 }
 
 html {
