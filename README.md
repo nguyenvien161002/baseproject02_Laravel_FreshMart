@@ -72,7 +72,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 Runs the app in the development mode.\
 
 ```bash
-npm php artisan serve
+php artisan serve
 ```
 
 Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
