@@ -34,7 +34,7 @@ cart.forEach((item, index) => {
             <div class="product-in-checkout" data-id="${item.id}">
                 <div class="column-info">
                     <div class="imgproduct">
-                        <img src="http://127.0.0.1:8000/images/${item.image_main}" alt="" class="imgproduct--img">
+                        <img src="http://localhost:8989/images/${item.image_main}" alt="" class="imgproduct--img">
                     </div>
                     <div class="box_nameproduct">
                         <div class="name_product">
@@ -173,7 +173,7 @@ function renderProductOrder() {
                 <div class="product-in-checkout" data-id="${item.id}">
                     <div class="column-info">
                         <div class="imgproduct">
-                            <img src="http://127.0.0.1:8000/images/${item.image_main}" alt="" class="imgproduct--img">
+                            <img src="http://localhost:8989/images/${item.image_main}" alt="" class="imgproduct--img">
                         </div>
                         <div class="box_nameproduct">
                             <div class="name_product">

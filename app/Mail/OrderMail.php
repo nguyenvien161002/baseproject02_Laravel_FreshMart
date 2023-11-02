@@ -54,7 +54,6 @@ class OrderMail extends Mailable
             view: 'email.order',
             with: [
                 'fullname' => $this -> recipient -> fullname,
-                'pathToImageLogo' => env('SRC_LOGOMAIN'),
             ],
         );
     }

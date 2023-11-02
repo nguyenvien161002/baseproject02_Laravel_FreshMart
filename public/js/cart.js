@@ -45,7 +45,7 @@ let cart = JSON.parse(localStorage.getItem('CART')) || [];
 notiCart.innerText = cart.length; 
 $j.ajax({
     type: "GET",
-    url: 'http://127.0.0.1:8000/api/all_product',
+    url: 'http://localhost:8989/api/all_product',
     success: function (response) {
 
         var products = response;
@@ -148,7 +148,7 @@ $j.ajax({
                 insideCart.innerHTML += `
                     <div class="cart__item">
                         <div class="imgproduct">
-                            <img src="http://localhost/baseproject02/assets/images/${item.image_main}" alt="" class="imgproduct--img">
+                            <img src="http://localhost:8989/images/${item.image_main}" alt="" class="imgproduct--img">
                         </div>
                         <div class="infoproduct">
                             <div class="name_product">

@@ -17,7 +17,7 @@ $j.ajax({
             cartFavorite.forEach((item) => {
                 if(idProduct == item.id) {
                     const productImg = product.querySelector('.btn_favorite .img-pro-action');
-                    productImg.src = "http://127.0.0.1:8000/images/svg/thickheart.svg";
+                    productImg.src = "http://localhost:8989/images/svg/thickheart.svg";
                 }
             });
             btn.addEventListener('click', function(){
@@ -30,7 +30,7 @@ $j.ajax({
                 cartFavorite.forEach(function(item, index) {
                     if(item.id === id){
                         cartFavorite.splice(index, 1);
-                        iconFavo[idbtnheart].src = "http://127.0.0.1:8000/images/svg/heart.svg";
+                        iconFavo[idbtnheart].src = "http://localhost:8989/images/svg/heart.svg";
                         showRemoveProFavoToast(item.name);
                     }
                 })
@@ -38,7 +38,7 @@ $j.ajax({
                 const item = products.find(function(product) {
                     return product.id === id;
                 });
-                iconFavo[idbtnheart].src = "http://127.0.0.1:8000/images/svg/thickheart.svg";
+                iconFavo[idbtnheart].src = "http://localhost:8989/images/svg/thickheart.svg";
                 cartFavorite.push({
                     ...item,
                 });
@@ -78,20 +78,20 @@ $j.ajax({
                     <div class="sectiontwo-item" data-id="${item.id}">
                         <div class="item-sp item-imgpro">
                             ${boxRprice}
-                            <a href="http://localhost/baseproject02/index/product/1">
-                                <img class="img-product" src="http://127.0.0.1:8000/images/${item.image_main}" alt="Ổi lê ruột đỏ">
+                            <a href="http://localhost:8989/index/product/1">
+                                <img class="img-product" src="http://localhost:8989/images/${item.image_main}" alt="Ổi lê ruột đỏ">
                             </a>
                             <div class="product-action">
                                 <div class="btn_action remove btn_favorite">
-                                    <img class="img-pro-action" src="http://127.0.0.1:8000/images/svg/closelight.svg" alt="">
+                                    <img class="img-pro-action" src="http://localhost:8989/images/svg/closelight.svg" alt="">
                                 </div>
                                 <div class="btn_action btn_addtocart">
-                                    <img class="img-pro-action" src="http://127.0.0.1:8000/images/svg/shopping-carts.svg" alt="">
+                                    <img class="img-pro-action" src="http://localhost:8989/images/svg/shopping-carts.svg" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="item-sp item-nameandprice">
-                            <a href="http://localhost/baseproject02/index/product/${item.id}" class="item-sp--name">${item.name}</a>
+                            <a href="http://localhost:8989/index/product/${item.id}" class="item-sp--name">${item.name}</a>
                             <div class="item-sp-price">
                                 ${boxPrice}
                             </div>
@@ -122,7 +122,7 @@ $j.ajax({
 function showAddProFavoToast(nameProduct) {
     toast({
         title: "Tuyệt vời!",
-        message: `Bạn vừa thêm <strong class="text-body">${nameProduct}</strong> vào mục yêu thích thành công bấm <a href="http://127.0.0.1:8000/favorite">vào đây</a> để tới trang yêu thích.`,
+        message: `Bạn vừa thêm <strong class="text-body">${nameProduct}</strong> vào mục yêu thích thành công bấm <a href="http://localhost:8989/favorite">vào đây</a> để tới trang yêu thích.`,
         type: "success",
         duration: 5000
     }, toastMain);

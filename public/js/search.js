@@ -10,7 +10,7 @@ function limit(c) {
 Array.prototype.limit = limit;
 $j.ajax({
     type: "GET",
-    url: 'http://127.0.0.1:8000/api/all_product',
+    url: 'http://localhost:8989/api/all_product',
     success: function (response) {
         search.addEventListener('input', () => {
             boxResult.classList.add('active');
@@ -43,8 +43,8 @@ $j.ajax({
                     `
                 }
                 boxResult.innerHTML += `
-                    <a href="http://127.0.0.1:8000/product/details/${product.id}" class="product_searched">
-                        <img src="http://127.0.0.1:8000/images/${product.image_main}" alt="">
+                    <a href="http://localhost:8989/product/details/${product.id}" class="product_searched">
+                        <img src="http://localhost:8989/images/${product.image_main}" alt="">
                         <div class="box-name-price">
                             <p class="nameproduct">${product.name}</p>
                             <div>

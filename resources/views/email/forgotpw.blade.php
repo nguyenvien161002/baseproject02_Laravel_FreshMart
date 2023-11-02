@@ -32,13 +32,13 @@
 <body>
     <div style="width: 500px; margin: 0 auto;" class="wrapper">
         <div style="width: 100%; text-align: center;">
-            <img src="{{ $message->embed($urlLogo) }}" alt="">
+            <img src="{{ env('SRC_LOGOMAIN') }}" alt="">
         </div>
         <h2>Đặt lại mật khẩu cho tài khoản của bạn</h2>
         <p>Chào bạn <strong>{{ $fullname }}</strong></p>
         <p>Vui lòng nhấp vào nút bên dưới để được lấy lại mật khẩu tài khoản này.</p>
         <p>Nếu không đã nhớ lại, xin vui lòng bỏ qua email này.</p>
-        <a href="{{$urlIP . '/user/reset/password/' . $id . '/' . $token}}" class="btn-confirm">Đặt lại mật khẩu</a>
+        <a href="{{env('APP_URL_IP') . '/user/reset/password/' . $id . '/' . $token}}" class="btn-confirm">Đặt lại mật khẩu</a>
         <p style="margin-top: 10px;">Trân trọng!</p>
         <p>Đội ngũ FreshMart</p>
         <p>Bạn có thắc mắc vui lòng liên hệ chúng tôi tại đây</p>

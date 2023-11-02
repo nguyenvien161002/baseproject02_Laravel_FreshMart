@@ -143,11 +143,11 @@ class CheckoutController extends Controller
         $amount = "$total_money";
         $orderId = "$order_code";
         if ($id_authorization == 3) {
-            $urlTo = "http://127.0.0.1:8000/user/ordered/$id_user";
+            $urlTo = "http://localhost:8989/user/ordered/$id_user";
         } elseif ($id_authorization == 4) {
-            $urlTo = "http://127.0.0.1:8000/user/facebook/ordered/$id_user";
+            $urlTo = "http://localhost:8989/user/facebook/ordered/$id_user";
         } else {
-            $urlTo = "http://127.0.0.1:8000/user/google/ordered/$id_user";
+            $urlTo = "http://localhost:8989/user/google/ordered/$id_user";
         }
         $redirectUrl = "$urlTo";
         $ipnUrl = "$urlTo";
@@ -201,11 +201,11 @@ class CheckoutController extends Controller
         $total_money = $data['total_money'];
         $id_authorization = $data['id_authorization'];
         if ($id_authorization == 3) {
-            $urlTo = "http://127.0.0.1:8000/user/ordered/$id_user";
+            $urlTo = "http://localhost:8989/user/ordered/$id_user";
         } elseif ($id_authorization == 4) {
-            $urlTo = "http://127.0.0.1:8000/user/facebook/ordered/$id_user";
+            $urlTo = "http://localhost:8989/user/facebook/ordered/$id_user";
         } else {
-            $urlTo = "http://127.0.0.1:8000/user/google/ordered/$id_user";
+            $urlTo = "http://localhost:8989/user/google/ordered/$id_user";
         }
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "$urlTo";

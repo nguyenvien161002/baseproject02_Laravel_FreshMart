@@ -182,7 +182,7 @@ const toastMain = document.getElementById("toast");
 function showAddProFavoToast() {
     toast({
         title: "Tuyệt vời!",
-        message: `Bạn vừa thêm 1 sản phẩm vào mục yêu thích thành công bấm <a href="http://localhost/baseproject02/index/favorite">vào đây</a> để tới trang yêu thích.`,
+        message: `Bạn vừa thêm 1 sản phẩm vào mục yêu thích thành công bấm <a href="http://localhost:8989/index/favorite">vào đây</a> để tới trang yêu thích.`,
         type: "success",
         duration: 5000
     }, toastMain);

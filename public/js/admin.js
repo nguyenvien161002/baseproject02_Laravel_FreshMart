@@ -101,7 +101,7 @@ btnOrderBrowsing.click(function () {
 
     $j.ajax({
         type: "POST",
-        url: 'http://127.0.0.1:8000/admin/order/update',
+        url: 'http://localhost:8989/admin/order/update',
         data: JSON.stringify(approved),
         dataType: 'JSON',
         headers: {
@@ -130,7 +130,7 @@ searchInput.keyup(function () {
     if (query != "") {
         $j.ajax({
             type: "GET",
-            url: `http://127.0.0.1:8000/admin/${pageUrl}`,
+            url: `http://localhost:8989/admin/${pageUrl}`,
             data: { queryAutocomplete: query },
             success: function (response) {
                 boxAutocomplete.fadeIn();
@@ -172,7 +172,7 @@ $j(document).on('click', ".result-search", (index, value) => {
 
 //         $j.ajax({
 //             type: "POST",
-//             url: `http://127.0.0.1:8000/admin/product/details/13`,
+//             url: `http://localhost:8989/admin/product/details/13`,
 //             data: JSON.stringify(query),
 //             dataType: 'JSON',
 //             headers: {

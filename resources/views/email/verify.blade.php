@@ -31,13 +31,13 @@
 <body>
     <div style="width: 500px; margin: 0 auto;" class="wrapper">
         <div style="width: 100%; text-align: center;">
-            <img src="{{ $message->embed($urlLogo) }}" alt="">
+            <img src="{{ env('SRC_LOGOMAIN') }}" alt="">
         </div>
         <h2>Xác nhận email của bạn</h2>
         <p>Chào bạn <strong>{{ $fullname }}</strong></p>
         <p>Vui lòng nhấp vào nút bên dưới để xác thực địa chỉ email của bạn và xác nhận rằng bạn là chủ sở hữu của tài khoản này.</p>
         <p>Nếu không, xin vui lòng bỏ qua email này.</p>
-        <a href="{{$urlIP . '/user/confirm/' . $id . '/' . $token}}" class="btn-confirm">Xác nhận</a>
+        <a href="{{env('APP_URL_IP') . '/user/confirm/' . $id . '/' . $token}}" class="btn-confirm">Xác nhận</a>
         <p style="margin-top: 10px;">Trân trọng!</p>
         <p>Đội ngũ FreshMart</p>
         <p>Bạn có thắc mắc vui lòng liên hệ chúng tôi tại đây</p>

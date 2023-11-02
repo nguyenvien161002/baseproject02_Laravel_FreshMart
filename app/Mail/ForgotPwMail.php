@@ -56,8 +56,6 @@ class ForgotPwMail extends Mailable
                 'id' => $this -> recipient -> id,
                 'fullname' => $this -> recipient -> fullname,
                 'token' => $this -> recipient -> token,
-                'urlLogo' => env('SRC_LOGOMAIN'),
-                'urlIP' => env('APP_URL_IP'),
             ],
         );
     }
