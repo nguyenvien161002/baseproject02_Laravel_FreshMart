@@ -117,7 +117,7 @@ In this Laravel project, you can use Docker Compose to manage your application's
 To launch your application using Docker Compose, execute the following command:
 
 ```bash
-php docker-compose up -d --build
+docker-compose up -d --build
 ```
 
 This command will build the images, create containers, and start the services defined in your docker-compose.yml file in detached mode (-d), allowing your application to run in the background.
@@ -133,7 +133,7 @@ To gracefully stop and remove the Docker containers created by docker-compose up
 Execute the following command to bring down your Dockerized services:
 
 ```bash
-php docker-compose down
+docker-compose down
 ```
 
 This command will stop and remove the containers, networks, and volumes defined in your docker-compose.yml file. It's a clean way to shut down your Dockerized application and free up resources.
