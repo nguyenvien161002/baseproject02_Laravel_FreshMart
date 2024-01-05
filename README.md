@@ -109,3 +109,35 @@ This command will continuously process jobs that are added to the queue. It's us
 Make sure to configure your queue system, such as using databases or Redis, according to your project's requirements.
 
 For more details on working with queues in Laravel, refer to the official Laravel documentation.
+
+### `docker-compose up -d --build`
+
+In this Laravel project, you can use Docker Compose to manage your application's services, including dependencies like databases and other containers. The docker-compose up -d --build command is utilized to start your Dockerized application, creating and building the necessary containers defined in your docker-compose.yml file.
+
+To launch your application using Docker Compose, execute the following command:
+
+```bash
+php docker-compose up -d --build
+```
+
+This command will build the images, create containers, and start the services defined in your docker-compose.yml file in detached mode (-d), allowing your application to run in the background.
+
+Ensure your docker-compose.yml file is properly configured with the required services, volumes, and networks for your Laravel project.
+
+For more information on using Docker Compose with Laravel applications, refer to the official Docker documentation and Laravel's deployment best practices.
+
+### `docker-compose down`
+
+To gracefully stop and remove the Docker containers created by docker-compose up, you can use the docker-compose down command.
+
+Execute the following command to bring down your Dockerized services:
+
+```bash
+php docker-compose down
+```
+
+This command will stop and remove the containers, networks, and volumes defined in your docker-compose.yml file. It's a clean way to shut down your Dockerized application and free up resources.
+
+Remember to run this command in the same directory where your docker-compose.yml file is located.
+
+For additional options and configurations, you can refer to the official Docker Compose documentation
