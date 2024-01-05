@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2.2'
 services:
   nginx:
     image: nginx:1.17.4-alpine
@@ -10,6 +10,8 @@ services:
     volumes:
       - .:/application
       - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - freshmart_laravel
 
   php:
     build: ./docker
@@ -25,6 +27,8 @@ services:
       - DB_USERNAME=root
       - DB_PASS=secret
       - DB_NAME=app_db
+    networks:
+      - freshmart_laravel
 
   db:
     image: mysql:5.7
@@ -37,22 +41,33 @@ services:
       - MYSQL_DATABASE=freshmart_laravel
       - MYSQL_ROOT_PASSWORD=16102002
       - MYSQL_PASSWORD=16102002
+    networks:
+      - freshmart_laravel
 
   redis:
     image: redis:5.0.6-alpine
     ports:
       - "6382:6379"
+    networks:
+      - freshmart_laravel
 
   phpmyadmin:
     image: phpmyadmin
     ports:
       - 8082:80
+    networks:
+      - freshmart_laravel
 
   vite:
     build: ./docker  
     volumes:
       - .:/application
     command: npm run build
+    networks:
+      - freshmart_laravel
+
+networks:
+  freshmart_laravel:
 
 volumes:
   db_data:
